@@ -45,12 +45,6 @@ const doctors = [
     specialty: "Хирург-имплантолог",
     experience: 9,
   },
-  {
-    name: "Бакирова Диляра Фаритовна",
-    initials: "БД",
-    specialty: "Стоматолог-терапевт",
-    experience: 5,
-  },
 ];
 
 function DoctorCard({ doctor }: { doctor: (typeof doctors)[number] }) {
