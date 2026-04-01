@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, FormEvent } from "react";
 import gsap from "gsap";
+import { DatePicker } from "@/components/ui/date-picker";
 import {
   Phone,
   MapPin,
@@ -339,12 +340,11 @@ export default function Booking() {
                     <label className="mb-2 block text-sm font-medium text-foreground">
                       Дата <span className="text-red-500">*</span>
                     </label>
-                    <input
-                      type="date"
+                    <DatePicker
                       value={date}
-                      onChange={(e) => setDate(e.target.value)}
+                      onChange={setDate}
                       min={getTodayString()}
-                      className={cn(inputBase, "font-[var(--font-mono)]", errors.date ? inputError : inputNormal)}
+                      className={cn(errors.date ? "ring-2 ring-red-400" : "")}
                     />
                     {errors.date && (
                       <p className="mt-1.5 text-xs text-red-500">{errors.date}</p>
