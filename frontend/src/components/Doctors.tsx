@@ -73,10 +73,11 @@ function DoctorCard({ doctor, onClick }: { doctor: Doctor; onClick: () => void }
     const rotateX = ((y - rect.height / 2) / (rect.height / 2)) * -12;
     const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 12;
 
-    gsap.to(card, { rotationX: rotateX, rotationY: rotateY, duration: 0.4, ease: "power2.out", transformPerspective: 800 });
+    // Rotate the border wrapper — card inside follows
+    gsap.to(border, { rotationX: rotateX, rotationY: rotateY, duration: 0.4, ease: "power2.out", transformPerspective: 800 });
 
     // Move the border gradient to follow cursor
-    border.style.background = `radial-gradient(400px circle at ${x}px ${y}px, rgba(42,50,80,0.8), rgba(42,50,80,0.15) 50%, transparent 70%)`;
+    border.style.backgroundImage = `radial-gradient(400px circle at ${x}px ${y}px, rgba(42,50,80,0.8), rgba(42,50,80,0.15) 50%, transparent 70%)`;
 
     if (glareRef.current) {
       gsap.to(glareRef.current, { opacity: 0.12, x: x - rect.width / 2, y: y - rect.height / 2, duration: 0.4, ease: "power2.out" });
@@ -84,8 +85,11 @@ function DoctorCard({ doctor, onClick }: { doctor: Doctor; onClick: () => void }
   }, []);
 
   const handleMouseLeave = useCallback(() => {
-    if (cardRef.current) gsap.to(cardRef.current, { rotationX: 0, rotationY: 0, duration: 0.6, ease: "power3.out", transformPerspective: 800 });
-    if (borderRef.current) borderRef.current.style.background = "rgba(42,50,80,0.12)";
+    if (borderRef.current) {
+      gsap.to(borderRef.current, { rotationX: 0, rotationY: 0, duration: 0.6, ease: "power3.out", transformPerspective: 800 });
+      borderRef.current.style.backgroundImage = "none";
+      borderRef.current.style.backgroundColor = "rgba(42,50,80,0.12)";
+    }
     if (glareRef.current) gsap.to(glareRef.current, { opacity: 0, duration: 0.4 });
   }, []);
 
@@ -100,17 +104,16 @@ function DoctorCard({ doctor, onClick }: { doctor: Doctor; onClick: () => void }
       {/* Border wrapper — the gradient border lives here */}
       <div
         ref={borderRef}
-        className="rounded-2xl p-[1.5px] h-full transition-all duration-300 will-change-[background]"
-        style={{ background: "rgba(42,50,80,0.12)" }}
+        className="rounded-2xl p-[1.5px] h-full will-change-transform"
+        style={{ background: "rgba(42,50,80,0.12)", transformStyle: "preserve-3d" }}
       >
         <div
           ref={cardRef}
           className={cn(
             "relative bg-white rounded-[14px] overflow-hidden h-full",
-            "transition-shadow duration-300 will-change-transform",
+            "transition-shadow duration-300",
             "hover:shadow-2xl hover:shadow-[var(--primary)]/10"
           )}
-          style={{ transformStyle: "preserve-3d" }}
         >
           <div ref={glareRef} className="pointer-events-none absolute inset-0 z-10 rounded-[14px]" style={{ opacity: 0, background: "radial-gradient(300px circle at center, rgba(255,255,255,0.8), transparent 60%)" }} />
 
