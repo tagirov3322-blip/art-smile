@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useCallback, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -20,51 +20,68 @@ const photos = [
 export default function About() {
   const gridRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const mouse = useRef({ x: 0, y: 0 });
+  const current = useRef({ x: 0, y: 0 });
+  const rafId = useRef<number>(0);
 
+  // Smooth mouse follow loop
   useEffect(() => {
-    const grid = gridRef.current;
+    const animate = () => {
+      current.current.x += (mouse.current.x - current.current.x) * 0.08;
+      current.current.y += (mouse.current.y - current.current.y) * 0.08;
+
+      if (gridRef.current) {
+        gridRef.current.style.transform = `
+          rotateX(${current.current.y}deg)
+          rotateY(${current.current.x}deg)
+        `;
+      }
+      rafId.current = requestAnimationFrame(animate);
+    };
+    rafId.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(rafId.current);
+  }, []);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+    const rect = wrapper.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    mouse.current.x = x * 20;  // max ±10 degrees
+    mouse.current.y = y * -15; // max ±7.5 degrees, inverted
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    mouse.current.x = 0;
+    mouse.current.y = 0;
+  }, []);
+
+  // Scroll-driven parallax on individual cards
+  useEffect(() => {
     const section = sectionRef.current;
-    if (!grid || !section) return;
+    const grid = gridRef.current;
+    if (!section || !grid) return;
 
+    const cards = grid.querySelectorAll<HTMLElement>("[data-photo]");
     const ctx = gsap.context(() => {
-      // Animate the grid's 3D rotation and vertical position on scroll
-      gsap.fromTo(
-        grid,
-        {
-          rotateX: 55,
-          rotateZ: -12,
-          translateY: "15%",
-          scale: 0.85,
-        },
-        {
-          rotateX: 0,
-          rotateZ: 0,
-          translateY: "-10%",
-          scale: 1,
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
-          },
-        }
-      );
-
-      // Parallax individual cards at different speeds
-      const cards = grid.querySelectorAll("[data-photo]");
       cards.forEach((card, i) => {
-        const speed = (i % 3 === 0) ? -40 : (i % 3 === 1) ? -20 : -60;
-        gsap.to(card, {
-          y: speed,
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
-          },
-        });
+        const speed = [60, -40, 80, -30, 50, -60, 70, -50][i % 8];
+        gsap.fromTo(
+          card,
+          { y: speed },
+          {
+            y: -speed,
+            ease: "none",
+            scrollTrigger: {
+              trigger: section,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.5,
+            },
+          }
+        );
       });
     });
 
@@ -75,8 +92,8 @@ export default function About() {
     <section id="about" ref={sectionRef} className="bg-white py-24 md:py-32 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
-        {/* Text section */}
-        <div className="mx-auto max-w-2xl text-center mb-16 lg:mb-20">
+        {/* Text */}
+        <div className="mx-auto max-w-2xl text-center mb-16 lg:mb-24">
           <p className="font-[var(--font-mono)] text-xs font-semibold uppercase tracking-widest text-blue-600">
             О клинике
           </p>
@@ -85,7 +102,7 @@ export default function About() {
             <br className="hidden sm:block" />
             {" "}в&nbsp;центре города
           </h2>
-          <div className="mt-6 space-y-4 text-base leading-relaxed text-gray-600 sm:text-lg">
+          <div className="mt-6 space-y-4 text-base leading-relaxed text-gray-600 sm:text-lg max-w-xl mx-auto">
             <p>
               Клиника{" "}
               <span className="font-semibold text-gray-900">IQ&nbsp;Dental</span>{" "}
@@ -94,33 +111,35 @@ export default function About() {
               Мы создали пространство, где передовые технологии сочетаются
               с&nbsp;комфортной атмосферой.
             </p>
-            <p>
-              Каждый кабинет оснащён новейшим оборудованием для точной
-              диагностики и&nbsp;безболезненного лечения. Наша команда
-              профессионалов заботится о&nbsp;здоровье вашей улыбки, используя
-              только проверенные материалы и&nbsp;современные методики.
-            </p>
           </div>
         </div>
 
-        {/* 3D Isometric Photo Grid */}
-        <div className="relative" style={{ perspective: "1200px" }}>
+        {/* 3D Interactive Grid */}
+        <div
+          ref={wrapperRef}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          className="relative"
+          style={{ perspective: "1000px" }}
+        >
           <div
             ref={gridRef}
-            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5"
+            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4"
             style={{
               transformStyle: "preserve-3d",
               willChange: "transform",
+              transition: "none",
             }}
           >
             {photos.map((photo, idx) => (
               <div
                 key={idx}
                 data-photo
-                className="group relative overflow-hidden rounded-2xl"
+                className="group relative overflow-hidden rounded-2xl cursor-pointer"
                 style={{
                   aspectRatio: idx % 3 === 0 ? "3/4" : "4/3",
                   transformStyle: "preserve-3d",
+                  willChange: "transform",
                 }}
               >
                 {/* Gradient placeholder */}
@@ -130,15 +149,15 @@ export default function About() {
 
                 {/* Label overlay */}
                 <div className="absolute inset-0 flex items-end p-4 sm:p-5">
-                  <div className="translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                  <div className="translate-y-4 opacity-0 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100">
                     <span className="inline-block rounded-lg bg-white/90 backdrop-blur-sm px-3 py-1.5 text-xs font-semibold text-gray-900 shadow-lg">
                       {photo.label}
                     </span>
                   </div>
                 </div>
 
-                {/* Shine effect on hover */}
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                {/* Shine on hover */}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-transparent via-white/25 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               </div>
             ))}
           </div>
