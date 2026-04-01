@@ -73,8 +73,8 @@ function DoctorCard({ doctor, onClick }: { doctor: Doctor; onClick: () => void }
     const rotateX = ((y - rect.height / 2) / (rect.height / 2)) * -12;
     const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 12;
 
-    // Rotate the border wrapper — card inside follows
-    gsap.to(border, { rotationX: rotateX, rotationY: rotateY, duration: 0.4, ease: "power2.out", transformPerspective: 800 });
+    // Rotate + scale the border wrapper — card inside follows
+    gsap.to(border, { rotationX: rotateX, rotationY: rotateY, scale: 1.06, zIndex: 10, duration: 0.4, ease: "power2.out", transformPerspective: 800 });
 
     // Move the border gradient to follow cursor
     border.style.backgroundImage = `radial-gradient(400px circle at ${x}px ${y}px, rgba(42,50,80,0.8), rgba(42,50,80,0.15) 50%, transparent 70%)`;
@@ -86,7 +86,7 @@ function DoctorCard({ doctor, onClick }: { doctor: Doctor; onClick: () => void }
 
   const handleMouseLeave = useCallback(() => {
     if (borderRef.current) {
-      gsap.to(borderRef.current, { rotationX: 0, rotationY: 0, duration: 0.6, ease: "power3.out", transformPerspective: 800 });
+      gsap.to(borderRef.current, { rotationX: 0, rotationY: 0, scale: 1, zIndex: 1, duration: 0.6, ease: "power3.out", transformPerspective: 800 });
       borderRef.current.style.backgroundImage = "none";
       borderRef.current.style.backgroundColor = "rgba(42,50,80,0.12)";
     }
@@ -95,7 +95,7 @@ function DoctorCard({ doctor, onClick }: { doctor: Doctor; onClick: () => void }
 
   return (
     <div
-      className="group cursor-pointer h-full"
+      className="group relative cursor-pointer h-full"
       style={{ perspective: "800px" }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
