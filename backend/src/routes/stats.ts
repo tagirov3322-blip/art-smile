@@ -6,11 +6,35 @@ const router = Router();
 
 // GET /api/stats — admin
 router.get("/", requireAdmin, async (_req: Request, res: Response) => {
-  const [totalBookings, newBookings, completedBookings, cancelledBookings] = await Promise.all([
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  const [
+    totalBookings,
+    newBookings,
+    confirmedBookings,
+    completedBookings,
+    cancelledBookings,
+    todayBookings,
+    totalDoctors,
+    totalServices,
+    totalReviews,
+    pendingReviews,
+  ] = await Promise.all([
     prisma.booking.count(),
     prisma.booking.count({ where: { status: "new" } }),
+    prisma.booking.count({ where: { status: "confirmed" } }),
     prisma.booking.count({ where: { status: "completed" } }),
     prisma.booking.count({ where: { status: "cancelled" } }),
+    prisma.booking.count({
+      where: { createdAt: { gte: today, lt: tomorrow } },
+    }),
+    prisma.doctor.count({ where: { isActive: true } }),
+    prisma.service.count({ where: { isActive: true } }),
+    prisma.review.count({ where: { isApproved: true } }),
+    prisma.review.count({ where: { isApproved: false } }),
   ]);
 
   const popularServices = await prisma.booking.groupBy({
@@ -20,12 +44,31 @@ router.get("/", requireAdmin, async (_req: Request, res: Response) => {
     take: 5,
   });
 
+  // Обогатим имена услуг
+  const serviceIds = popularServices.map((s) => s.serviceId);
+  const services = await prisma.service.findMany({
+    where: { id: { in: serviceIds } },
+    select: { id: true, name: true },
+  });
+
+  const popularServicesWithNames = popularServices.map((s) => ({
+    serviceId: s.serviceId,
+    serviceName: services.find((srv) => srv.id === s.serviceId)?.name || "Неизвестно",
+    count: s._count.serviceId,
+  }));
+
   res.json({
     totalBookings,
     newBookings,
+    confirmedBookings,
     completedBookings,
     cancelledBookings,
-    popularServices,
+    todayBookings,
+    totalDoctors,
+    totalServices,
+    totalReviews,
+    pendingReviews,
+    popularServices: popularServicesWithNames,
   });
 });
 
