@@ -161,7 +161,7 @@ function DoctorModal({ doctor, onClose }: { doctor: Doctor; onClose: () => void 
           <div className="flex flex-col sm:flex-row overflow-hidden rounded-3xl">
             {/* Photo */}
             <div className="relative sm:w-2/5 shrink-0">
-              <div style={{ aspectRatio: "3/4" }}>
+              <div className="overflow-hidden rounded-2xl m-4 sm:m-5 sm:mr-0" style={{ aspectRatio: "3/4" }}>
                 <img src={doctor.photo} alt={doctor.name} className="h-full w-full object-cover" />
               </div>
             </div>
