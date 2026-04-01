@@ -31,17 +31,17 @@ const gridPositions = [
   "col-start-3 row-start-3", // bottom-right — was missing
 ];
 
-// Scattered positions: where each card flies out to (x%, y%, rotation)
+// Scattered positions: chaotic spread across the entire section
 const scatteredState = [
-  { x: -120, y: -80, r: -15 },
-  { x: 0, y: -100, r: 8 },
-  { x: 120, y: -70, r: 18 },
-  { x: -140, y: 10, r: -10 },
-  { x: 0, y: 0, r: 0 },       // center stays
-  { x: 140, y: 0, r: 12 },
-  { x: -110, y: 90, r: 15 },
-  { x: 10, y: 110, r: -8 },
-  { x: 130, y: 80, r: -18 },
+  { x: -350, y: -200, r: -25 },
+  { x: 60,   y: -260, r: 18 },
+  { x: 380,  y: -180, r: 30 },
+  { x: -420, y: 30,   r: -35 },
+  { x: 0,    y: 0,    r: 20 },
+  { x: 400,  y: -20,  r: -22 },
+  { x: -300, y: 220,  r: 28 },
+  { x: 80,   y: 280,  r: -15 },
+  { x: 360,  y: 200,  r: -32 },
 ];
 
 export default function About() {
@@ -96,20 +96,20 @@ export default function About() {
       cards.forEach((card, i) => {
         const s = scatteredState[i];
         // Set initial scattered state
-        gsap.set(card, { x: s.x, y: s.y, rotation: s.r, scale: 0.85 });
+        gsap.set(card, { x: s.x, y: s.y, rotation: s.r, scale: 0.8 });
 
-        // Animate to assembled (0,0) as section enters viewport
+        // Animate to assembled (0,0) — long scrub range for smooth feel
         gsap.to(card, {
           x: 0,
           y: 0,
           rotation: 0,
           scale: 1,
-          ease: "power3.out",
+          ease: "none",
           scrollTrigger: {
             trigger: section,
-            start: "top 80%",
-            end: "top 20%",
-            scrub: 1,
+            start: "top 90%",
+            end: "center center",
+            scrub: 2,
           },
         });
       });
@@ -118,16 +118,16 @@ export default function About() {
       cards.forEach((card, i) => {
         const s = scatteredState[i];
         gsap.to(card, {
-          x: -s.x * 0.7,
-          y: s.y * 0.8,
-          rotation: -s.r * 0.6,
-          scale: 0.9,
-          ease: "power2.in",
+          x: -s.x * 0.8,
+          y: s.y * 0.9,
+          rotation: -s.r * 0.7,
+          scale: 0.8,
+          ease: "none",
           scrollTrigger: {
             trigger: section,
-            start: "bottom 80%",
-            end: "bottom 10%",
-            scrub: 1,
+            start: "center 30%",
+            end: "bottom top",
+            scrub: 2,
           },
         });
       });
@@ -166,7 +166,7 @@ export default function About() {
         <div
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className="relative mx-auto max-w-4xl"
+          className="relative mx-auto max-w-6xl"
           style={{ perspective: "1000px" }}
         >
           <div
