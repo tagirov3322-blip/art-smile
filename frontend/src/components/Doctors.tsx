@@ -146,14 +146,14 @@ function DoctorCard({ doctor }: { doctor: (typeof doctors)[number] }) {
         </div>
 
         {/* Info */}
-        <div className="p-5">
-          <h3 className="font-[var(--font-heading)] text-base font-semibold text-foreground leading-snug">
+        <div className="p-6">
+          <h3 className="font-[var(--font-heading)] text-lg font-semibold text-foreground leading-snug">
             {doctor.name}
           </h3>
-          <p className="mt-1.5 text-sm font-medium text-primary">
+          <p className="mt-2 text-sm font-medium text-primary">
             {doctor.specialty}
           </p>
-          <p className="mt-2 font-[var(--font-mono)] text-[11px] uppercase tracking-[0.15em] text-muted-foreground">
+          <p className="mt-2.5 font-[var(--font-mono)] text-xs uppercase tracking-[0.15em] text-muted-foreground">
             Опыт {doctor.experience} лет
           </p>
         </div>
@@ -218,7 +218,7 @@ export default function Doctors() {
         </div>
 
         {/* Grid — 3 cols desktop, 2 tablet, 1 mobile */}
-        <div className="group-hover-dim grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="group-hover-dim grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
           {doctors.map((doctor) => (
             <DoctorCard key={doctor.name} doctor={doctor} />
           ))}
