@@ -169,9 +169,9 @@ export default function Footer() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-            {/* Left column — contact info */}
-            <div className="space-y-8">
+          <div>
+            {/* Contact info */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {contactItems.map((item) => (
                 <div
                   key={item.title}
@@ -190,30 +190,6 @@ export default function Footer() {
               ))}
             </div>
 
-            {/* Right column — Map */}
-            <div
-              className="overflow-hidden rounded-2xl border border-white/5 min-h-[420px] bg-slate-900 flex flex-col"
-            >
-              <iframe
-                src="https://yandex.ru/map-widget/v1/?um=constructor%3A&source=constructor"
-                width="100%"
-                height="100%"
-                frameBorder="0"
-                allowFullScreen
-                className="flex-1 min-h-[420px]"
-                title="IQ Dental на карте"
-              />
-              <div className="px-5 py-3.5 text-center text-sm text-slate-500 bg-slate-900/80">
-                <a
-                  href="https://2gis.ru/naberezhnye_chelny/search/%D0%BF%D1%80%D0%BE%D1%81%D0%BF.%20%D0%9C%D0%B8%D1%80%D0%B0%2C%2034"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-blue-300 transition-colors"
-                >
-                  Открыть в 2ГИС
-                </a>
-              </div>
-            </div>
           </div>
         </div>
       </section>
