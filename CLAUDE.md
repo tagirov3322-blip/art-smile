@@ -28,6 +28,11 @@ npm run dev   # Запуск dev-сервера (порт 3000)
 npm run build # Сборка
 ```
 
+## GSAP-анимации
+- Скиллы GSAP расположены в `.skills/gsap/`
+- При работе с анимациями — читай соответствующий SKILL.md перед использованием
+- Доступные скиллы: gsap-core, gsap-react, gsap-scrolltrigger, gsap-timeline, gsap-plugins, gsap-performance, gsap-frameworks, gsap-utils
+
 ## Git
 - Перед работой: `git pull origin master`
 - Один репозиторий, две папки
