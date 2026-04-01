@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, FormEvent } from "react";
 import gsap from "gsap";
 import { DatePicker } from "@/components/ui/date-picker";
+import { CustomSelect } from "@/components/ui/custom-select";
 import {
   Phone,
   MapPin,
@@ -296,18 +297,13 @@ export default function Booking() {
                     <label className="mb-2 block text-sm font-medium text-foreground">
                       Выбор врача <span className="text-red-500">*</span>
                     </label>
-                    <select
+                    <CustomSelect
                       value={doctorId}
-                      onChange={(e) => setDoctorId(e.target.value)}
-                      className={cn(inputBase, errors.doctorId ? inputError : inputNormal)}
-                    >
-                      <option value="">Выберите врача</option>
-                      {doctors.map((d) => (
-                        <option key={d.id} value={d.id}>
-                          {d.name}
-                        </option>
-                      ))}
-                    </select>
+                      onChange={setDoctorId}
+                      placeholder="Выберите врача"
+                      options={doctors.map((d) => ({ value: d.id, label: d.name }))}
+                      className={cn(errors.doctorId ? "ring-2 ring-red-400" : "")}
+                    />
                     {errors.doctorId && (
                       <p className="mt-1.5 text-xs text-red-500">{errors.doctorId}</p>
                     )}
@@ -318,18 +314,13 @@ export default function Booking() {
                     <label className="mb-2 block text-sm font-medium text-foreground">
                       Выбор услуги <span className="text-red-500">*</span>
                     </label>
-                    <select
+                    <CustomSelect
                       value={serviceId}
-                      onChange={(e) => setServiceId(e.target.value)}
-                      className={cn(inputBase, errors.serviceId ? inputError : inputNormal)}
-                    >
-                      <option value="">Выберите услугу</option>
-                      {serviceCategories.map((s) => (
-                        <option key={s.id} value={s.id}>
-                          {s.name}
-                        </option>
-                      ))}
-                    </select>
+                      onChange={setServiceId}
+                      placeholder="Выберите услугу"
+                      options={serviceCategories.map((s) => ({ value: s.id, label: s.name }))}
+                      className={cn(errors.serviceId ? "ring-2 ring-red-400" : "")}
+                    />
                     {errors.serviceId && (
                       <p className="mt-1.5 text-xs text-red-500">{errors.serviceId}</p>
                     )}
@@ -356,18 +347,13 @@ export default function Booking() {
                     <label className="mb-2 block text-sm font-medium text-foreground">
                       Время <span className="text-red-500">*</span>
                     </label>
-                    <select
+                    <CustomSelect
                       value={time}
-                      onChange={(e) => setTime(e.target.value)}
-                      className={cn(inputBase, "font-[var(--font-mono)]", errors.time ? inputError : inputNormal)}
-                    >
-                      <option value="">Выберите время</option>
-                      {timeSlots.map((slot) => (
-                        <option key={slot} value={slot}>
-                          {slot}
-                        </option>
-                      ))}
-                    </select>
+                      onChange={setTime}
+                      placeholder="Выберите время"
+                      options={timeSlots.map((slot) => ({ value: slot, label: slot }))}
+                      className={cn(errors.time ? "ring-2 ring-red-400" : "")}
+                    />
                     {errors.time && (
                       <p className="mt-1.5 text-xs text-red-500">{errors.time}</p>
                     )}
