@@ -114,10 +114,6 @@ export default function Hero() {
       ref={containerRef}
       className="relative min-h-screen overflow-hidden bg-white"
     >
-      {/* Bold accent element — single oversized soft circle */}
-      <div
-        className="pointer-events-none absolute -right-[15vw] -top-[10vh] h-[80vh] w-[80vh] rounded-full bg-[var(--primary,#2563eb)] opacity-[0.06]"
-      />
 
       {/* Content wrapper */}
       <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-[1400px] flex-col px-6 sm:px-10 lg:px-16">
