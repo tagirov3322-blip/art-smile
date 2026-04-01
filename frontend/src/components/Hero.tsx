@@ -81,8 +81,8 @@ export default function Hero() {
                 className={cn(
                   "group inline-flex h-14 items-center gap-2.5 rounded-full bg-[var(--primary,#2563eb)] px-8",
                   "text-base font-semibold text-white transition-all duration-300",
-                  "shadow-lg shadow-blue-600/20",
-                  "hover:scale-[1.03] hover:shadow-xl hover:shadow-blue-600/30",
+                  "shadow-lg shadow-[var(--primary)]/15",
+                  "hover:scale-[1.03] hover:shadow-xl hover:shadow-[var(--primary)]/20",
                   "active:scale-[0.98]"
                 )}
               >

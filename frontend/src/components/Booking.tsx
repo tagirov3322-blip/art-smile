@@ -197,7 +197,7 @@ export default function Booking() {
   return (
     <section
       id="booking"
-      className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-500 to-blue-700 py-[var(--space-section)]"
+      className="relative overflow-hidden bg-gradient-to-br from-[#1e2540] via-blue-500 to-blue-700 py-[var(--space-section)]"
     >
       {/* Noise texture */}
       <div className="noise-overlay pointer-events-none absolute inset-0" />
@@ -396,7 +396,7 @@ export default function Booking() {
                         type="checkbox"
                         checked={consentGiven}
                         onChange={(e) => setConsentGiven(e.target.checked)}
-                        className="mt-0.5 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                        className="mt-0.5 h-4 w-4 rounded border-slate-300 text-[var(--primary)] focus:ring-blue-500"
                       />
                       <span className="text-sm text-muted-foreground">
                         Я даю{" "}
@@ -404,7 +404,7 @@ export default function Booking() {
                           href="/privacy"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-600 underline underline-offset-2 hover:text-blue-700"
+                          className="text-[var(--primary)] underline underline-offset-2 hover:text-blue-700"
                         >
                           согласие на обработку персональных данных
                         </a>{" "}
@@ -422,7 +422,7 @@ export default function Booking() {
                   type="submit"
                   disabled={isSubmitting}
                   className={cn(
-                    "mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-4 text-sm font-semibold text-white shadow-lg shadow-blue-600/30 transition-all duration-200 hover:bg-blue-700 hover:shadow-blue-700/30 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
+                    "mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--primary)] px-6 py-4 text-sm font-semibold text-white shadow-lg shadow-[var(--primary)]/20 transition-all duration-200 hover:bg-blue-700 hover:shadow-blue-700/30 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
                     isSubmitting && "cursor-not-allowed opacity-60"
                   )}
                 >

@@ -77,7 +77,7 @@ export default function About() {
           {/* Soft radial glow behind text */}
           <div className="absolute -inset-x-24 -inset-y-16 rounded-full bg-gray-900/70 blur-3xl" />
           <div className="relative px-8 py-12 sm:px-14 sm:py-16">
-            <p className="font-[var(--font-mono)] text-xs font-semibold uppercase tracking-widest text-blue-400">
+            <p className="font-[var(--font-mono)] text-xs font-semibold uppercase tracking-widest text-gray-400">
               О клинике
             </p>
             <h2 className="mt-4 text-fluid-h1 font-[var(--font-heading)] font-bold leading-[1.1] tracking-tight text-white">
@@ -96,7 +96,7 @@ export default function About() {
 
             <a
               href="#services"
-              className="mt-8 inline-flex h-12 items-center gap-2 rounded-full bg-blue-600 px-8 text-sm font-semibold text-white transition-all duration-300 hover:bg-blue-500 hover:scale-[1.03] active:scale-[0.98]"
+              className="mt-8 inline-flex h-12 items-center gap-2 rounded-full bg-[var(--primary)] px-8 text-sm font-semibold text-white transition-all duration-300 hover:bg-[var(--primary)] hover:scale-[1.03] active:scale-[0.98]"
             >
               Наши услуги
             </a>

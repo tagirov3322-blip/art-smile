@@ -62,7 +62,7 @@ const contactItems = [
       <div className="flex flex-col gap-1.5">
         <a
           href="tel:+79061232727"
-          className="font-[var(--font-mono)] text-2xl font-semibold text-white transition-colors hover:text-blue-400"
+          className="font-[var(--font-mono)] text-2xl font-semibold text-white transition-colors hover:text-gray-400"
         >
           +7 (906) 123-27-27
         </a>
@@ -208,7 +208,7 @@ export default function Footer() {
                   href="https://2gis.ru/naberezhnye_chelny/search/%D0%BF%D1%80%D0%BE%D1%81%D0%BF.%20%D0%9C%D0%B8%D1%80%D0%B0%2C%2034"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-400 hover:text-blue-300 transition-colors"
+                  className="text-gray-400 hover:text-blue-300 transition-colors"
                 >
                   Открыть в 2ГИС
                 </a>
@@ -227,7 +227,7 @@ export default function Footer() {
               className="space-y-5"
             >
               <Link href="/" className="flex items-center gap-3">
-                <ToothIcon className="h-9 w-9 text-blue-400" />
+                <ToothIcon className="h-9 w-9 text-gray-400" />
                 <span className="font-[var(--font-heading)] text-2xl font-bold text-white">
                   IQ Dental
                 </span>
@@ -271,7 +271,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className={cn(
                     "flex h-11 w-11 items-center justify-center rounded-xl",
-                    "bg-white/5 text-slate-400 hover:bg-blue-600 hover:text-white transition-all duration-200"
+                    "bg-white/5 text-slate-400 hover:bg-[var(--primary)] hover:text-white transition-all duration-200"
                   )}
                   aria-label="VK"
                 >
@@ -316,7 +316,7 @@ export default function Footer() {
               <div className="space-y-3">
                 <a
                   href="tel:+79061232727"
-                  className="block font-[var(--font-mono)] text-lg text-white hover:text-blue-400 transition-colors duration-200"
+                  className="block font-[var(--font-mono)] text-lg text-white hover:text-gray-400 transition-colors duration-200"
                 >
                   +7 (906) 123-27-27
                 </a>
