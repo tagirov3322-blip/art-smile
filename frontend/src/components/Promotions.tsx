@@ -1,163 +1,152 @@
 "use client";
 
 import { useState } from "react";
-import { Clock, ArrowRight, X } from "lucide-react";
+import { Clock, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const promotions = [
   {
     title: "Бесплатная консультация",
     subtitle: "0 ₽",
-    description: "Первичный осмотр, диагностика и составление плана лечения — совершенно бесплатно для всех новых пациентов клиники.",
+    description: "Первичный осмотр, диагностика и составление плана лечения — бесплатно для всех новых пациентов.",
     conditions: "Для новых пациентов",
     deadline: null,
     isHit: false,
-    accent: "from-[#2a3250] to-[#3a4565]",
+    gradient: "from-blue-100 via-indigo-100 to-purple-100",
   },
   {
-    title: "Профчистка",
+    title: "Профчистка –20%",
     subtitle: "–20%",
     description: "Скидка 20% на комплексную профессиональную гигиену полости рта: ультразвук, Air-Flow, полировка и фторирование.",
     conditions: "На полный комплекс",
     deadline: "30.06.2026",
     isHit: true,
-    accent: "from-[#1e2540] to-[#2a3250]",
+    gradient: "from-rose-100 via-pink-100 to-orange-100",
   },
   {
     title: "Имплантация под ключ",
     subtitle: "от 35 000 ₽",
-    description: "Полный цикл имплантации: установка импланта, формирователь десны и металлокерамическая коронка по фиксированной цене.",
+    description: "Полный цикл имплантации: установка импланта, формирователь десны и металлокерамическая коронка.",
     conditions: "Имплант + коронка",
     deadline: "31.05.2026",
     isHit: false,
-    accent: "from-[#2a3250] to-[#1a1f2e]",
+    gradient: "from-emerald-100 via-teal-100 to-cyan-100",
   },
   {
-    title: "Семейная скидка",
+    title: "Семейная скидка 10%",
     subtitle: "10%",
-    description: "Приходите всей семьёй и получайте скидку 10% на все виды лечения при одновременном обращении от двух членов семьи.",
+    description: "Приходите всей семьёй и получайте скидку 10% на все виды лечения.",
     conditions: "От 2 членов семьи",
     deadline: null,
     isHit: false,
-    accent: "from-[#353d5c] to-[#2a3250]",
-  },
-  {
-    title: "Рассрочка",
-    subtitle: "0%",
-    description: "Оформите беспроцентную рассрочку на срок до 12 месяцев на все виды стоматологического лечения от 10 000 ₽.",
-    conditions: "От 10 000 ₽",
-    deadline: null,
-    isHit: false,
-    accent: "from-[#1e2540] to-[#353d5c]",
+    gradient: "from-violet-100 via-purple-100 to-fuchsia-100",
   },
 ];
 
 export default function Promotions() {
-  const [active, setActive] = useState<number | null>(null);
+  const [activeTab, setActiveTab] = useState(0);
 
   return (
     <section id="promotions" className="py-[var(--space-section)] bg-[var(--background)]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-xl px-4 sm:px-6">
 
-        {/* Heading */}
-        <div className="mb-14">
-          <span className="font-[var(--font-mono)] text-fluid-small uppercase tracking-[0.15em] text-muted-foreground">
-            Выгодные предложения
-          </span>
-          <h2 className="mt-3 font-[var(--font-heading)] text-fluid-h1 text-foreground">
-            Акции
-          </h2>
-        </div>
+        {/* Title */}
+        <h2 className="text-center font-[var(--font-heading)] text-fluid-h1 text-foreground">
+          Акции и предложения
+        </h2>
 
-        {/* Cards grid — 3 top, 2 bottom centered */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {promotions.map((promo, i) => (
-            <div
-              key={i}
-              onClick={() => setActive(active === i ? null : i)}
-              className={cn(
-                "group relative cursor-pointer overflow-hidden rounded-2xl p-7 sm:p-8 transition-all duration-500",
-                "bg-[#1c1f26]",
-                "hover:scale-[1.02] hover:shadow-2xl hover:shadow-[var(--primary)]/15",
-                // Last 2 cards center on lg
-                i === 3 && "lg:col-start-1",
-                i === 4 && "lg:col-start-2",
-              )}
-            >
-              {/* Hit badge */}
-              {promo.isHit && (
-                <div className="absolute top-5 right-5 rounded-full bg-white/15 backdrop-blur-sm px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white">
-                  Хит
-                </div>
-              )}
-
-              {/* Big number/price */}
-              <p className="font-[var(--font-mono)] text-4xl sm:text-5xl font-bold text-white/90 leading-none">
-                {promo.subtitle}
-              </p>
-
-              {/* Title */}
-              <h3 className="mt-4 font-[var(--font-heading)] text-xl font-semibold text-white">
-                {promo.title}
-              </h3>
-
-              {/* Deadline / permanent badge */}
-              <div className="mt-4 flex items-center gap-2">
-                {promo.deadline ? (
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/80">
-                    <Clock className="h-3 w-3" />
-                    до {promo.deadline}
-                  </span>
-                ) : (
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/80">
-                    <Clock className="h-3 w-3" />
-                    Бессрочно
-                  </span>
-                )}
-                <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/80">
-                  {promo.conditions}
-                </span>
-              </div>
-
-              {/* Expand arrow */}
-              <div className="mt-6 flex items-center justify-between">
-                <a
-                  href="#booking"
-                  onClick={(e) => e.stopPropagation()}
-                  className="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur-sm px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/25"
-                >
-                  Записаться
-                  <ArrowRight className="h-4 w-4" />
-                </a>
-
-                <button
-                  onClick={(e) => { e.stopPropagation(); setActive(active === i ? null : i); }}
-                  className={cn(
-                    "flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white/70 transition-all duration-300",
-                    active === i ? "rotate-45 bg-white/20" : "group-hover:bg-white/20"
-                  )}
-                >
-                  {active === i ? <X className="h-4 w-4" /> : <ArrowRight className="h-4 w-4 -rotate-45" />}
-                </button>
-              </div>
-
-              {/* Expandable description */}
-              <div
+        {/* Tabs */}
+        <div className="mt-6 flex items-center justify-center">
+          <div className="inline-flex items-center rounded-full border border-[var(--border)] bg-white p-1">
+            {promotions.map((promo, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveTab(i)}
                 className={cn(
-                  "overflow-hidden transition-all duration-500 ease-out",
-                  active === i ? "mt-5 max-h-40 opacity-100" : "max-h-0 opacity-0"
+                  "rounded-full px-4 py-2 text-sm font-medium transition-all duration-200",
+                  activeTab === i
+                    ? "bg-[var(--foreground)] text-white shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
                 )}
               >
-                <p className="text-sm leading-relaxed text-white/70 border-t border-white/10 pt-5">
-                  {promo.description}
+                {promo.title.split(" ")[0]}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Featured card */}
+        <div className="mt-8 overflow-hidden rounded-3xl bg-[var(--muted)] border border-[var(--border)]">
+          <div className={cn("relative h-48 bg-gradient-to-br", promotions[activeTab].gradient)}>
+            {/* Big subtitle overlay */}
+            <div className="absolute inset-0 flex items-center justify-between px-8">
+              <div>
+                <h3 className="font-[var(--font-heading)] text-2xl font-bold text-foreground">
+                  {promotions[activeTab].title}
+                </h3>
+                <p className="mt-1 font-[var(--font-mono)] text-3xl font-bold text-foreground/80">
+                  {promotions[activeTab].subtitle}
                 </p>
               </div>
-
-              {/* Decorative circle */}
-              <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/5 transition-transform duration-700 group-hover:scale-150" />
             </div>
+          </div>
+
+          <div className="px-8 py-6">
+            <div className="flex items-center gap-2 mb-3">
+              {promotions[activeTab].deadline ? (
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-red-50 px-3 py-1 text-xs font-medium text-red-600">
+                  <Clock className="h-3 w-3" />
+                  до {promotions[activeTab].deadline}
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-3 py-1 text-xs font-medium text-green-600">
+                  <Clock className="h-3 w-3" />
+                  Бессрочно
+                </span>
+              )}
+              <span className="rounded-full bg-[var(--muted)] border border-[var(--border)] px-3 py-1 text-xs font-medium text-muted-foreground">
+                {promotions[activeTab].conditions}
+              </span>
+              {promotions[activeTab].isHit && (
+                <span className="rounded-full bg-[var(--foreground)] px-3 py-1 text-xs font-bold text-white">
+                  Хит
+                </span>
+              )}
+            </div>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              {promotions[activeTab].description}
+            </p>
+          </div>
+        </div>
+
+        {/* Small cards grid — the rest */}
+        <div className="mt-4 grid grid-cols-2 gap-4">
+          {promotions.filter((_, i) => i !== activeTab).map((promo, idx) => (
+            <button
+              key={promo.title}
+              onClick={() => setActiveTab(promotions.indexOf(promo))}
+              className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-white text-left transition-all duration-300 hover:shadow-lg hover:scale-[1.02]"
+            >
+              {/* Gradient top */}
+              <div className={cn("h-28 bg-gradient-to-br", promo.gradient)} />
+              {/* Label */}
+              <div className="px-4 py-3">
+                <p className="text-sm font-medium text-foreground leading-snug">
+                  {promo.title}
+                </p>
+              </div>
+            </button>
           ))}
         </div>
+
+        {/* CTA */}
+        <a
+          href="#booking"
+          className="mt-8 flex items-center justify-center gap-2 rounded-2xl bg-[var(--foreground)] py-4 text-sm font-semibold text-white transition-all duration-300 hover:opacity-90 active:scale-[0.98]"
+        >
+          Записаться на приём
+          <ArrowRight className="h-4 w-4" />
+        </a>
       </div>
     </section>
   );
