@@ -3,69 +3,45 @@ import bcrypt from "bcryptjs";
 import prisma from "../prismaClient";
 import { generateTokens, verifyRefreshToken } from "../middleware/auth";
 import { validate } from "../middleware/validate";
+import { asyncHandler } from "../middleware/asyncHandler";
 import { loginSchema, refreshSchema } from "../lib/validators";
 
 const router = Router();
 
-// POST /api/auth/login
-router.post("/login", validate(loginSchema), async (req: Request, res: Response): Promise<void> => {
+router.post("/login", validate(loginSchema), asyncHandler(async (req: Request, res: Response) => {
   const { login, password } = req.body;
-
   const admin = await prisma.admin.findUnique({ where: { login } });
-  if (!admin) {
-    res.status(401).json({ error: "Неверный логин или пароль" });
-    return;
-  }
+  if (!admin) { res.status(401).json({ error: "Неверный логин или пароль" }); return; }
 
   const valid = await bcrypt.compare(password, admin.passwordHash);
-  if (!valid) {
-    res.status(401).json({ error: "Неверный логин или пароль" });
-    return;
-  }
+  if (!valid) { res.status(401).json({ error: "Неверный логин или пароль" }); return; }
 
-  const tokens = generateTokens(admin.id, admin.role);
-  res.json(tokens);
-});
+  res.json(generateTokens(admin.id, admin.role));
+}));
 
-// POST /api/auth/refresh
-router.post("/refresh", validate(refreshSchema), async (req: Request, res: Response): Promise<void> => {
+router.post("/refresh", validate(refreshSchema), asyncHandler(async (req: Request, res: Response) => {
   const { refreshToken } = req.body;
-
   try {
     const payload = verifyRefreshToken(refreshToken);
-    if (payload.type !== "refresh") {
-      res.status(401).json({ error: "Недействительный refresh-токен" });
-      return;
-    }
-
-    const tokens = generateTokens(payload.adminId, payload.role);
-    res.json(tokens);
+    if (payload.type !== "refresh") { res.status(401).json({ error: "Недействительный refresh-токен" }); return; }
+    res.json(generateTokens(payload.adminId, payload.role));
   } catch {
     res.status(401).json({ error: "Refresh-токен просрочен" });
   }
-});
+}));
 
-// POST /api/auth/setup — создание первого админа (только если нет ни одного)
-router.post("/setup", async (req: Request, res: Response): Promise<void> => {
+router.post("/setup", asyncHandler(async (req: Request, res: Response) => {
   const count = await prisma.admin.count();
-  if (count > 0) {
-    res.status(403).json({ error: "Админ уже существует" });
-    return;
-  }
+  if (count > 0) { res.status(403).json({ error: "Админ уже существует" }); return; }
 
   const { login, password } = req.body;
   if (!login || !password || password.length < 6) {
-    res.status(400).json({ error: "Логин и пароль (мин. 6 символов) обязательны" });
-    return;
+    res.status(400).json({ error: "Логин и пароль (мин. 6 символов) обязательны" }); return;
   }
 
   const passwordHash = await bcrypt.hash(password, 12);
-  const admin = await prisma.admin.create({
-    data: { login, passwordHash },
-  });
-
-  const tokens = generateTokens(admin.id, admin.role);
-  res.status(201).json(tokens);
-});
+  const admin = await prisma.admin.create({ data: { login, passwordHash } });
+  res.status(201).json(generateTokens(admin.id, admin.role));
+}));
 
 export default router;
