@@ -8,25 +8,31 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Fewer photos per row, more breathing room
 const row1 = [
-  "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=600&h=400&fit=crop",
+  "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=500&h=350&fit=crop",
+  "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=500&h=350&fit=crop",
+  "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=500&h=350&fit=crop",
+  "https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=500&h=350&fit=crop",
+  "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=500&h=350&fit=crop",
+  "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=500&h=350&fit=crop",
+  "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=500&h=350&fit=crop",
 ];
 const row2 = [
-  "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1606265752439-1f18756aa5fc?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1629909615850-0a8a2a026e39?w=600&h=400&fit=crop",
+  "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=500&h=350&fit=crop",
+  "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=500&h=350&fit=crop",
+  "https://images.unsplash.com/photo-1606265752439-1f18756aa5fc?w=500&h=350&fit=crop",
+  "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=500&h=350&fit=crop",
+  "https://images.unsplash.com/photo-1629909615850-0a8a2a026e39?w=500&h=350&fit=crop",
+  "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=500&h=350&fit=crop",
+  "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=500&h=350&fit=crop",
 ];
 const row3 = [
-  "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1571772996211-2f02c9727629?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=600&h=400&fit=crop",
+  "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=500&h=350&fit=crop",
+  "https://images.unsplash.com/photo-1571772996211-2f02c9727629?w=500&h=350&fit=crop",
+  "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=500&h=350&fit=crop",
+  "https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=500&h=350&fit=crop",
+  "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=500&h=350&fit=crop",
+  "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=500&h=350&fit=crop",
+  "https://images.unsplash.com/photo-1571772996211-2f02c9727629?w=500&h=350&fit=crop",
 ];
 
 function ImageRow({ images, direction }: { images: string[]; direction: "left" | "right" }) {
@@ -59,9 +65,9 @@ function ImageRow({ images, direction }: { images: string[]; direction: "left" |
   }, [direction]);
 
   return (
-    <div ref={rowRef} className="flex gap-5 will-change-transform" style={{ width: "max-content" }}>
+    <div ref={rowRef} className="flex gap-3 will-change-transform" style={{ width: "max-content" }}>
       {images.map((src, i) => (
-        <div key={i} className="h-[200px] w-[320px] flex-shrink-0 overflow-hidden rounded-2xl sm:h-[220px] sm:w-[350px]">
+        <div key={i} className="h-[180px] w-[270px] flex-shrink-0 overflow-hidden rounded-xl sm:h-[200px] sm:w-[300px]">
           <img
             src={src}
             alt=""
@@ -76,12 +82,7 @@ function ImageRow({ images, direction }: { images: string[]; direction: "left" |
 
 export default function About() {
   return (
-    <section id="about" className="relative overflow-hidden bg-gray-900 py-40 sm:py-48 md:py-56">
-
-      {/* Short clean transition top */}
-      <div className="absolute top-0 left-0 right-0 h-16 z-20 bg-gradient-to-b from-white to-transparent pointer-events-none" />
-      {/* Short clean transition bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-16 z-20 bg-gradient-to-t from-[var(--muted)] to-transparent pointer-events-none" />
+    <section id="about" className="relative overflow-hidden bg-gray-900 py-52 sm:py-60 md:py-72">
 
       {/* Background image rows */}
       <div className="absolute inset-0 flex flex-col justify-center gap-5 opacity-50">
