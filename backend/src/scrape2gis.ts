@@ -45,21 +45,14 @@ async function scrape2GIS() {
 
   console.log(`Найдено ${allTexts.length} отзывов`);
 
-  // Извлекаем имена из HTML
-  const nameRegex = /"name":"([А-Яа-яЁё][А-Яа-яЁё\s]{2,30})"/g;
-  const names: string[] = [];
-  while ((match = nameRegex.exec(html)) !== null) {
-    names.push(match[1]);
-  }
-
   // Удаляем старые отзывы с 2gis
   await prisma.review.deleteMany({ where: { source: "2gis" } });
 
   let saved = 0;
   for (let i = 0; i < allTexts.length && i < 20; i++) {
     const text = allTexts[i];
-    const authorName = names[i] || "Пациент";
-    const sourceId = `2gis_${Buffer.from(text.slice(0, 50)).toString("base64").slice(0, 20)}`;
+    const authorName = "Пациент IQ Dental";
+    const sourceId = `2gis_${i}_${Date.now()}`;
 
     // Определяем рейтинг по тону (все 2GIS отзывы обычно положительные)
     const rating = text.includes("не рекомендую") || text.includes("невозможно") ? 2 : 5;
