@@ -133,7 +133,7 @@ export default function AdminDashboard() {
             </div>
             <div className="grid grid-cols-3 gap-x-6 gap-y-2 text-right">
               {[{ l: "Врачей", v: stats.totalDoctors }, { l: "Услуг", v: stats.totalServices }, { l: "Отзывов", v: stats.totalReviews }].map((d) => (
-                <div key={d.l}><p className="text-[10px] uppercase tracking-wider text-gray-400">{d.l}</p><p className="text-lg font-bold text-[#2a3250]">{d.v}</p></div>
+                <div key={d.l} className="dash-mini-stat"><p className="text-[10px] uppercase tracking-wider text-gray-400">{d.l}</p><p className="text-lg font-bold text-[#2a3250]">{d.v}</p></div>
               ))}
             </div>
           </div>
