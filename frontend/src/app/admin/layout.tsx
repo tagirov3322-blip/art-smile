@@ -20,6 +20,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const router = useRouter();
   const pathname = usePathname();
   const [ready, setReady] = useState(false);
+  const mainRef = useRef<HTMLElement>(null);
+  const prevPath = useRef(pathname);
 
   useEffect(() => {
     if (pathname === "/admin/login") {
