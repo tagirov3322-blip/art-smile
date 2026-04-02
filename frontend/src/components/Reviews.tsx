@@ -61,13 +61,15 @@ function getInitials(name: string) {
   return name.split(" ").map((w) => w[0]).join("").toUpperCase();
 }
 
-function TestimonialsColumn({ testimonials, className, duration = 10 }: { testimonials: Review[]; className?: string; duration?: number }) {
+function TestimonialsColumn({ testimonials, className, pixelsPerSecond = 20 }: { testimonials: Review[]; className?: string; pixelsPerSecond?: number }) {
   const columnRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     if (!columnRef.current) return;
+    const height = columnRef.current.scrollHeight / 2;
+    const duration = height / pixelsPerSecond;
     gsap.to(columnRef.current, { y: "-50%", duration, repeat: -1, ease: "none" });
-  }, { scope: columnRef });
+  }, { scope: columnRef, dependencies: [testimonials] });
 
   return (
     <div className={cn("overflow-hidden", className)}>
