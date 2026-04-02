@@ -29,7 +29,7 @@ async function seed() {
         name: "Нигматуллин Марат Хамзаевич",
         specialty: "Стоматолог-ортопед, директор",
         experience: 12,
-        photo: "/doctors/nigmatullin.png",
+        photo: "/doctors/nigmatullin.webp",
         description: "Специалист в области ортопедической стоматологии. Руководит клиникой IQ Dental, обеспечивая высочайшие стандарты качества лечения.",
         isActive: true,
         schedule: {
@@ -46,7 +46,7 @@ async function seed() {
         name: "Шайхелисламов Раушан Рафисович",
         specialty: "Хирург-имплантолог",
         experience: 15,
-        photo: "/doctors/shaikhelislamov.png",
+        photo: "/doctors/shaikhelislamov.webp",
         description: "Опытный хирург-имплантолог, владеющий современными методиками имплантации и костной пластики.",
         isActive: true,
         schedule: {
@@ -63,7 +63,7 @@ async function seed() {
         name: "Гумеров Артур Рафаэлевич",
         specialty: "Стоматолог-ортопед",
         experience: 19,
-        photo: "/doctors/gumerov.png",
+        photo: "/doctors/gumerov.webp",
         description: "Один из самых опытных специалистов клиники. Мастер эстетического протезирования и сложных ортопедических конструкций.",
         isActive: true,
         schedule: {
@@ -80,7 +80,7 @@ async function seed() {
         name: "Нигматуллина Лилия Марселевна",
         specialty: "Стоматолог-терапевт",
         experience: 12,
-        photo: "/doctors/nigmatullina.png",
+        photo: "/doctors/nigmatullina.webp",
         description: "Специализируется на терапевтическом лечении зубов, эндодонтии и эстетической реставрации.",
         isActive: true,
         schedule: {
@@ -97,7 +97,7 @@ async function seed() {
         name: "Ногманов Фарид Флюрович",
         specialty: "Хирург-имплантолог",
         experience: 11,
-        photo: "/doctors/nogmanov.png",
+        photo: "/doctors/nogmanov.webp",
         description: "Квалифицированный хирург-имплантолог, специализирующийся на установке дентальных имплантатов.",
         isActive: true,
         schedule: {
@@ -113,7 +113,7 @@ async function seed() {
         name: "Гараев Альберт Радикович",
         specialty: "Хирург-имплантолог",
         experience: 9,
-        photo: "/doctors/garaev.png",
+        photo: "/doctors/garaev.webp",
         description: "Молодой и перспективный хирург-имплантолог, применяющий передовые технологии в имплантации зубов.",
         isActive: true,
         schedule: {
