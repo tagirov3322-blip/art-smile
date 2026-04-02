@@ -83,7 +83,7 @@ export default function AdminDashboard() {
     gsap.from(".dash-legend-item", { x: 20, opacity: 0, duration: 0.4, stagger: 0.08, delay: 0.8, ease: "power2.out" });
     gsap.from(".dash-table", { y: 40, opacity: 0, duration: 0.7, delay: 0.5, ease: "power3.out" });
     gsap.from(".dash-table-row", { x: -20, opacity: 0, duration: 0.4, stagger: 0.06, delay: 0.7, ease: "power2.out" });
-  }, { scope: containerRef, dependencies: [!!stats] });
+  }, { scope: containerRef });
 
   if (!stats) return <div className="flex h-96 items-center justify-center text-gray-400">Загрузка...</div>;
 
