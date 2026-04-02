@@ -63,10 +63,10 @@ export default function AdminReviews() {
   };
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold text-[#2a3250]">Отзывы</h1>
+    <div ref={containerRef}>
+      <h1 className="page-title text-2xl font-bold text-[#2a3250]">Отзывы</h1>
 
-      <div className="mt-4 flex gap-2">
+      <div className="page-controls mt-4 flex gap-2">
         {[{ v: "", l: "Все" }, { v: "false", l: "На модерации" }, { v: "true", l: "Одобренные" }].map((f) => (
           <button key={f.v} onClick={() => setFilter(f.v)}
             className={`rounded-xl px-4 py-2 text-sm font-medium transition ${filter === f.v ? "bg-[#2a3250] text-white" : "bg-white text-gray-600 hover:bg-gray-50"}`}>
