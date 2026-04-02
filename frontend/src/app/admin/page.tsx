@@ -182,7 +182,7 @@ export default function AdminDashboard() {
             <thead><tr className="border-y border-gray-100 text-[10px] uppercase tracking-wider text-gray-400"><th className="px-6 py-2.5 font-medium">Пациент</th><th className="px-6 py-2.5 font-medium">Врач</th><th className="px-6 py-2.5 font-medium">Услуга</th><th className="px-6 py-2.5 font-medium">Дата / Время</th><th className="px-6 py-2.5 font-medium">Статус</th></tr></thead>
             <tbody>
               {recentBookings.map((b) => (
-                <tr key={b.id} className="booking-row border-b border-gray-50 last:border-0 transition-colors hover:bg-gray-50/50">
+                <tr key={b.id} className="dash-table-row border-b border-gray-50 last:border-0 transition-colors hover:bg-gray-50/50">
                   <td className="px-6 py-3.5"><div className="font-medium text-gray-900">{b.patientName}</div><div className="text-[11px] text-gray-400">{b.phone}</div></td>
                   <td className="px-6 py-3.5 text-gray-600">{b.doctor.name.split(" ").slice(0, 2).join(" ")}</td>
                   <td className="px-6 py-3.5 text-gray-600">{b.service.name}</td>
