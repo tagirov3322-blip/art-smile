@@ -22,6 +22,13 @@ export default function AdminDoctors() {
   const [editing, setEditing] = useState<Partial<Doctor> | null>(null);
   const [uploading, setUploading] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    gsap.from(".page-title", { y: -20, opacity: 0, duration: 0.5, ease: "power2.out" });
+    gsap.from(".page-controls", { y: 20, opacity: 0, duration: 0.5, delay: 0.1, ease: "power2.out" });
+    gsap.from(".page-content", { y: 30, opacity: 0, duration: 0.6, delay: 0.2, ease: "power3.out" });
+  }, { scope: containerRef });
 
   const load = () => api.get<Doctor[]>("/doctors?active=false").then(setDoctors);
   useEffect(() => { load(); }, []);
