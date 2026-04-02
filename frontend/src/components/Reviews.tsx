@@ -133,12 +133,17 @@ export default function Reviews() {
     });
   }, { scope: sectionRef });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formName || !formRating || !formText) return;
-    setSubmitted(true);
-    setFormName(""); setFormRating(0); setFormText("");
-    setTimeout(() => setSubmitted(false), 3000);
+    try {
+      await api.post("/reviews", { authorName: formName, text: formText, rating: formRating });
+      setSubmitted(true);
+      setFormName(""); setFormRating(0); setFormText("");
+      setTimeout(() => setSubmitted(false), 3000);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
