@@ -57,6 +57,8 @@ function validatePhone(phone: string): boolean {
 }
 
 export default function Booking() {
+  const [doctors, setDoctors] = useState<{ id: string; name: string }[]>([]);
+  const [serviceCategories, setServiceCategories] = useState<{ id: string; name: string }[]>([]);
   const [patientName, setPatientName] = useState("");
   const [phone, setPhone] = useState("");
   const [doctorId, setDoctorId] = useState("");
@@ -69,6 +71,15 @@ export default function Booking() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [apiError, setApiError] = useState("");
+
+  useEffect(() => {
+    api.get<ApiDoctor[]>("/doctors").then((data) => {
+      setDoctors(data.map((d) => ({ id: String(d.id), name: `${d.name} — ${d.specialty}` })));
+    }).catch(console.error);
+    api.get<ApiService[]>("/services").then((data) => {
+      setServiceCategories(data.map((s) => ({ id: String(s.id), name: `${s.name} (${s.price.toLocaleString("ru-RU")} ₽)` })));
+    }).catch(console.error);
+  }, []);
 
   const successRef = useRef<HTMLDivElement>(null);
   const errorRef = useRef<HTMLDivElement>(null);
