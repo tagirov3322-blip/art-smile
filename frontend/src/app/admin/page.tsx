@@ -160,7 +160,7 @@ export default function AdminDashboard() {
               </div>
               <div className="flex-1 space-y-2.5">
                 {statusData.map((d, i) => (
-                  <div key={d.name} className="flex items-center justify-between">
+                  <div key={d.name} className="dash-legend-item flex items-center justify-between">
                     <span className="flex items-center gap-2 text-xs text-gray-500"><span className="h-2.5 w-2.5 rounded" style={{ backgroundColor: PIE_COLORS[i % PIE_COLORS.length] }} />{d.name}</span>
                     <span className="text-sm font-bold text-[#2a3250]">{d.value}</span>
                   </div>
