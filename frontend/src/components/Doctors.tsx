@@ -14,8 +14,7 @@ const doctors = [
     name: "Нигматуллин Марат Хамзаевич",
     specialty: "Стоматолог-ортопед, директор",
     experience: 12,
-    photo:
-      "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=500&fit=crop&crop=face",
+    photo: "/doctors/nigmatullin.png",
     description:
       "Специалист в области ортопедической стоматологии. Руководит клиникой IQ Dental, обеспечивая высочайшие стандарты качества лечения.",
     schedule: "Пн–Пт: 9:00–18:00",
