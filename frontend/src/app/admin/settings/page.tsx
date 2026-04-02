@@ -19,6 +19,12 @@ export default function AdminSettings() {
   const [settings, setSettings] = useState<Settings | null>(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    gsap.from(".page-title", { y: -20, opacity: 0, duration: 0.5, ease: "power2.out" });
+    gsap.from(".page-content", { y: 30, opacity: 0, duration: 0.6, delay: 0.2, ease: "power3.out" });
+  }, { scope: containerRef });
 
   useEffect(() => {
     api.get<Settings>("/settings").then(setSettings).catch(console.error);
