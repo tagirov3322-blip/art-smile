@@ -1,14 +1,10 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useState, useEffect } from "react";
 import { ArrowRight, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { api } from "@/lib/api";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 interface ApiPromotion {
   id: number;
@@ -41,6 +37,7 @@ const FALLBACK_PROMOTIONS: Promo[] = [
 ];
 
 export default function Promotions() {
+<<<<<<< HEAD
   const sectionRef = useRef<HTMLElement>(null);
   const [promotions, setPromotions] = useState<Promo[]>(FALLBACK_PROMOTIONS);
 
@@ -58,21 +55,13 @@ export default function Promotions() {
       }
     }).catch(console.error);
   }, []);
+=======
+  
+>>>>>>> 7425ed765e7c40b7f164e48d68af126d6c1a8ed4
 
-  useGSAP(() => {
-    gsap.from(".promotions-heading", {
-      y: 40, opacity: 0, duration: 0.9, ease: "power3.out",
-      scrollTrigger: { trigger: ".promotions-heading", start: "top 88%", once: true },
-    });
-
-    gsap.from(".promo-card", {
-      y: 60, opacity: 0, scale: 0.94, duration: 0.8, stagger: 0.12, ease: "power3.out",
-      scrollTrigger: { trigger: ".promos-grid", start: "top 85%", once: true },
-    });
-  }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} id="promotions" className="relative bg-background pb-28 pt-16 sm:pt-20">
+    <section id="promotions" className="relative bg-background pb-28 pt-16 sm:pt-20">
       {/* Accent orb */}
       <div className="pointer-events-none absolute right-1/4 top-0 h-80 w-80 rounded-full bg-primary/4 blur-3xl" aria-hidden="true" />
 
