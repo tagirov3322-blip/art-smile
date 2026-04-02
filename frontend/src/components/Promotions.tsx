@@ -1,13 +1,8 @@
 "use client";
 
-import { useRef } from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const promotions = [
   {
@@ -49,22 +44,11 @@ const promotions = [
 ];
 
 export default function Promotions() {
-  const sectionRef = useRef<HTMLElement>(null);
+  
 
-  useGSAP(() => {
-    gsap.from(".promotions-heading", {
-      y: 40, opacity: 0, duration: 0.9, ease: "power3.out",
-      scrollTrigger: { trigger: ".promotions-heading", start: "top 88%", once: true },
-    });
-
-    gsap.from(".promo-card", {
-      y: 60, opacity: 0, scale: 0.94, duration: 0.8, stagger: 0.12, ease: "power3.out",
-      scrollTrigger: { trigger: ".promos-grid", start: "top 85%", once: true },
-    });
-  }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} id="promotions" className="relative bg-background pb-28 pt-16 sm:pt-20">
+    <section id="promotions" className="relative bg-background pb-28 pt-16 sm:pt-20">
       {/* Accent orb */}
       <div className="pointer-events-none absolute right-1/4 top-0 h-80 w-80 rounded-full bg-primary/4 blur-3xl" aria-hidden="true" />
 
