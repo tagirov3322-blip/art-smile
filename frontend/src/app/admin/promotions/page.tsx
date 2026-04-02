@@ -64,7 +64,7 @@ export default function AdminPromotions() {
 
       <div className="page-content mt-6 space-y-4">
         {promos.map((p) => (
-          <div key={p.id} className="rounded-2xl bg-white p-5 shadow-sm">
+          <div key={p.id} className="promo-card rounded-2xl bg-white p-5 shadow-sm">
             <div className="flex items-start justify-between">
               <div>
                 <div className="flex items-center gap-2">
