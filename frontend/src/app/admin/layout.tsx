@@ -95,6 +95,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <main ref={mainRef} className="ml-60 flex-1 p-8">
         {children}
       </main>
+      <SSEToast />
     </div>
   );
 }
