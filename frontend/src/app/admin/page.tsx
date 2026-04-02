@@ -10,10 +10,10 @@ import {
 function renderActiveShape(props: any) {
   const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill, payload, value } = props;
   return (
-    <g style={{ transition: "all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)" }}>
-      <Sector cx={cx} cy={cy} innerRadius={innerRadius - 2} outerRadius={outerRadius + 6} startAngle={startAngle} endAngle={endAngle} fill={fill} style={{ filter: "drop-shadow(0 3px 8px rgba(0,0,0,0.12))" }} />
-      <text x={cx} y={cy - 5} textAnchor="middle" fill="#2a3250" fontSize={18} fontWeight={700} style={{ transition: "opacity 0.4s ease" }}>{value}</text>
-      <text x={cx} y={cy + 11} textAnchor="middle" fill="#9ca3af" fontSize={9} style={{ transition: "opacity 0.4s ease" }}>{payload.name}</text>
+    <g>
+      <Sector cx={cx} cy={cy} innerRadius={innerRadius} outerRadius={outerRadius + 4} startAngle={startAngle} endAngle={endAngle} fill={fill} />
+      <text x={cx} y={cy - 4} textAnchor="middle" fill="#2a3250" fontSize={17} fontWeight={700}>{value}</text>
+      <text x={cx} y={cy + 11} textAnchor="middle" fill="#9ca3af" fontSize={9}>{payload.name}</text>
     </g>
   );
 }
