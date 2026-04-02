@@ -73,7 +73,7 @@ export default function AdminServices() {
 
       <div className="page-content mt-6 space-y-6">
         {Object.entries(grouped).map(([cat, items]) => (
-          <div key={cat}>
+          <div key={cat} className="service-category">
             <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-gray-400">{cat}</h2>
             <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
               {items.map((s, i) => (
