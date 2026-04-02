@@ -22,13 +22,19 @@ export default function AdminServices() {
 
   const save = async () => {
     if (!editing) return;
-    if (editing.id) {
-      await api.put(`/services/${editing.id}`, editing);
-    } else {
-      await api.post("/services", editing);
+    const { id, ...rest } = editing as Service & Record<string, unknown>;
+    const body = { name: rest.name, description: rest.description, price: rest.price, duration: rest.duration, category: rest.category, isActive: rest.isActive };
+    try {
+      if (id) {
+        await api.put(`/services/${id}`, body);
+      } else {
+        await api.post("/services", body);
+      }
+      setEditing(null);
+      load();
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Ошибка сохранения");
     }
-    setEditing(null);
-    load();
   };
 
   const remove = async (id: number) => {
