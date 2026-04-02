@@ -76,16 +76,14 @@ export default function AdminDashboard() {
     api.get<BookingsResponse>("/bookings?limit=7").then((d) => setRecentBookings(d.bookings)).catch(console.error);
   };
 
+  const loadRef = useRef(loadDashboard);
+  loadRef.current = loadDashboard;
+
   useEffect(() => { loadDashboard(); }, []);
 
   // SSE — realtime
   useEffect(() => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
-    const es = new EventSource(`${apiUrl.replace("/api", "")}/api/events`);
-    es.addEventListener("new_booking", () => loadDashboard());
-    es.addEventListener("booking_updated", () => loadDashboard());
-    es.addEventListener("booking_deleted", () => loadDashboard());
-    return () => es.close();
+    return onSSE("*", () => loadRef.current());
   }, []);
 
   if (!stats) return <div className="flex h-96 items-center justify-center text-gray-400">Загрузка...</div>;
