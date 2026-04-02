@@ -72,15 +72,15 @@ export default function AdminDoctors() {
   };
 
   return (
-    <div>
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-[#2a3250]">Врачи</h1>
+    <div ref={containerRef}>
+      <div className="page-controls flex items-center justify-between">
+        <h1 className="page-title text-2xl font-bold text-[#2a3250]">Врачи</h1>
         <button onClick={() => setEditing({ name: "", specialty: "", experience: 0, isActive: true })} className="rounded-xl bg-[#2a3250] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#353d5c]">
           Добавить
         </button>
       </div>
 
-      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="page-content mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {doctors.map((d) => (
           <div key={d.id} className="rounded-2xl bg-white p-5 shadow-sm">
             <div className="flex items-start gap-4">
