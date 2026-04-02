@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { api } from "@/lib/api";
+import { onSSE } from "@/lib/sse";
 import {
   PieChart, Pie, Cell, Tooltip, ResponsiveContainer, AreaChart, Area, Sector,
 } from "recharts";
