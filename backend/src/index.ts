@@ -66,6 +66,11 @@ app.get("/api/events", (req, res) => {
   addSSEClient(req, res);
 });
 
+// Health check
+app.get("/api/health", (_req, res) => {
+  res.json({ status: "ok", uptime: process.uptime() });
+});
+
 // 404
 app.use((_req, res) => {
   res.status(404).json({ error: "Маршрут не найден" });
@@ -75,11 +80,6 @@ app.use((_req, res) => {
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   logger.error({ err: err.message, stack: err.stack }, "Unhandled error");
   res.status(500).json({ error: "Внутренняя ошибка сервера" });
-});
-
-// Health check
-app.get("/api/health", (_req, res) => {
-  res.json({ status: "ok", uptime: process.uptime() });
 });
 
 // Запуск
