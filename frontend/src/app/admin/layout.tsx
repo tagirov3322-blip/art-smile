@@ -35,6 +35,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     }
   }, [pathname, router]);
 
+  // Плавная анимация при смене вкладок
+  useEffect(() => {
+    if (pathname === prevPath.current || !mainRef.current) {
+      prevPath.current = pathname;
+      return;
+    }
+    prevPath.current = pathname;
+    gsap.fromTo(mainRef.current,
+      { opacity: 0, y: 12 },
+      { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
+    );
+  }, [pathname]);
+
   if (pathname === "/admin/login") return <>{children}</>;
   if (!ready) return <div className="flex min-h-screen items-center justify-center bg-[#f8f9fb]"><div className="text-gray-400">Загрузка...</div></div>;
 
