@@ -3,9 +3,6 @@
 import { useEffect, useState, useRef } from "react";
 import { api } from "@/lib/api";
 import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-
-gsap.registerPlugin(useGSAP);
 
 interface Doctor {
   id: number;
@@ -17,20 +14,50 @@ interface Doctor {
   isActive: boolean;
 }
 
+function Skeleton() {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {[1, 2, 3, 4, 5, 6].map((i) => (
+        <div key={i} className="animate-pulse rounded-2xl bg-white p-5 shadow-sm">
+          <div className="flex items-start gap-4">
+            <div className="h-16 w-16 shrink-0 rounded-xl bg-gray-200" />
+            <div className="flex-1 space-y-2">
+              <div className="h-4 w-3/4 rounded bg-gray-200" />
+              <div className="h-3 w-1/2 rounded bg-gray-100" />
+              <div className="h-3 w-1/3 rounded bg-gray-100" />
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function AdminDoctors() {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [editing, setEditing] = useState<Partial<Doctor> | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const fileRef = useRef<HTMLInputElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    gsap.from(".page-title", { y: -20, opacity: 0, duration: 0.5, ease: "power2.out" });
-    gsap.from(".page-controls", { y: 20, opacity: 0, duration: 0.5, delay: 0.1, ease: "power2.out" });
-    gsap.from(".page-content", { y: 30, opacity: 0, duration: 0.6, delay: 0.2, ease: "power3.out" });
-  }, { scope: containerRef });
+  const load = () => {
+    setLoading(true);
+    api.get<Doctor[]>("/doctors?active=false").then((data) => {
+      setDoctors(data);
+      setLoading(false);
+      requestAnimationFrame(() => {
+        if (gridRef.current) {
+          gsap.fromTo(
+            gridRef.current.querySelectorAll(".doctor-card"),
+            { y: 20, opacity: 0, scale: 0.96 },
+            { y: 0, opacity: 1, scale: 1, duration: 0.4, stagger: 0.06, ease: "power2.out" }
+          );
+        }
+      });
+    });
+  };
 
-  const load = () => api.get<Doctor[]>("/doctors?active=false").then(setDoctors);
   useEffect(() => { load(); }, []);
 
   const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,44 +99,48 @@ export default function AdminDoctors() {
   };
 
   return (
-    <div ref={containerRef}>
-      <div className="page-controls flex items-center justify-between">
-        <h1 className="page-title text-2xl font-bold text-[#2a3250]">Врачи</h1>
+    <div>
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold text-[#2a3250]">Врачи</h1>
         <button onClick={() => setEditing({ name: "", specialty: "", experience: 0, isActive: true })} className="rounded-xl bg-[#2a3250] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#353d5c]">
           Добавить
         </button>
       </div>
 
-      <div className="page-content mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {doctors.map((d) => (
-          <div key={d.id} className="doctor-card rounded-2xl bg-white p-5 shadow-sm">
-            <div className="flex items-start gap-4">
-              <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-gray-100">
-                {d.photo ? (
-                  <img src={d.photo} alt={d.name} className="h-full w-full object-cover object-top" />
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center text-2xl text-gray-300">👨‍⚕️</div>
-                )}
-              </div>
-              <div className="flex-1">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h3 className="font-semibold text-gray-900">{d.name}</h3>
-                    <p className="mt-0.5 text-sm text-[#2a3250]">{d.specialty}</p>
-                    <p className="mt-0.5 text-xs text-gray-500">Опыт: {d.experience} лет</p>
+      <div className="mt-6">
+        {loading ? <Skeleton /> : (
+          <div ref={gridRef} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {doctors.map((d) => (
+              <div key={d.id} className="doctor-card rounded-2xl bg-white p-5 shadow-sm" style={{ opacity: 0 }}>
+                <div className="flex items-start gap-4">
+                  <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-gray-100">
+                    {d.photo ? (
+                      <img src={d.photo} alt={d.name} className="h-full w-full object-cover object-top" />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center text-2xl text-gray-300">👨‍⚕️</div>
+                    )}
                   </div>
-                  <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${d.isActive ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"}`}>
-                    {d.isActive ? "Активен" : "Неактивен"}
-                  </span>
+                  <div className="flex-1">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h3 className="font-semibold text-gray-900">{d.name}</h3>
+                        <p className="mt-0.5 text-sm text-[#2a3250]">{d.specialty}</p>
+                        <p className="mt-0.5 text-xs text-gray-500">Опыт: {d.experience} лет</p>
+                      </div>
+                      <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${d.isActive ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"}`}>
+                        {d.isActive ? "Активен" : "Неактивен"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4 flex gap-2">
+                  <button onClick={() => setEditing(d)} className="rounded-lg bg-gray-50 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-100 transition-colors">Редактировать</button>
+                  <button onClick={() => remove(d.id)} className="rounded-lg bg-red-50 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-100 transition-colors">Удалить</button>
                 </div>
               </div>
-            </div>
-            <div className="mt-4 flex gap-2">
-              <button onClick={() => setEditing(d)} className="rounded-lg bg-gray-50 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-100">Редактировать</button>
-              <button onClick={() => remove(d.id)} className="rounded-lg bg-red-50 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-100">Удалить</button>
-            </div>
+            ))}
           </div>
-        ))}
+        )}
       </div>
 
       {editing && (
@@ -117,7 +148,6 @@ export default function AdminDoctors() {
           <div className="w-full max-w-md rounded-2xl bg-white p-6">
             <h2 className="text-lg font-bold text-[#2a3250]">{editing.id ? "Редактирование" : "Новый врач"}</h2>
             <div className="mt-4 space-y-3">
-              {/* Фото */}
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-gray-700">Фото</label>
                 <div className="flex items-center gap-4">
@@ -139,7 +169,6 @@ export default function AdminDoctors() {
                   </div>
                 </div>
               </div>
-
               <input value={editing.name || ""} onChange={(e) => setEditing({ ...editing, name: e.target.value })} placeholder="ФИО" className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm outline-none focus:border-[#2a3250]" />
               <input value={editing.specialty || ""} onChange={(e) => setEditing({ ...editing, specialty: e.target.value })} placeholder="Специальность" className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm outline-none focus:border-[#2a3250]" />
               <input type="number" value={editing.experience || 0} onChange={(e) => setEditing({ ...editing, experience: Number(e.target.value) })} placeholder="Опыт (лет)" className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm outline-none focus:border-[#2a3250]" />
