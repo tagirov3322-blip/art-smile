@@ -170,7 +170,7 @@ export default function AdminDashboard() {
             <div className="flex items-center gap-4">
               <div
                 className="h-40 w-40 shrink-0"
-                style={{ transform: pieHovered ? "scale(1.12)" : "scale(1)", transition: "transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)", transformOrigin: "center center" }}
+                style={{ transform: pieHovered ? "scale(1.15)" : "scale(1)", transition: "transform 1.2s cubic-bezier(0.22, 1, 0.36, 1)", transformOrigin: "center center", willChange: "transform" }}
                 onMouseEnter={() => setPieHovered(true)}
                 onMouseLeave={() => { setPieHovered(false); setActivePieIndex(-1); }}
               >
