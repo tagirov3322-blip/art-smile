@@ -61,19 +61,19 @@ export default function SSEToast() {
       {toasts.map((t) => (
         <div
           key={t.id}
-          className="flex items-start gap-3 rounded-2xl bg-white px-5 py-4 shadow-xl shadow-black/10"
+          className="flex items-start gap-4 rounded-2xl bg-[#2a3250] px-6 py-5 shadow-2xl shadow-black/20"
           style={{
-            minWidth: 280,
+            minWidth: 340,
             animation: t.leaving ? "toast-out 0.5s ease forwards" : "toast-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards",
           }}
         >
-          <div className="relative mt-0.5">
-            <div className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: t.color }} />
-            <div className="absolute inset-0 h-2.5 w-2.5 animate-ping rounded-full" style={{ backgroundColor: t.color, opacity: 0.4 }} />
+          <div className="relative mt-1">
+            <div className="h-3 w-3 rounded-full" style={{ backgroundColor: t.color }} />
+            <div className="absolute inset-0 h-3 w-3 animate-ping rounded-full" style={{ backgroundColor: t.color, opacity: 0.4 }} />
           </div>
           <div>
-            <p className="text-sm font-semibold text-[#2a3250]">{t.title}</p>
-            <p className="mt-0.5 text-xs text-gray-500 line-clamp-1">{t.subtitle}</p>
+            <p className="text-base font-semibold text-white">{t.title}</p>
+            <p className="mt-1 text-sm text-gray-400 line-clamp-1">{t.subtitle}</p>
           </div>
         </div>
       ))}
