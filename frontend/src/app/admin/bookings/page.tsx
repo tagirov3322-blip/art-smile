@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback, useRef } from "react";
 import { api } from "@/lib/api";
+import { onSSE } from "@/lib/sse";
 
 interface Booking {
   id: number;
