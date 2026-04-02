@@ -123,7 +123,7 @@ export default function Booking() {
     if (Object.keys(errs).length > 0) return;
     setIsSubmitting(true);
     try {
-      await api.post("/bookings", { patientName: patientName.trim(), phone: phone.trim(), doctorId, serviceId, date, time, comment: comment.trim(), consentGiven });
+      await api.post("/bookings", { patientName: patientName.trim(), phone: phone.trim(), doctorId: Number(doctorId), serviceId: Number(serviceId), date, time, comment: comment.trim() || undefined, consentGiven });
       setSuccessMessage("Заявка отправлена! Мы скоро свяжемся с вами");
       setPatientName(""); setPhone(""); setDoctorId(""); setServiceId(""); setDate(""); setTime(""); setComment(""); setConsentGiven(false); setErrors({});
     } catch (err: unknown) {
