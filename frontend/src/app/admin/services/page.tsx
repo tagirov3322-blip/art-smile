@@ -109,7 +109,7 @@ export default function AdminServices() {
         <div ref={listRef}>
         {Object.entries(grouped).map(([cat, items]) => (
           <div key={cat} className="service-category">
-            <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-gray-400">{cat}</h2>
+            <h2 className="mb-4 pt-4 text-sm font-semibold uppercase tracking-wider text-gray-400">{cat}</h2>
             <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
               {items.map((s, i) => (
                 <div key={s.id} className={`service-row flex items-center justify-between px-5 py-5 ${i > 0 ? "border-t border-gray-50" : ""}`}>
