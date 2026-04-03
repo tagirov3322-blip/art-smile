@@ -34,20 +34,9 @@ export default function AdminReviews() {
     if (filter) params.set("isApproved", filter);
     api.get<ReviewsResponse>(`/reviews/all?${params}`).then((d) => {
       setData(d);
-      if (firstLoad) {
-        setFirstLoad(false);
-        requestAnimationFrame(() => {
-          if (listRef.current) {
-            gsap.fromTo(
-              listRef.current.querySelectorAll(".review-card"),
-              { y: 15, opacity: 0 },
-              { y: 0, opacity: 1, duration: 0.5, stagger: 0.04, ease: "power2.out" }
-            );
-          }
-        });
-      }
+      setVisible(10);
     }).catch(console.error);
-  }, [filter, firstLoad]);
+  }, [filter]);
 
   useEffect(() => { load(); }, [load]);
 
