@@ -79,10 +79,12 @@ export default function Footer() {
         {/* Logo + info */}
         <div className="space-y-4">
           <Link href="/" className="flex items-center gap-3">
-            <img src="/logo.png" alt="IQ Dental" className="h-10 w-auto" />
-            <span className="font-[var(--font-heading)] text-2xl font-bold text-white">
-              IQ Dental
-            </span>
+            <img
+              src="/logo_iq.png"
+              alt="IQ Dental"
+              className="h-[4.25rem] w-auto"
+              style={{ filter: "brightness(0) invert(72%) sepia(12%) saturate(560%) hue-rotate(182deg) brightness(92%) contrast(87%)" }}
+            />
           </Link>
           <p className="text-sm text-slate-500 max-w-xs leading-relaxed mt-4">
             Современная стоматология в Набережных Челнах.

@@ -38,13 +38,13 @@ function DoctorCard({
       const rect = border.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      const rotateX = ((y - rect.height / 2) / (rect.height / 2)) * -12;
-      const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 12;
+      const rotateX = ((y - rect.height / 2) / (rect.height / 2)) * -5;
+      const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 5;
 
       gsap.to(border, {
         rotationX: rotateX,
         rotationY: rotateY,
-        scale: 1.06,
+        scale: 1.03,
         zIndex: 10,
         duration: 0.4,
         ease: "power2.out",
@@ -105,7 +105,7 @@ function DoctorCard({
           className={cn(
             "relative h-full overflow-hidden rounded-[14px] bg-white",
             "transition-shadow duration-300",
-            "hover:shadow-2xl hover:shadow-primary/10"
+            "hover:shadow-xl hover:shadow-slate-300/30"
           )}
         >
           <div

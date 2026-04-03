@@ -6,7 +6,7 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { DatePicker } from "@/components/ui/date-picker";
 import { CustomSelect } from "@/components/ui/custom-select";
-import { Phone, MapPin, Clock, CheckCircle, AlertCircle, Send } from "lucide-react";
+import { Phone, MapPin, Clock, CheckCircle, AlertCircle, Send, CalendarClock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { api } from "@/lib/api";
 
@@ -67,6 +67,8 @@ export default function Booking() {
   const [time, setTime] = useState("");
   const [comment, setComment] = useState("");
   const [consentGiven, setConsentGiven] = useState(false);
+  const [showDateTimePicker, setShowDateTimePicker] = useState(false);
+  const [dateTimeStep, setDateTimeStep] = useState<"date" | "time">("date");
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -76,8 +78,10 @@ export default function Booking() {
     api.get<ApiDoctor[]>("/doctors").then((data) => {
       setDoctors(data.map((d) => ({ id: String(d.id), name: `${d.name} — ${d.specialty}` })));
     }).catch(console.error);
+    // Только консультация (бесплатно)
     api.get<ApiService[]>("/services").then((data) => {
-      setServiceCategories(data.map((s) => ({ id: String(s.id), name: `${s.name} (${s.price.toLocaleString("ru-RU")} ₽)` })));
+      const allowed = data.filter((s) => /консультация/i.test(s.name));
+      setServiceCategories(allowed.map((s) => ({ id: String(s.id), name: `${s.name} (бесплатно)` })));
     }).catch(console.error);
   }, []);
 
@@ -123,9 +127,9 @@ export default function Booking() {
     if (Object.keys(errs).length > 0) return;
     setIsSubmitting(true);
     try {
-      await api.post("/bookings", { patientName: patientName.trim(), phone: phone.trim(), doctorId: Number(doctorId), serviceId: Number(serviceId), date, time, comment: comment.trim() || undefined, consentGiven });
+      await api.post("/bookings", { patientName: patientName.trim(), phone: phone.trim(), doctorId: Number(doctorId), serviceId: Number(serviceId), date, time, consentGiven });
       setSuccessMessage("Заявка отправлена! Мы скоро свяжемся с вами");
-      setPatientName(""); setPhone(""); setDoctorId(""); setServiceId(""); setDate(""); setTime(""); setComment(""); setConsentGiven(false); setErrors({});
+      setPatientName(""); setPhone(""); setDoctorId(""); setServiceId(""); setDate(""); setTime(""); setConsentGiven(false); setErrors({});
     } catch (err: unknown) {
       setApiError(err instanceof Error ? err.message : "Произошла ошибка. Попробуйте позже.");
     } finally {
@@ -167,13 +171,13 @@ export default function Booking() {
         </div>
 
         {/* Cols */}
-        <div className="booking-cols grid grid-cols-1 gap-8 lg:grid-cols-5">
+        <div className="booking-cols grid grid-cols-1 items-stretch gap-8 lg:grid-cols-5">
           {/* Form */}
-          <div className="booking-form-col lg:col-span-3">
+          <div className="booking-form-col flex flex-col lg:col-span-3">
             <form
               onSubmit={handleSubmit}
               noValidate
-              className="relative overflow-hidden rounded-3xl bg-white p-8 shadow-2xl shadow-black/20 sm:p-10 lg:p-12"
+              className="relative flex-1 flex flex-col justify-center rounded-3xl bg-white p-8 shadow-2xl shadow-black/20 sm:p-10 lg:p-12"
             >
               {/* Inner glass accent */}
               <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary/5 blur-2xl" />
@@ -217,21 +221,66 @@ export default function Booking() {
                     {errors.serviceId && <p className="mt-1.5 text-xs text-red-500">{errors.serviceId}</p>}
                   </div>
 
-                  <div>
-                    <label className="mb-2 block text-sm font-medium text-foreground">Дата <span className="text-red-500">*</span></label>
-                    <DatePicker value={date} onChange={setDate} min={getTodayString()} className={cn(errors.date ? "ring-2 ring-red-400" : "")} />
-                    {errors.date && <p className="mt-1.5 text-xs text-red-500">{errors.date}</p>}
-                  </div>
+                  <div className="relative">
+                    <label className="mb-2 block text-sm font-medium text-foreground">Дата и время <span className="text-red-500">*</span></label>
+                    <button
+                      type="button"
+                      onClick={() => setShowDateTimePicker((v) => !v)}
+                      className={cn(inputBase, inputNormal, "flex items-center justify-between text-left", (errors.date || errors.time) && "ring-2 ring-red-400")}
+                    >
+                      <span className={date && time ? "text-foreground" : "text-muted-foreground"}>
+                        {date && time
+                          ? `${new Date(date).toLocaleDateString("ru-RU", { day: "numeric", month: "long" })} в ${time}`
+                          : "Выберите дату и время"}
+                      </span>
+                      <CalendarClock className="h-5 w-5 text-muted-foreground" />
+                    </button>
+                    {(errors.date || errors.time) && <p className="mt-1.5 text-xs text-red-500">{errors.date || errors.time}</p>}
 
-                  <div>
-                    <label className="mb-2 block text-sm font-medium text-foreground">Время <span className="text-red-500">*</span></label>
-                    <CustomSelect value={time} onChange={setTime} placeholder="Выберите время" options={timeSlots.map((slot) => ({ value: slot, label: slot }))} className={cn(errors.time ? "ring-2 ring-red-400" : "")} />
-                    {errors.time && <p className="mt-1.5 text-xs text-red-500">{errors.time}</p>}
-                  </div>
-
-                  <div className="sm:col-span-2">
-                    <label className="mb-2 block text-sm font-medium text-foreground">Комментарий</label>
-                    <textarea value={comment} onChange={(e) => setComment(e.target.value)} rows={3} placeholder="Опишите вашу проблему или пожелания..." className={cn(inputBase, inputNormal, "resize-none")} />
+                    {showDateTimePicker && (
+                      <div className="absolute left-0 top-full z-50 mt-2 w-full rounded-2xl border border-slate-200 bg-white p-5 shadow-2xl">
+                        {!dateTimeStep || dateTimeStep === "date" ? (
+                          <>
+                            <p className="mb-3 text-sm font-medium text-foreground">Выберите дату</p>
+                            <DatePicker
+                              value={date}
+                              onChange={(v) => { setDate(v); setDateTimeStep("time"); }}
+                              min={getTodayString()}
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <p className="mb-3 text-sm font-medium text-foreground">
+                              {new Date(date).toLocaleDateString("ru-RU", { day: "numeric", month: "long" })} — выберите время
+                            </p>
+                            <div className="grid grid-cols-4 gap-2">
+                              {timeSlots.map((slot) => (
+                                <button
+                                  key={slot}
+                                  type="button"
+                                  onClick={() => { setTime(slot); setShowDateTimePicker(false); setDateTimeStep("date"); }}
+                                  className={cn(
+                                    "rounded-lg border px-3 py-2 text-sm transition-colors",
+                                    time === slot
+                                      ? "border-primary bg-primary text-white"
+                                      : "border-slate-200 hover:border-primary hover:bg-primary/5"
+                                  )}
+                                >
+                                  {slot}
+                                </button>
+                              ))}
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => setDateTimeStep("date")}
+                              className="mt-3 text-sm text-primary hover:underline"
+                            >
+                              ← Изменить дату
+                            </button>
+                          </>
+                        )}
+                      </div>
+                    )}
                   </div>
 
                   <div className="sm:col-span-2">
@@ -289,11 +338,11 @@ export default function Booking() {
                 </div>
               </div>
 
-              <div className="min-h-[200px] flex-1 overflow-hidden rounded-3xl border border-white/10">
-                <div className="relative h-full w-full bg-white/10">
+              <div className="min-h-[250px] flex-1 overflow-hidden rounded-3xl border border-white/10">
+                <div className="relative h-full min-h-[250px] w-full">
                   <iframe
                     src="https://yandex.ru/map-widget/v1/?ll=52.390714%2C55.727186&z=17&l=map&pt=52.390714%2C55.727186%2Cpm2rdm"
-                    className="absolute inset-0 h-full w-full opacity-70"
+                    className="absolute inset-0 h-full w-full"
                     allowFullScreen
                     title="IQ Dental на карте"
                   />

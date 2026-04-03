@@ -62,6 +62,7 @@ function handleSmoothScroll(
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
   const [open, setOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
 
@@ -79,6 +80,16 @@ export default function Header() {
   useEffect(() => {
     function onScroll() {
       setScrolled(window.scrollY > 10);
+
+      const sections = navLinks.map((l) => l.href.replace("#", ""));
+      let current = "";
+      for (const id of sections) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= 150) {
+          current = id;
+        }
+      }
+      setActiveSection(current);
     }
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -88,7 +99,7 @@ export default function Header() {
     <header
       ref={headerRef}
       className={cn(
-        "fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-screen-xl rounded-2xl border border-gray-200/60 bg-white/90 px-6 py-3 backdrop-blur-lg transition-shadow duration-300",
+        "fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-screen-xl rounded-2xl border border-gray-200/60 bg-white/95 px-6 py-3 backdrop-blur-sm transition-shadow duration-300",
         scrolled ? "shadow-lg shadow-blue-100/40" : "shadow-none"
       )}
     >
@@ -99,12 +110,11 @@ export default function Header() {
           className="flex items-center gap-2 text-primary font-bold text-xl tracking-tight"
         >
           <img
-            src="/logo.png"
+            src="/logo_iq.png"
             alt="IQ Dental"
-            className="h-8 w-auto"
-            style={{ filter: "brightness(0) saturate(100%) invert(13%) sepia(15%) saturate(1800%) hue-rotate(190deg) brightness(95%) contrast(90%)" }}
+            className="h-11 w-auto"
+            style={{ filter: "brightness(0) saturate(100%) invert(17%) sepia(14%) saturate(1500%) hue-rotate(190deg) brightness(92%) contrast(92%)" }}
           />
-          <span>IQ Dental</span>
         </Link>
 
         {/* Desktop nav */}
@@ -114,7 +124,10 @@ export default function Header() {
               key={link.href}
               href={link.href}
               onClick={(e) => handleSmoothScroll(e, link.href)}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              className={cn(
+                "text-sm font-medium transition-colors hover:text-primary",
+                activeSection === link.href.replace("#", "") ? "text-primary font-semibold" : "text-muted-foreground"
+              )}
             >
               {link.label}
             </a>

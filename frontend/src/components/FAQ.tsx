@@ -57,6 +57,20 @@ export default function FAQ() {
       y: 30, opacity: 0, duration: 0.6, stagger: 0.07, ease: "power2.out",
       scrollTrigger: { trigger: ".faq-list", start: "top 85%", once: true },
     });
+
+    // GSAP hover for FAQ rows
+    const rows = gsap.utils.toArray<HTMLElement>(".faq-row");
+    rows.forEach((row) => {
+      const chevron = row.querySelector(".faq-chevron");
+      row.addEventListener("mouseenter", () => {
+        gsap.to(row, { backgroundColor: "rgba(42,50,80,0.04)", paddingLeft: 24, duration: 0.3, ease: "power2.out" });
+        if (chevron) gsap.to(chevron, { y: 3, duration: 0.3, ease: "power2.out" });
+      });
+      row.addEventListener("mouseleave", () => {
+        gsap.to(row, { backgroundColor: "transparent", paddingLeft: 0, duration: 0.3, ease: "power2.out" });
+        if (chevron) gsap.to(chevron, { y: 0, duration: 0.3, ease: "power2.out" });
+      });
+    });
   }, { scope: sectionRef });
 
   return (
@@ -83,14 +97,14 @@ export default function FAQ() {
                   type="button"
                   onClick={() => toggle(index)}
                   className={cn(
-                    "flex w-full items-center justify-between gap-6 py-6 text-left transition-colors duration-200 sm:py-7",
-                    isOpen ? "text-primary" : "text-foreground hover:text-primary"
+                    "faq-row flex w-full items-center justify-between gap-6 rounded-xl py-6 text-left sm:py-7",
+                    isOpen ? "text-primary" : "text-foreground"
                   )}
                 >
                   <span className="text-lg font-medium leading-snug sm:text-xl">{item.question}</span>
                   <span
                     ref={(el) => { if (el) chevronRefs.current.set(index, el); }}
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-muted transition-colors duration-200"
+                    className="faq-chevron flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-muted"
                   >
                     <ChevronDown className={cn("h-5 w-5 transition-colors duration-200", isOpen ? "text-primary" : "text-muted-foreground")} />
                   </span>

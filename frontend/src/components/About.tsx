@@ -1,15 +1,39 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { MapPin, Clock, Shield, Sparkles, Monitor, Scan, Cpu, Zap } from "lucide-react";
+import { MapPin, Clock, Shield, HeartPulse, Monitor, Scan, Cpu, Syringe } from "lucide-react";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
+const PHOTOS = [1, 2, 3, 4, 5, 6];
+
 export default function About() {
   const sectionRef = useRef<HTMLElement>(null);
+  const [lightbox, setLightbox] = useState<number | null>(null);
+
+  const openLightbox = (index: number) => setLightbox(index);
+  const closeLightbox = () => setLightbox(null);
+  const prevPhoto = useCallback(() => {
+    setLightbox((i) => (i !== null ? (i - 1 + PHOTOS.length) % PHOTOS.length : null));
+  }, []);
+  const nextPhoto = useCallback(() => {
+    setLightbox((i) => (i !== null ? (i + 1) % PHOTOS.length : null));
+  }, []);
+
+  useEffect(() => {
+    if (lightbox === null) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") prevPhoto();
+      if (e.key === "ArrowRight") nextPhoto();
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [lightbox, prevPhoto, nextPhoto]);
 
   useGSAP(
     () => {
@@ -82,27 +106,19 @@ export default function About() {
     <section
       ref={sectionRef}
       id="about"
-      className="relative z-[1] overflow-hidden pt-0 min-h-screen"
-      style={{ background: "linear-gradient(to bottom, #2a3040 0%, #272d3b 8%, #242a37 16%, #222833 25%, #1f2430 40%, #1d2129 55%, #1a1f2e 70%, #1a1f2e 100%)" }}
+      className="relative z-[1] overflow-hidden pt-0 pb-20 sm:pb-28 lg:pb-32"
+      style={{ backgroundColor: "transparent" }}
     >
       <div className="relative z-10 mx-auto max-w-[1600px] px-6 pt-40 sm:px-10 sm:pt-52 lg:px-12 lg:pt-48">
         <div className="flex flex-col gap-10 lg:flex-row lg:items-stretch lg:gap-10">
           {/* ── Left — Info ── */}
           <div className="about-left lg:w-[28%] shrink-0">
             <p
-              className="about-text-item font-[var(--font-mono)] text-xs font-semibold uppercase tracking-widest text-white/60"
+              className="about-text-item font-[var(--font-mono)] text-sm font-semibold uppercase tracking-[0.2em] text-white/60"
               style={{ opacity: 0, transform: "translateY(30px)" }}
             >
               О клинике
             </p>
-
-            <h2
-              className="about-text-item mt-4 font-[var(--font-heading)] text-fluid-h1 font-bold leading-[1.1] text-white"
-              style={{ opacity: 0, transform: "translateY(30px)", letterSpacing: "-0.03em" }}
-            >
-              Современная стоматология
-              <br className="hidden sm:block" /> в&nbsp;центре города
-            </h2>
 
             <p
               className="about-text-item mt-6 max-w-lg text-lg leading-relaxed text-white/80"
@@ -150,7 +166,7 @@ export default function About() {
               </div>
               <div className="flex items-start gap-3">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10">
-                  <Sparkles className="h-5 w-5 text-white" />
+                  <HeartPulse className="h-5 w-5 text-white" />
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-white">Технологии</p>
@@ -198,7 +214,7 @@ export default function About() {
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/10">
-                    <Zap className="h-4 w-4 text-white/80" />
+                    <Syringe className="h-4 w-4 text-white/80" />
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">Диодный лазер</p>
@@ -221,9 +237,10 @@ export default function About() {
           <div className="about-grid flex-1 lg:translate-x-4 flex flex-col gap-5">
             {/* Row 1 */}
             <div className="about-photo-grid flex flex-1 gap-5">
-              {[1, 2, 3].map((n) => (
+              {PHOTOS.slice(0, 3).map((n, i) => (
                 <div
                   key={n}
+                  onClick={() => openLightbox(i)}
                   className="about-photo cursor-pointer overflow-hidden rounded-2xl bg-white/10"
                   style={{ opacity: 0, transform: "translateY(40px)", flexGrow: 1, flexBasis: 0 }}
                 >
@@ -237,9 +254,10 @@ export default function About() {
             </div>
             {/* Row 2 */}
             <div className="about-photo-grid flex flex-1 gap-5">
-              {[4, 5, 6].map((n) => (
+              {PHOTOS.slice(3, 6).map((n, i) => (
                 <div
                   key={n}
+                  onClick={() => openLightbox(i + 3)}
                   className="about-photo cursor-pointer overflow-hidden rounded-2xl bg-white/10"
                   style={{ opacity: 0, transform: "translateY(40px)", flexGrow: 1, flexBasis: 0 }}
                 >
@@ -254,6 +272,50 @@ export default function About() {
           </div>
         </div>
       </div>
+      {/* ── Lightbox ── */}
+      {lightbox !== null && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+          onClick={closeLightbox}
+        >
+          {/* Close */}
+          <button
+            onClick={closeLightbox}
+            className="absolute right-6 top-6 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+          >
+            <X className="h-5 w-5" />
+          </button>
+
+          {/* Prev */}
+          <button
+            onClick={(e) => { e.stopPropagation(); prevPhoto(); }}
+            className="absolute left-6 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </button>
+
+          {/* Image */}
+          <img
+            src={`/about/${PHOTOS[lightbox]}.png`}
+            alt={`Фото клиники ${PHOTOS[lightbox]}`}
+            className="max-h-[85vh] max-w-[90vw] rounded-2xl object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+
+          {/* Next */}
+          <button
+            onClick={(e) => { e.stopPropagation(); nextPhoto(); }}
+            className="absolute right-6 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+          >
+            <ChevronRight className="h-6 w-6" />
+          </button>
+
+          {/* Counter */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-white/10 px-4 py-1.5 text-sm text-white/70">
+            {lightbox + 1} / {PHOTOS.length}
+          </div>
+        </div>
+      )}
     </section>
   );
 }

@@ -44,13 +44,17 @@ const FALLBACK_REVIEWS: Review[] = [
 ];
 
 function StarRating({ rating, interactive = false, onRate }: { rating: number; interactive?: boolean; onRate?: (v: number) => void }) {
+  const [hovered, setHovered] = React.useState(0);
+  const display = interactive && hovered > 0 ? hovered : rating;
+
   return (
-    <div className="flex gap-1">
+    <div className="flex gap-1" onMouseLeave={() => interactive && setHovered(0)}>
       {[1, 2, 3, 4, 5].map((star) => (
         <Star
           key={star}
-          className={cn("h-4 w-4 transition-colors", star <= rating ? "fill-yellow-400 text-yellow-400" : "fill-white/20 text-foreground/20", interactive && "h-5 w-5 cursor-pointer hover:text-yellow-400")}
+          className={cn("h-4 w-4 transition-colors", star <= display ? "fill-yellow-400 text-yellow-400" : "fill-white/20 text-foreground/20", interactive && "h-5 w-5 cursor-pointer")}
           onClick={() => interactive && onRate?.(star)}
+          onMouseEnter={() => interactive && setHovered(star)}
         />
       ))}
     </div>
@@ -156,7 +160,7 @@ export default function Reviews() {
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="reviews-heading mb-[var(--space-lg)]">
-          <span className="font-mono text-xs uppercase tracking-[0.2em] text-white/40">Отзывы</span>
+          <span className="font-[var(--font-mono)] text-sm font-semibold uppercase tracking-[0.2em] text-white/60">Отзывы</span>
           <h2 className="text-fluid-h1 font-heading text-white">Что говорят пациенты</h2>
           <p className="mt-4 max-w-xl text-fluid-body text-white/50">Рейтинг 4.0 на ПроДокторов</p>
         </div>

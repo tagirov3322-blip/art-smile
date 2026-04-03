@@ -14,8 +14,15 @@ export default function Home() {
     <>
       <Header />
       <main>
-        <Hero />
-        <About />
+        <div
+          style={{
+            backgroundColor: "#0d1117",
+            backgroundImage: "linear-gradient(160deg, #1a2035 0%, #141a2a 15%, #0d1117 30%, #111827 50%, #0d1117 70%, #151c2c 85%, #1a2438 100%)",
+          }}
+        >
+          <Hero />
+          <About />
+        </div>
         <Services />
         <Doctors />
         <Reviews />

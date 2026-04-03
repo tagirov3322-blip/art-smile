@@ -153,7 +153,8 @@ const FALLBACK_SERVICES: Service[] = [
 export default function Services() {
   const [activeCategory, setActiveCategory] = useState<string>("Все");
   const [expandedId, setExpandedId] = useState<number | null>(null);
-  const [services, setServices] = useState<Service[]>(FALLBACK_SERVICES);
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState<string[]>([]);
   const detailsRefs = useRef<Map<number, HTMLDivElement>>(new Map());
   const sectionRef = useRef<HTMLElement>(null);
@@ -165,14 +166,21 @@ export default function Services() {
         category: s.category || "Другое",
         name: s.name,
         description: s.description || "",
-        price: `${s.price.toLocaleString("ru-RU")} ₽`,
+        price: `от ${s.price.toLocaleString("ru-RU")} ₽`,
         duration: `${s.duration} мин`,
         details: s.description || "",
       }));
-      if (mapped.length > 0) setServices(mapped);
-      const cats = [...new Set(mapped.map((s) => s.category))];
-      setCategories(cats);
-    }).catch(console.error);
+      if (mapped.length > 0) {
+        setServices(mapped);
+        setCategories([...new Set(mapped.map((s) => s.category))]);
+      } else {
+        setServices(FALLBACK_SERVICES);
+      }
+    }).catch(() => {
+      setServices(FALLBACK_SERVICES);
+    }).finally(() => {
+      setLoading(false);
+    });
   }, []);
 
   const categoryTabs = ["Все", ...categories];
@@ -184,6 +192,20 @@ export default function Services() {
 
   const toggleExpand = useCallback((id: number) => {
     setExpandedId((prev) => (prev === id ? null : id));
+  }, []);
+
+  const handleRowEnter = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    const row = e.currentTarget;
+    const chevron = row.querySelector(".chevron-icon");
+    gsap.to(row, { backgroundColor: "rgba(42,50,80,0.04)", paddingLeft: 52, duration: 0.3, ease: "power2.out" });
+    if (chevron) gsap.to(chevron, { y: 3, duration: 0.3, ease: "power2.out" });
+  }, []);
+
+  const handleRowLeave = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    const row = e.currentTarget;
+    const chevron = row.querySelector(".chevron-icon");
+    gsap.to(row, { backgroundColor: "transparent", paddingLeft: 32, duration: 0.3, ease: "power2.out" });
+    if (chevron) gsap.to(chevron, { y: 0, duration: 0.3, ease: "power2.out" });
   }, []);
 
   useEffect(() => {
@@ -253,6 +275,7 @@ export default function Services() {
           once: true,
         },
       });
+
     },
     { scope: sectionRef }
   );
@@ -269,7 +292,7 @@ export default function Services() {
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <div className="services-heading mb-12">
-          <span className="font-[var(--font-mono)] text-xs uppercase tracking-[0.2em] text-muted-foreground">
+          <span className="font-[var(--font-mono)] text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground">
             Услуги клиники
           </span>
           <h2 className="text-fluid-h1 mt-3 font-[var(--font-heading)] text-foreground">
@@ -282,7 +305,7 @@ export default function Services() {
         </div>
 
         {/* Category tabs */}
-        <div className="services-tabs mb-8 flex flex-wrap gap-2">
+        <div className="services-tabs mb-8 flex flex-wrap items-center gap-2">
           {categoryTabs.map((label) => (
             <button
               key={label}
@@ -304,7 +327,16 @@ export default function Services() {
 
         {/* Price list */}
         <div className="services-list liquid-glass-light overflow-hidden rounded-2xl border border-white/60 shadow-xl shadow-primary/5">
-          {filtered.map((service, idx) => {
+          {loading ? (
+            Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="flex items-center gap-6 px-8 py-7">
+                <div className="h-5 flex-1 animate-pulse rounded bg-muted" />
+                <div className="hidden h-4 w-20 animate-pulse rounded bg-muted sm:block" />
+                <div className="h-5 w-32 animate-pulse rounded bg-muted" />
+                <div className="h-5 w-5 animate-pulse rounded bg-muted" />
+              </div>
+            ))
+          ) : filtered.map((service, idx) => {
             const isExpanded = expandedId === service.id;
             const isLast = idx === filtered.length - 1;
 
@@ -312,9 +344,10 @@ export default function Services() {
               <div key={service.id}>
                 <button
                   onClick={() => toggleExpand(service.id)}
+                  onMouseEnter={handleRowEnter}
+                  onMouseLeave={handleRowLeave}
                   className={cn(
-                    "flex w-full items-center gap-6 px-8 py-7 text-left transition-colors duration-150",
-                    "hover:bg-white/50",
+                    "service-row group flex w-full items-center gap-6 px-8 py-7 text-left",
                     isExpanded && "bg-white/60"
                   )}
                 >
@@ -333,7 +366,7 @@ export default function Services() {
 
                   <ChevronDown
                     className={cn(
-                      "h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-300",
+                      "chevron-icon h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-300",
                       isExpanded && "rotate-180"
                     )}
                   />
@@ -347,12 +380,14 @@ export default function Services() {
                   style={{ height: 0, visibility: "hidden", display: "none" }}
                 >
                   <div className="px-8 pb-7 pt-2">
-                    <p className="mb-3 text-base leading-relaxed text-muted-foreground">
+                    <p className="text-base leading-relaxed text-muted-foreground">
                       {service.description}
                     </p>
-                    <p className="text-base leading-relaxed text-muted-foreground">
-                      {service.details}
-                    </p>
+                    {service.details && service.details !== service.description && (
+                      <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+                        {service.details}
+                      </p>
+                    )}
                   </div>
                 </div>
 
