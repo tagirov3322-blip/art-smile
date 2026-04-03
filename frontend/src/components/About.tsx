@@ -82,7 +82,7 @@ export default function About() {
     <section
       ref={sectionRef}
       id="about"
-      className="relative overflow-hidden pt-0 min-h-screen"
+      className="relative z-[1] overflow-hidden pt-0 min-h-screen"
       style={{ background: "linear-gradient(to bottom, #2a3040 0%, #272d3b 8%, #242a37 16%, #222833 25%, #1f2430 40%, #1d2129 55%, #1a1f2e 70%, #1a1f2e 100%)" }}
     >
       <div className="relative z-10 mx-auto max-w-[1600px] px-6 pt-40 sm:px-10 sm:pt-52 lg:px-12 lg:pt-48">

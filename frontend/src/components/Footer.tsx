@@ -79,7 +79,7 @@ export default function Footer() {
         {/* Logo + info */}
         <div className="space-y-4">
           <Link href="/" className="flex items-center gap-3">
-            <ToothIcon className="h-8 w-8 text-gray-400" />
+            <img src="/logo.png" alt="IQ Dental" className="h-10 w-auto" />
             <span className="font-[var(--font-heading)] text-2xl font-bold text-white">
               IQ Dental
             </span>

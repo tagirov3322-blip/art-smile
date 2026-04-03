@@ -98,7 +98,12 @@ export default function Header() {
           href="/"
           className="flex items-center gap-2 text-primary font-bold text-xl tracking-tight"
         >
-          <ToothIcon className="h-7 w-7" />
+          <img
+            src="/logo.png"
+            alt="IQ Dental"
+            className="h-8 w-auto"
+            style={{ filter: "brightness(0) saturate(100%) invert(13%) sepia(15%) saturate(1800%) hue-rotate(190deg) brightness(95%) contrast(90%)" }}
+          />
           <span>IQ Dental</span>
         </Link>
 
