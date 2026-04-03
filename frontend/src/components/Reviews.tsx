@@ -160,7 +160,7 @@ export default function Reviews() {
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="reviews-heading mb-[var(--space-lg)]">
-          <span className="font-[var(--font-mono)] text-sm font-semibold uppercase tracking-[0.2em] text-white/60">Отзывы</span>
+          <span className="mb-3 inline-block font-[var(--font-mono)] text-sm font-semibold uppercase tracking-[0.2em] text-white/60">Отзывы</span>
           <h2 className="text-fluid-h1 font-heading text-white">Что говорят пациенты</h2>
           <p className="mt-4 max-w-xl text-fluid-body text-white/50">Рейтинг 4.0 на ПроДокторов</p>
         </div>

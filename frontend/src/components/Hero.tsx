@@ -166,7 +166,7 @@ export default function Hero() {
             Стоматология нового поколения
           </span>
           <h1
-            className="whitespace-nowrap text-center font-[var(--font-heading)] font-bold uppercase leading-none"
+            className="whitespace-nowrap text-center font-[var(--font-heading)] font-bold uppercase leading-[1.1]"
             style={{
               fontSize: "clamp(4rem, 12vw, 14rem)",
               letterSpacing: "-0.04em",
