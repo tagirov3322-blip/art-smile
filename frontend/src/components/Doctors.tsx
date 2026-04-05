@@ -256,7 +256,7 @@ function DoctorModal({
                     График
                   </p>
                   <p className="font-[var(--font-heading)] text-sm font-bold text-foreground">
-                    {Object.keys(doctor.schedule).map(d => d.slice(0,2).toUpperCase()).join(", ")}
+                    {Object.keys(doctor.schedule).map(d => ({monday:"Пн",tuesday:"Вт",wednesday:"Ср",thursday:"Чт",friday:"Пт",saturday:"Сб",sunday:"Вс"})[d] || d).join(", ")}
                   </p>
                 </div>
                 )}
