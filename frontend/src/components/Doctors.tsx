@@ -350,8 +350,8 @@ export default function Doctors() {
             </p>
           </div>
 
-          <div className="doctors-grid grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3">
-            {doctors.map((doctor) => (
+          <div className="doctors-grid grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {doctors.slice(0, VISIBLE_COUNT).map((doctor) => (
               <DoctorCard
                 key={doctor.name}
                 doctor={doctor}
@@ -359,6 +359,37 @@ export default function Doctors() {
               />
             ))}
           </div>
+
+          {doctors.length > VISIBLE_COUNT && (
+            <>
+              <div
+                ref={extraRef}
+                className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 overflow-hidden transition-all duration-700 ease-in-out"
+                style={{
+                  maxHeight: showAll ? `${doctors.length * 500}px` : "0px",
+                  opacity: showAll ? 1 : 0,
+                  marginTop: showAll ? "1.25rem" : "0px",
+                }}
+              >
+                {doctors.slice(VISIBLE_COUNT).map((doctor) => (
+                  <DoctorCard
+                    key={doctor.name}
+                    doctor={doctor}
+                    onClick={() => setSelectedDoctor(doctor)}
+                  />
+                ))}
+              </div>
+
+              <div className="mt-8 flex justify-center">
+                <button
+                  onClick={() => setShowAll((v) => !v)}
+                  className="rounded-full border border-primary/20 bg-white px-8 py-3 text-sm font-semibold text-primary transition-all duration-300 hover:bg-primary hover:text-white hover:border-primary"
+                >
+                  {showAll ? "Скрыть" : `Показать всех (${doctors.length})`}
+                </button>
+              </div>
+            </>
+          )}
         </div>
 
         {/* Wave → Reviews (very dark) */}
