@@ -207,15 +207,6 @@ export default function Hero() {
         </div>
       </section>
 
-      {/* ── 3D Tooth — positioned over both Hero and About ── */}
-      <div
-        className="hero-tooth-wrapper pointer-events-none absolute inset-x-0 top-0 z-[3] hidden sm:block"
-        style={{ top: "25vh", height: "130vh", opacity: 0, transform: "translateY(5%)", willChange: "transform, opacity" }}
-      >
-        <div className="hero-tooth-scroll h-full w-full">
-          <ToothScene onReady={handleSceneReady} />
-        </div>
-      </div>
     </div>
   );
 }
