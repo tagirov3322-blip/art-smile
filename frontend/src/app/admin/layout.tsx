@@ -6,6 +6,7 @@ import Link from "next/link";
 import { isAuthenticated, clearTokens } from "@/lib/api";
 import gsap from "gsap";
 import SSEToast from "@/components/admin/SSEToast";
+import SoundControl from "@/components/admin/SoundControl";
 
 const NAV = [
   { href: "/admin/bookings", label: "Записи", icon: "📋" },
