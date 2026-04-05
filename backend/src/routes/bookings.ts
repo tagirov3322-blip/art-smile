@@ -3,7 +3,7 @@ import prisma from "../prismaClient";
 import { requireAdmin } from "../middleware/auth";
 import { validate } from "../middleware/validate";
 import { asyncHandler } from "../middleware/asyncHandler";
-import { bookingLimiter } from "../index";
+import { bookingLimiter } from "../lib/rateLimiters";
 import { createBookingSchema, updateBookingSchema } from "../lib/validators";
 import { sanitizeObject } from "../lib/sanitize";
 import { broadcast } from "../lib/sse";
