@@ -216,6 +216,6 @@ export default function Hero() {
           <ToothScene onReady={handleSceneReady} />
         </div>
       </div>
-    </>
+    </div>
   );
 }
