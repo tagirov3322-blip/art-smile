@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getSoundEnabled, getSoundVolume, setSoundEnabled, setSoundVolume, playNotification } from "@/lib/sound";
 
 export default function SoundControl() {
