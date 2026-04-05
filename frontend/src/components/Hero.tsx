@@ -99,7 +99,7 @@ export default function Hero() {
     <>
       <section
         ref={sectionRef}
-        className="relative z-10 min-h-screen"
+        className="relative z-10 min-h-screen overflow-hidden"
         style={{ backgroundColor: "transparent" }}
       >
         {/* ── Ambient light overlays ── */}
@@ -120,8 +120,8 @@ export default function Hero() {
         <div
           className="hero-glow pointer-events-none absolute left-1/2 top-[68%] z-[1] -translate-x-1/2 -translate-y-1/2"
           style={{
-            width: "630px",
-            height: "360px",
+            width: "clamp(280px, 50vw, 630px)",
+            height: "clamp(160px, 28vw, 360px)",
             borderRadius: "50%",
             background: "radial-gradient(ellipse, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.54) 40%, transparent 70%)",
             filter: "blur(35px)",
@@ -132,8 +132,8 @@ export default function Hero() {
         <div
           className="hero-glow pointer-events-none absolute left-1/2 top-[68%] z-[1] -translate-x-1/2 -translate-y-1/2"
           style={{
-            width: "990px",
-            height: "585px",
+            width: "clamp(400px, 75vw, 990px)",
+            height: "clamp(230px, 45vw, 585px)",
             borderRadius: "50%",
             background: "radial-gradient(ellipse, rgba(220,235,255,0.68) 0%, rgba(180,210,250,0.32) 45%, transparent 70%)",
             filter: "blur(55px)",
@@ -144,8 +144,8 @@ export default function Hero() {
         <div
           className="hero-glow pointer-events-none absolute left-1/2 top-[68%] z-[1] -translate-x-1/2 -translate-y-1/2"
           style={{
-            width: "1620px",
-            height: "900px",
+            width: "clamp(500px, 100vw, 1620px)",
+            height: "clamp(280px, 60vw, 900px)",
             borderRadius: "50%",
             background: "radial-gradient(ellipse, rgba(160,190,240,0.36) 0%, rgba(130,165,220,0.16) 40%, transparent 65%)",
             filter: "blur(80px)",
@@ -156,19 +156,19 @@ export default function Hero() {
 
         {/* ── Subtitle + Title ── */}
         <div
-          className="hero-title pointer-events-none absolute inset-x-0 top-[14%] z-[1] flex flex-col items-center select-none"
+          className="hero-title pointer-events-none absolute inset-x-0 top-[12%] sm:top-[14%] z-[1] flex flex-col items-center select-none px-4"
           style={{ opacity: 0, transform: "translateY(30px)", willChange: "transform, opacity" }}
         >
           <span
-            className="hero-subtitle mb-5 font-[var(--font-heading)] text-base font-medium tracking-wide sm:text-lg lg:text-xl"
+            className="hero-subtitle mb-3 sm:mb-5 font-[var(--font-heading)] text-sm font-medium tracking-wide sm:text-lg lg:text-xl"
             style={{ color: "rgba(220, 225, 240, 0.5)" }}
           >
             Стоматология нового поколения
           </span>
           <h1
-            className="whitespace-nowrap text-center font-[var(--font-heading)] font-bold uppercase leading-[1.1]"
+            className="text-center font-[var(--font-heading)] font-bold uppercase leading-[1.1]"
             style={{
-              fontSize: "clamp(4rem, 12vw, 14rem)",
+              fontSize: "clamp(2.5rem, 12vw, 14rem)",
               letterSpacing: "-0.04em",
               background: "linear-gradient(180deg, rgba(230,235,250,0.7) 0%, rgba(160,175,210,0.35) 100%)",
               WebkitBackgroundClip: "text",
@@ -192,22 +192,22 @@ export default function Hero() {
         </div>
 
         {/* ── Buttons ── */}
-        <div className="hero-cta-row pointer-events-none absolute inset-x-0 bottom-[30%] z-[4] flex items-center justify-between px-[8%] sm:px-[10%] lg:px-[13%] [&_a]:pointer-events-auto">
+        <div className="hero-cta-row pointer-events-none absolute inset-x-0 bottom-[22%] sm:bottom-[30%] z-[4] flex flex-col sm:flex-row items-center justify-center gap-4 sm:justify-between px-4 sm:px-[10%] lg:px-[13%] [&_a]:pointer-events-auto">
           <a
             href="#booking"
-            className="hero-cta inline-flex h-[72px] w-[280px] items-center justify-center gap-3 rounded-lg border border-white/20 bg-white/5 text-lg font-medium tracking-[0.08em] text-white/90 hover:border-white/40 hover:bg-white/10 active:scale-[0.97] sm:h-20 sm:w-[320px] sm:text-xl"
+            className="hero-cta inline-flex h-14 w-full max-w-[280px] items-center justify-center gap-2 rounded-lg border border-white/20 bg-white/5 text-base font-medium tracking-[0.08em] text-white/90 hover:border-white/40 hover:bg-white/10 active:scale-[0.97] sm:h-20 sm:w-[320px] sm:max-w-none sm:text-xl"
             style={{ visibility: "hidden" }}
           >
             Записаться на приём
-            <ArrowRight className="h-6 w-6 text-white/70" />
+            <ArrowRight className="h-5 w-5 sm:h-6 sm:w-6 text-white/70" />
           </a>
           <a
             href="#promotions"
-            className="hero-cta inline-flex h-[72px] w-[280px] items-center justify-center gap-3 rounded-lg border border-white/20 bg-white/5 text-xl font-medium tracking-[0.08em] text-white/90 hover:border-white/40 hover:bg-white/10 active:scale-[0.97] sm:h-20 sm:w-[320px] sm:text-2xl"
+            className="hero-cta inline-flex h-14 w-full max-w-[280px] items-center justify-center gap-2 rounded-lg border border-white/20 bg-white/5 text-base font-medium tracking-[0.08em] text-white/90 hover:border-white/40 hover:bg-white/10 active:scale-[0.97] sm:h-20 sm:w-[320px] sm:max-w-none sm:text-xl"
             style={{ visibility: "hidden" }}
           >
             К акциям
-            <ArrowRight className="h-6 w-6 text-white/70" />
+            <ArrowRight className="h-5 w-5 sm:h-6 sm:w-6 text-white/70" />
           </a>
         </div>
       </section>
