@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { onSSEEvent, SSEEvent } from "@/lib/sse";
+import { playNotification } from "@/lib/sound";
 
 interface Toast {
   id: number;
