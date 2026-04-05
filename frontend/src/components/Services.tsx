@@ -360,7 +360,7 @@ export default function Services() {
                     {service.duration}
                   </span>
 
-                  <span className="w-40 shrink-0 text-right font-[var(--font-mono)] text-lg font-bold text-foreground">
+                  <span className="w-24 sm:w-40 shrink-0 text-right font-[var(--font-mono)] text-sm sm:text-lg font-bold text-foreground">
                     {service.price}
                   </span>
 
