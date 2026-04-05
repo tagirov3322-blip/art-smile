@@ -225,9 +225,9 @@ export default function Booking() {
     if (apiError && errorRef.current) gsap.from(errorRef.current, { opacity: 0, y: -10, duration: 0.3 });
   }, [apiError]);
 
-  const inputBase = "w-full rounded-xl border bg-white/80 px-5 pr-10 py-3.5 text-sm text-foreground outline-none transition-all duration-200 placeholder:text-muted-foreground/50 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:bg-white";
+  const inputBase = "w-full rounded-xl border bg-card/80 px-5 pr-10 py-3.5 text-sm text-foreground outline-none transition-all duration-200 placeholder:text-muted-foreground/50 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:bg-card";
   const inputError = "border-red-400 focus:border-red-500 focus:ring-red-500/20";
-  const inputNormal = "border-slate-200/80";
+  const inputNormal = "border-border";
 
   return (
     <section
@@ -235,10 +235,8 @@ export default function Booking() {
       id="booking"
       className="relative overflow-hidden min-h-screen bg-[#0a0f1a] flex items-center"
     >
-      {/* Decorative orbs */}
-      <div className="orb-1 pointer-events-none absolute -left-40 -top-40 h-[500px] w-[500px] rounded-full bg-white/4 blur-3xl" aria-hidden="true" />
-      <div className="orb-2 pointer-events-none absolute -bottom-40 -right-40 h-[400px] w-[400px] rounded-full bg-white/3 blur-3xl" aria-hidden="true" />
-      <div className="pointer-events-none absolute left-1/2 top-0 h-px w-3/4 -translate-x-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+      {/* Decorative line */}
+      <div className="pointer-events-none absolute left-1/2 top-0 h-px w-3/4 -translate-x-1/2 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         {/* Heading */}
@@ -257,7 +255,7 @@ export default function Booking() {
             <form
               onSubmit={handleSubmit}
               noValidate
-              className="relative flex-1 flex flex-col justify-center rounded-3xl bg-white p-8 shadow-2xl shadow-black/20 sm:p-10 lg:p-12"
+              className="relative flex-1 flex flex-col justify-center rounded-3xl bg-card p-8 shadow-2xl shadow-black/20 sm:p-10 lg:p-12"
             >
               {/* Inner glass accent */}
               <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary/5 blur-2xl" />
@@ -318,7 +316,7 @@ export default function Booking() {
                     {(errors.date || errors.time) && <p className="mt-1.5 text-xs text-red-500">{errors.date || errors.time}</p>}
 
                     {showDateTimePicker && (
-                      <div className="absolute left-0 top-full z-50 mt-2 w-full rounded-2xl border border-slate-200 bg-white p-5 shadow-2xl">
+                      <div className="absolute left-0 top-full z-50 mt-2 w-full rounded-2xl border border-border bg-card p-5 shadow-2xl">
                         {!dateTimeStep || dateTimeStep === "date" ? (
                           <>
                             <p className="mb-3 text-sm font-medium text-foreground">Выберите дату</p>
@@ -346,7 +344,7 @@ export default function Booking() {
                                     "rounded-lg border px-3 py-2 text-sm transition-colors",
                                     time === slot
                                       ? "border-primary bg-primary text-white"
-                                      : "border-slate-200 hover:border-primary hover:bg-primary/5"
+                                      : "border-border hover:border-primary hover:bg-primary/5"
                                   )}
                                 >
                                   {slot}
@@ -393,7 +391,7 @@ export default function Booking() {
                   type="submit"
                   disabled={isSubmitting}
                   className={cn(
-                    "mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-4 text-sm font-semibold text-white shadow-lg shadow-primary/20 transition-all duration-200 hover:bg-[#353d5c] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
+                    "mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-6 py-4 text-sm font-semibold text-[#0a0f1a] shadow-lg shadow-white/10 transition-all duration-200 hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-[#0a0f1a]",
                     isSubmitting && "cursor-not-allowed opacity-60"
                   )}
                 >

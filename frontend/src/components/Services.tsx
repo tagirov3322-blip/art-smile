@@ -248,20 +248,6 @@ export default function Services() {
         },
       });
 
-      // Tabs slide in
-      gsap.from(".services-tabs > *", {
-        y: 20,
-        opacity: 0,
-        duration: 0.5,
-        stagger: 0.05,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".services-tabs",
-          start: "top 90%",
-          once: true,
-        },
-      });
-
       // Price list card
       gsap.from(".services-list", {
         y: 50,
@@ -306,7 +292,21 @@ export default function Services() {
 
         {/* Category tabs */}
         <div className="services-tabs mb-8 flex flex-wrap items-center gap-2">
-          {categoryTabs.map((label) => (
+          <button
+            onClick={() => {
+              setActiveCategory("Все");
+              setExpandedId(null);
+            }}
+            className={cn(
+              "rounded-full border px-5 py-2 text-sm font-medium transition-all duration-200",
+              activeCategory === "Все"
+                ? "border-primary bg-primary text-white shadow-md shadow-primary/20"
+                : "border-border bg-card text-muted-foreground hover:text-foreground"
+            )}
+          >
+            Все
+          </button>
+          {categories.map((label) => (
             <button
               key={label}
               onClick={() => {
@@ -314,10 +314,10 @@ export default function Services() {
                 setExpandedId(null);
               }}
               className={cn(
-                "rounded-full px-4 py-2 text-sm font-medium transition-all duration-200",
+                "rounded-full border px-5 py-2 text-sm font-medium transition-all duration-200",
                 activeCategory === label
-                  ? "bg-primary text-white shadow-md shadow-primary/20"
-                  : "bg-white text-muted-foreground hover:text-foreground"
+                  ? "border-primary bg-primary text-white shadow-md shadow-primary/20"
+                  : "border-border bg-card text-muted-foreground hover:text-foreground"
               )}
             >
               {label}
@@ -326,7 +326,7 @@ export default function Services() {
         </div>
 
         {/* Price list */}
-        <div className="services-list liquid-glass-light overflow-hidden rounded-2xl border border-white/60 shadow-xl shadow-primary/5">
+        <div className="services-list overflow-hidden rounded-2xl border border-border bg-card/80 shadow-xl shadow-primary/5 backdrop-blur-sm">
           {loading ? (
             Array.from({ length: 6 }).map((_, i) => (
               <div key={i} className="flex items-center gap-6 px-8 py-7">
@@ -348,7 +348,7 @@ export default function Services() {
                   onMouseLeave={handleRowLeave}
                   className={cn(
                     "service-row group flex w-full items-center gap-6 px-8 py-7 text-left",
-                    isExpanded && "bg-white/60"
+                    isExpanded && "bg-card/60"
                   )}
                 >
                   <span className="flex-1 text-xl font-medium text-foreground">

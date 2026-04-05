@@ -184,7 +184,7 @@ export default function Reviews() {
               <span className="text-yellow-400">★</span> 4.9 на 2ГИС
             </a>
             <span className="text-white/20">|</span>
-            <a href="https://yandex.ru/maps/org/iq_dental/141258842825/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 transition-colors hover:text-white/80">
+            <a href="https://yandex.com/maps/org/aykyu_dental/76832207525/reviews/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 transition-colors hover:text-white/80">
               <span className="text-yellow-400">★</span> 5.0 на Яндекс Картах
             </a>
           </p>

@@ -2,7 +2,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Menu, Phone, X } from "lucide-react";
+import { Menu, Phone } from "lucide-react";
+import { useTheme } from "next-themes";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -66,17 +68,9 @@ export default function Header() {
   const [activeSection, setActiveSection] = useState("");
   const [open, setOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
+  const { resolvedTheme } = useTheme();
 
-  useGSAP(() => {
-    if (headerRef.current) {
-      gsap.from(headerRef.current, {
-        y: -100,
-        autoAlpha: 0,
-        duration: 0.8,
-        ease: "power3.out",
-      });
-    }
-  });
+  // No animation — header stays centered
 
   useEffect(() => {
     function onScroll() {
@@ -100,8 +94,8 @@ export default function Header() {
     <header
       ref={headerRef}
       className={cn(
-        "fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-screen-xl rounded-2xl border border-gray-200/60 bg-white/95 px-6 py-3 backdrop-blur-sm transition-shadow duration-300",
-        scrolled ? "shadow-lg shadow-blue-100/40" : "shadow-none"
+        "fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-screen-2xl rounded-2xl border border-border bg-card/95 px-6 py-3 backdrop-blur-sm transition-all duration-300",
+        scrolled ? "shadow-lg shadow-black/10" : "shadow-none"
       )}
     >
       <div className="flex items-center justify-between">
@@ -114,8 +108,12 @@ export default function Header() {
           <img
             src="/logo_iq.png"
             alt="IQ Dental"
-            className="h-11 w-auto"
-            style={{ filter: "brightness(0) saturate(100%) invert(17%) sepia(14%) saturate(1500%) hue-rotate(190deg) brightness(92%) contrast(92%)" }}
+            className="h-11 w-auto transition-[filter] duration-300"
+            style={{
+              filter: resolvedTheme === "dark"
+                ? "brightness(0) invert(1)"
+                : "brightness(0) saturate(100%) invert(17%) sepia(14%) saturate(1500%) hue-rotate(190deg) brightness(92%) contrast(92%)"
+            }}
           />
         </a>
 
@@ -137,7 +135,7 @@ export default function Header() {
         </nav>
 
         {/* Desktop right side */}
-        <div className="hidden lg:flex items-center gap-6">
+        <div className="hidden lg:flex items-center gap-4">
           <a
             href="tel:+79061232727"
             className="flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
@@ -145,6 +143,7 @@ export default function Header() {
             <Phone className="h-4 w-4" />
             +7 (906) 123-27-27
           </a>
+          <ThemeToggle />
           <Button
             asChild
             className="rounded-xl bg-primary px-6 font-semibold"
@@ -192,13 +191,16 @@ export default function Header() {
               </nav>
 
               <div className="mt-auto flex flex-col gap-3 border-t p-4">
-                <a
-                  href="tel:+79061232727"
-                  className="flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
-                >
-                  <Phone className="h-4 w-4" />
-                  +7 (906) 123-27-27
-                </a>
+                <div className="flex items-center justify-between">
+                  <a
+                    href="tel:+79061232727"
+                    className="flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
+                  >
+                    <Phone className="h-4 w-4" />
+                    +7 (906) 123-27-27
+                  </a>
+                  <ThemeToggle />
+                </div>
                 <SheetClose asChild>
                   <Button
                     asChild

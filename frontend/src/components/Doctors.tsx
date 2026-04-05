@@ -103,9 +103,9 @@ function DoctorCard({
         <div
           ref={cardRef}
           className={cn(
-            "relative h-full overflow-hidden rounded-[14px] bg-white",
+            "relative h-full overflow-hidden rounded-[14px] bg-card",
             "transition-shadow duration-300",
-            "hover:shadow-xl hover:shadow-slate-300/30"
+            "hover:shadow-xl hover:shadow-black/10"
           )}
         >
           <div
@@ -203,7 +203,7 @@ function DoctorModal({
       >
         <div
           ref={cardRef}
-          className="relative overflow-hidden rounded-3xl bg-white shadow-2xl will-change-transform"
+          className="relative overflow-hidden rounded-3xl bg-card shadow-2xl will-change-transform"
           style={{ transformStyle: "preserve-3d" }}
         >
           <button
@@ -303,8 +303,15 @@ export default function Doctors() {
           once: true,
         },
       });
+    },
+    { scope: sectionRef }
+  );
 
-      // Cards stagger entrance
+  // Cards stagger entrance — run after doctors are loaded
+  useEffect(() => {
+    if (doctors.length === 0 || !sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
       gsap.from(".doctor-card", {
         y: 60,
         opacity: 0,
@@ -318,9 +325,10 @@ export default function Doctors() {
           once: true,
         },
       });
-    },
-    { scope: sectionRef }
-  );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [doctors]);
 
   return (
     <>
@@ -383,7 +391,7 @@ export default function Doctors() {
               <div className="mt-8 flex justify-center">
                 <button
                   onClick={() => setShowAll((v) => !v)}
-                  className="rounded-full border border-primary/20 bg-white px-8 py-3 text-sm font-semibold text-primary transition-all duration-300 hover:bg-primary hover:text-white hover:border-primary"
+                  className="rounded-full border border-primary/20 bg-card px-8 py-3 text-sm font-semibold text-primary transition-all duration-300 hover:bg-primary hover:text-primary-foreground hover:border-primary"
                 >
                   {showAll ? "Скрыть" : "Показать всех"}
                 </button>
