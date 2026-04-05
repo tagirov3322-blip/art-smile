@@ -89,7 +89,7 @@ router.get("/", requireAdmin, asyncHandler(async (req: Request, res: Response) =
 }));
 
 // POST /api/bookings — публичный
-router.post("/", validate(createBookingSchema), asyncHandler(async (req: Request, res: Response) => {
+router.post("/", bookingLimiter, validate(createBookingSchema), asyncHandler(async (req: Request, res: Response) => {
   const data = sanitizeObject(req.body);
   const { patientName, phone, doctorId, serviceId, date, time, comment } = data;
 
