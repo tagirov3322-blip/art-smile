@@ -329,7 +329,7 @@ export default function Services() {
         <div className="services-list overflow-hidden rounded-2xl border border-border bg-card/80 shadow-xl shadow-primary/5 backdrop-blur-sm">
           {loading ? (
             Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="flex items-center gap-6 px-8 py-7">
+              <div key={i} className="flex items-center gap-4 px-4 py-5 sm:gap-6 sm:px-8 sm:py-7">
                 <div className="h-5 flex-1 animate-pulse rounded bg-muted" />
                 <div className="hidden h-4 w-20 animate-pulse rounded bg-muted sm:block" />
                 <div className="h-5 w-32 animate-pulse rounded bg-muted" />
@@ -347,7 +347,7 @@ export default function Services() {
                   onMouseEnter={handleRowEnter}
                   onMouseLeave={handleRowLeave}
                   className={cn(
-                    "service-row group flex w-full items-center gap-6 px-8 py-7 text-left",
+                    "service-row group flex w-full items-center gap-4 px-4 py-5 sm:gap-6 sm:px-8 sm:py-7 text-left",
                     isExpanded && "bg-card/60"
                   )}
                 >
