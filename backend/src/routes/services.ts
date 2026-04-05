@@ -5,15 +5,20 @@ import { validate } from "../middleware/validate";
 import { asyncHandler } from "../middleware/asyncHandler";
 import { createServiceSchema, updateServiceSchema } from "../lib/validators";
 import { sanitizeObject } from "../lib/sanitize";
+import { cacheGet, cacheSet, cacheInvalidate } from "../lib/cache";
 
 const router = Router();
 
 router.get("/", asyncHandler(async (req: Request, res: Response) => {
   const { category, active } = req.query;
+  const cacheKey = `services:${active}:${category}`;
+  const cached = cacheGet(cacheKey);
+  if (cached) { res.json(cached); return; }
   const where: Record<string, unknown> = {};
   if (active !== "false") where.isActive = true;
   if (category) where.category = category;
   const services = await prisma.service.findMany({ where, orderBy: { category: "asc" } });
+  cacheSet(cacheKey, services, 60_000);
   res.json(services);
 }));
 
