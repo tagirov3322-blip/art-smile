@@ -24,7 +24,13 @@ export const createBookingSchema = z.object({
 
 export const updateBookingSchema = z.object({
   status: z.enum(["new", "confirmed", "completed", "cancelled"]).optional(),
-  comment: z.string().max(500).optional(),
+  doctorId: z.number().int().positive().optional(),
+  serviceId: z.number().int().positive().optional(),
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  time: z.string().regex(/^\d{2}:\d{2}$/).optional(),
+  patientName: z.string().min(2).max(100).optional(),
+  phone: z.string().regex(/^(\+7|7|8)\d{10}$/).optional(),
+  comment: z.string().max(500).optional().nullable(),
 });
 
 // Doctor
