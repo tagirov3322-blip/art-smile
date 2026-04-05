@@ -97,13 +97,13 @@ export default function Hero() {
         ease: "none",
         scrollTrigger: trigger,
       });
-    }, sectionRef);
+    }, wrapperRef);
 
     return () => ctx.revert();
   }, [sceneReady]);
 
   return (
-    <>
+    <div ref={wrapperRef} className="relative">
       <section
         ref={sectionRef}
         className="relative z-10 min-h-screen"
