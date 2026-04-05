@@ -82,8 +82,8 @@ export default function AdminServices() {
   return (
     <div ref={containerRef}>
       <div className="page-controls flex items-center justify-between">
-        <h1 className="page-title text-2xl font-bold text-[#2a3250]">Услуги</h1>
-        <button onClick={() => setEditing({ name: "", price: 0, duration: 30, isActive: true })} className="rounded-xl bg-[#2a3250] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#353d5c]">
+        <h1 className="page-title text-2xl font-bold text-foreground">Услуги</h1>
+        <button onClick={() => setEditing({ name: "", price: 0, duration: 30, isActive: true })} className="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:opacity-90">
           Добавить
         </button>
       </div>
@@ -93,12 +93,12 @@ export default function AdminServices() {
           <div className="space-y-4">
             {[1, 2, 3].map((i) => (
               <div key={i}>
-                <div className="mb-3 h-3 w-20 animate-pulse rounded bg-gray-200" />
-                <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
+                <div className="mb-3 h-3 w-20 animate-pulse rounded bg-muted" />
+                <div className="overflow-hidden rounded-2xl bg-card shadow-sm">
                   {[1, 2, 3].map((j) => (
-                    <div key={j} className="flex items-center justify-between border-t border-gray-50 first:border-0 px-5 py-4">
-                      <div className="h-4 w-40 animate-pulse rounded bg-gray-200" />
-                      <div className="h-4 w-20 animate-pulse rounded bg-gray-100" />
+                    <div key={j} className="flex items-center justify-between border-t border-border/50 first:border-0 px-5 py-4">
+                      <div className="h-4 w-40 animate-pulse rounded bg-muted" />
+                      <div className="h-4 w-20 animate-pulse rounded bg-muted/60" />
                     </div>
                   ))}
                 </div>
@@ -109,18 +109,18 @@ export default function AdminServices() {
         <div ref={listRef}>
         {Object.entries(grouped).map(([cat, items]) => (
           <div key={cat} className="service-category">
-            <h2 className="mb-4 pt-4 text-sm font-semibold uppercase tracking-wider text-gray-400">{cat}</h2>
-            <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
+            <h2 className="mb-4 pt-4 text-sm font-semibold uppercase tracking-wider text-muted-foreground">{cat}</h2>
+            <div className="overflow-hidden rounded-2xl bg-card shadow-sm">
               {items.map((s, i) => (
-                <div key={s.id} className={`service-row flex items-center justify-between px-5 py-5 ${i > 0 ? "border-t border-gray-50" : ""}`}>
+                <div key={s.id} className={`service-row flex items-center justify-between px-5 py-5 ${i > 0 ? "border-t border-border/50" : ""}`}>
                   <div className="flex-1">
-                    <span className="font-medium text-gray-900">{s.name}</span>
-                    <span className="ml-2 text-xs text-gray-400">{s.duration} мин</span>
+                    <span className="font-medium text-foreground">{s.name}</span>
+                    <span className="ml-2 text-xs text-muted-foreground">{s.duration} мин</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="font-semibold text-[#2a3250]">{s.price.toLocaleString("ru-RU")} &#8381;</span>
-                    <button onClick={() => setEditing(s)} className="rounded-lg bg-gray-50 px-2.5 py-1 text-xs font-medium text-gray-600 hover:bg-gray-100">Ред.</button>
-                    <button onClick={() => remove(s.id)} className="rounded-lg bg-red-50 px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-100">Удалить</button>
+                    <span className="font-semibold text-primary">{s.price.toLocaleString("ru-RU")} &#8381;</span>
+                    <button onClick={() => setEditing(s)} className="rounded-lg bg-accent px-2.5 py-1 text-xs font-medium text-foreground hover:bg-accent/80">Ред.</button>
+                    <button onClick={() => remove(s.id)} className="rounded-lg bg-red-50 px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-100 dark:bg-red-950 dark:text-red-400 dark:hover:bg-red-900">Удалить</button>
                   </div>
                 </div>
               ))}
@@ -133,20 +133,20 @@ export default function AdminServices() {
 
       {editing && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" onMouseDown={(e) => { if (e.target === e.currentTarget) setEditing(null); }}>
-          <div className="w-full max-w-md rounded-2xl bg-white p-6">
-            <h2 className="text-lg font-bold text-[#2a3250]">{editing.id ? "Редактирование" : "Новая услуга"}</h2>
+          <div className="w-full max-w-md rounded-2xl bg-card p-6">
+            <h2 className="text-lg font-bold text-foreground">{editing.id ? "Редактирование" : "Новая услуга"}</h2>
             <div className="mt-4 space-y-3">
-              <input value={editing.name || ""} onChange={(e) => setEditing({ ...editing, name: e.target.value })} placeholder="Название" className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-none focus:border-[#2a3250]" />
-              <input value={editing.category || ""} onChange={(e) => setEditing({ ...editing, category: e.target.value })} placeholder="Категория" className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-none focus:border-[#2a3250]" />
+              <input value={editing.name || ""} onChange={(e) => setEditing({ ...editing, name: e.target.value })} placeholder="Название" className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary" />
+              <input value={editing.category || ""} onChange={(e) => setEditing({ ...editing, category: e.target.value })} placeholder="Категория" className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary" />
               <div className="flex gap-3">
-                <input type="number" value={editing.price || 0} onChange={(e) => setEditing({ ...editing, price: Number(e.target.value) })} placeholder="Цена" className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-none focus:border-[#2a3250]" />
-                <input type="number" value={editing.duration || 30} onChange={(e) => setEditing({ ...editing, duration: Number(e.target.value) })} placeholder="Минут" className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-none focus:border-[#2a3250]" />
+                <input type="number" value={editing.price || 0} onChange={(e) => setEditing({ ...editing, price: Number(e.target.value) })} placeholder="Цена" className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary" />
+                <input type="number" value={editing.duration || 30} onChange={(e) => setEditing({ ...editing, duration: Number(e.target.value) })} placeholder="Минут" className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary" />
               </div>
-              <textarea value={editing.description || ""} onChange={(e) => setEditing({ ...editing, description: e.target.value })} placeholder="Описание" rows={2} className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-none focus:border-[#2a3250]" />
+              <textarea value={editing.description || ""} onChange={(e) => setEditing({ ...editing, description: e.target.value })} placeholder="Описание" rows={2} className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary" />
             </div>
             <div className="mt-5 flex gap-3">
-              <button onClick={save} className="rounded-xl bg-[#2a3250] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#353d5c]">Сохранить</button>
-              <button onClick={() => setEditing(null)} className="rounded-xl bg-gray-100 px-5 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-200">Отмена</button>
+              <button onClick={save} className="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:opacity-90">Сохранить</button>
+              <button onClick={() => setEditing(null)} className="rounded-xl bg-accent px-5 py-2.5 text-sm font-medium text-foreground hover:bg-accent/80">Отмена</button>
             </div>
           </div>
         </div>
