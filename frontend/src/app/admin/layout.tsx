@@ -8,7 +8,7 @@ import { isAuthenticated, clearTokens } from "@/lib/api";
 import gsap from "gsap";
 import SSEToast from "@/components/admin/SSEToast";
 import SoundControl from "@/components/admin/SoundControl";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, Menu, X } from "lucide-react";
 
 const NAV = [
   { href: "/admin/bookings", label: "Записи", icon: "📋" },
@@ -21,14 +21,23 @@ const NAV = [
   { href: "/admin/settings", label: "Настройки", icon: "⚙️" },
 ];
 
+// Bottom tab bar items (subset for mobile)
+const BOTTOM_NAV = [
+  { href: "/admin/bookings", label: "Записи", icon: "📋" },
+  { href: "/admin/doctors", label: "Врачи", icon: "👨‍⚕️" },
+  { href: "/admin", label: "Дашборд", icon: "📊" },
+  { href: "/admin/services", label: "Услуги", icon: "🦷" },
+];
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const [ready, setReady] = useState(false);
   const mainRef = useRef<HTMLElement>(null);
   const prevPath = useRef(pathname);
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => setMounted(true), []);
 
@@ -43,6 +52,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       setReady(true);
     }
   }, [pathname, router]);
+
+  // Close mobile menu on navigation
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
   // Плавная анимация при смене вкладок
   useEffect(() => {
@@ -64,8 +78,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <div className="flex min-h-screen bg-background">
-      {/* Sidebar */}
-      <aside className="fixed left-0 top-0 z-30 flex h-full w-60 flex-col border-r border-border bg-card">
+      {/* Desktop Sidebar */}
+      <aside className="fixed left-0 top-0 z-30 hidden h-full w-60 flex-col border-r border-border bg-card lg:flex">
         <div className="flex h-20 items-center justify-center">
           <Link href="/admin" className="flex items-center">
             <img src="/logo_iq.png" alt="IQ Dental" className="logo-themed h-14 w-auto" />
@@ -113,8 +127,95 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
       </aside>
 
+      {/* Mobile Top Bar */}
+      <header className="fixed left-0 right-0 top-0 z-30 flex h-14 items-center justify-between border-b border-border bg-card px-4 lg:hidden">
+        <Link href="/admin" className="flex items-center">
+          <img src="/logo_iq.png" alt="IQ Dental" className="logo-themed h-8 w-auto" />
+        </Link>
+        <div className="flex items-center gap-2">
+          {mounted && (
+            <button
+              onClick={() => setTheme(isDark ? "light" : "dark")}
+              className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground hover:bg-accent"
+            >
+              {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </button>
+          )}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground hover:bg-accent"
+          >
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
+      </header>
+
+      {/* Mobile Slide Menu */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)}>
+          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute right-0 top-14 bottom-0 w-64 border-l border-border bg-card p-4 overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <nav className="space-y-1">
+              {NAV.map((item) => {
+                const active = pathname === item.href || (item.href !== "/admin" && pathname.startsWith(item.href));
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition ${
+                      active
+                        ? "bg-primary text-primary-foreground"
+                        : "text-muted-foreground hover:bg-accent hover:text-foreground"
+                    }`}
+                  >
+                    <span className="text-lg">{item.icon}</span>
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </nav>
+            <div className="mt-4 border-t border-border pt-4 space-y-1">
+              <SoundControl />
+              <button
+                onClick={() => { clearTokens(); router.push("/admin/login"); }}
+                className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-muted-foreground transition hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950 dark:hover:text-red-400"
+              >
+                <span className="text-lg">🚪</span>
+                Выйти
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Mobile Bottom Tab Bar */}
+      <nav className="fixed bottom-0 left-0 right-0 z-30 flex items-center justify-around border-t border-border bg-card pb-[env(safe-area-inset-bottom)] lg:hidden">
+        {BOTTOM_NAV.map((item) => {
+          const active = pathname === item.href || (item.href !== "/admin" && pathname.startsWith(item.href));
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`flex flex-1 flex-col items-center gap-0.5 py-2 text-[10px] font-medium transition ${
+                active ? "text-primary" : "text-muted-foreground"
+              }`}
+            >
+              <span className="text-lg">{item.icon}</span>
+              {item.label}
+            </Link>
+          );
+        })}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="flex flex-1 flex-col items-center gap-0.5 py-2 text-[10px] font-medium text-muted-foreground"
+        >
+          <span className="text-lg">☰</span>
+          Ещё
+        </button>
+      </nav>
+
       {/* Main content */}
-      <main ref={mainRef} className="ml-60 flex-1 p-8">
+      <main ref={mainRef} className="flex-1 pt-14 pb-16 px-4 lg:ml-60 lg:pt-0 lg:pb-0 lg:p-8">
         {children}
       </main>
       <SSEToast />
