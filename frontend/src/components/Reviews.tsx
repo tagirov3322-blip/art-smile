@@ -65,45 +65,50 @@ function getInitials(name: string) {
   return name.split(" ").map((w) => w[0]).join("").toUpperCase();
 }
 
-function TestimonialsColumn({ testimonials, className, speed = 40 }: { testimonials: Review[]; className?: string; speed?: number }) {
+function TestimonialsColumn({ testimonials, className, speed = 30 }: { testimonials: Review[]; className?: string; speed?: number }) {
   const columnRef = useRef<HTMLDivElement>(null);
-  const [duration, setDuration] = useState(0);
+  const innerRef = useRef<HTMLDivElement>(null);
+  const [ready, setReady] = useState(false);
+  const [dur, setDur] = useState(40);
 
   useEffect(() => {
-    // Ждём рендер, потом считаем высоту
-    const timer = setTimeout(() => {
-      if (columnRef.current) {
-        const h = columnRef.current.scrollHeight / 2;
-        setDuration(h > 0 ? h / speed : 40);
+    const el = innerRef.current;
+    if (!el || testimonials.length === 0) return;
+    const check = () => {
+      const h = el.scrollHeight / 2;
+      if (h > 100) {
+        setDur(h / speed);
+        setReady(true);
+      } else {
+        requestAnimationFrame(check);
       }
-    }, 100);
-    return () => clearTimeout(timer);
+    };
+    requestAnimationFrame(check);
   }, [testimonials, speed]);
 
+  const cards = testimonials.map((review, i) => (
+    <div key={i} className="liquid-glass-dark w-full max-w-xs rounded-2xl p-6 mb-6">
+      <StarRating rating={review.rating} />
+      <p className="mt-4 text-sm leading-relaxed text-white/70">{review.text}</p>
+      <div className="mt-5 flex items-center gap-3">
+        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-xs font-semibold text-white">{getInitials(review.name)}</div>
+        <div className="text-sm font-medium tracking-tight text-white">{review.name}</div>
+      </div>
+    </div>
+  ));
+
   return (
-    <div className={cn("overflow-hidden", className)}>
+    <div ref={columnRef} className={cn("overflow-hidden", className)}>
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes reviewScroll { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+      `}} />
       <div
-        ref={columnRef}
+        ref={innerRef}
         className="flex flex-col"
-        style={duration > 0 ? {
-          animation: `scroll-up ${duration}s linear infinite`,
-          willChange: "transform",
-        } : undefined}
+        style={ready ? { animation: `reviewScroll ${dur}s linear infinite`, willChange: "transform" } : undefined}
       >
-        {[0, 1].map((index) => (
-          <React.Fragment key={index}>
-            {testimonials.map((review) => (
-              <div key={`${index}-${review.id}`} className="liquid-glass-dark w-full max-w-xs rounded-2xl p-6 mb-6">
-                <StarRating rating={review.rating} />
-                <p className="mt-4 text-sm leading-relaxed text-white/70">{review.text}</p>
-                <div className="mt-5 flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-xs font-semibold text-white">{getInitials(review.name)}</div>
-                  <div className="text-sm font-medium tracking-tight text-white">{review.name}</div>
-                </div>
-              </div>
-            ))}
-          </React.Fragment>
-        ))}
+        {cards}
+        {cards}
       </div>
     </div>
   );
