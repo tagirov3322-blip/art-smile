@@ -5,13 +5,18 @@ import { validate } from "../middleware/validate";
 import { asyncHandler } from "../middleware/asyncHandler";
 import { createDoctorSchema, updateDoctorSchema } from "../lib/validators";
 import { sanitizeObject } from "../lib/sanitize";
+import { cacheGet, cacheSet, cacheInvalidate } from "../lib/cache";
 
 const router = Router();
 
 router.get("/", asyncHandler(async (req: Request, res: Response) => {
   const { active } = req.query;
+  const cacheKey = `doctors:${active}`;
+  const cached = cacheGet(cacheKey);
+  if (cached) { res.json(cached); return; }
   const where = active === "false" ? {} : { isActive: true };
   const doctors = await prisma.doctor.findMany({ where, orderBy: { name: "asc" } });
+  cacheSet(cacheKey, doctors, 60_000);
   res.json(doctors);
 }));
 
