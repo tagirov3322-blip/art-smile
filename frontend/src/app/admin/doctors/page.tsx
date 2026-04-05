@@ -169,9 +169,28 @@ export default function AdminDoctors() {
                   </div>
                 </div>
               </div>
-              <input value={editing.name || ""} onChange={(e) => setEditing({ ...editing, name: e.target.value })} placeholder="ФИО" className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm outline-none focus:border-[#2a3250]" />
-              <input value={editing.specialty || ""} onChange={(e) => setEditing({ ...editing, specialty: e.target.value })} placeholder="Специальность" className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm outline-none focus:border-[#2a3250]" />
-              <input type="number" value={editing.experience || 0} onChange={(e) => setEditing({ ...editing, experience: Number(e.target.value) })} placeholder="Опыт (лет)" className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm outline-none focus:border-[#2a3250]" />
+              <div>
+                <label className="mb-1.5 block text-sm font-medium text-gray-700">ФИО</label>
+                <input value={editing.name || ""} onChange={(e) => setEditing({ ...editing, name: e.target.value })} placeholder="Иванов Иван Иванович" className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm outline-none focus:border-[#2a3250]" />
+              </div>
+              <div>
+                <label className="mb-1.5 block text-sm font-medium text-gray-700">Специальность</label>
+                <input value={editing.specialty || ""} onChange={(e) => setEditing({ ...editing, specialty: e.target.value })} placeholder="Стоматолог-терапевт" className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm outline-none focus:border-[#2a3250]" />
+              </div>
+              <div>
+                <label className="mb-1.5 block text-sm font-medium text-gray-700">Опыт работы (лет)</label>
+                <div className="flex items-center gap-4">
+                  <input
+                    type="range"
+                    min={0}
+                    max={40}
+                    value={editing.experience || 0}
+                    onChange={(e) => setEditing({ ...editing, experience: Number(e.target.value) })}
+                    className="flex-1 accent-[#2a3250]"
+                  />
+                  <span className="w-12 text-center text-lg font-bold text-[#2a3250]">{editing.experience || 0}</span>
+                </div>
+              </div>
               <textarea value={editing.description || ""} onChange={(e) => setEditing({ ...editing, description: e.target.value })} placeholder="Описание" rows={3} className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm outline-none focus:border-[#2a3250]" />
               <label className="flex items-center gap-2 text-sm">
                 <input type="checkbox" checked={editing.isActive ?? true} onChange={(e) => setEditing({ ...editing, isActive: e.target.checked })} className="rounded" />
