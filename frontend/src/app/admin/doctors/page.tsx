@@ -65,11 +65,13 @@ export default function AdminDoctors() {
     const file = e.target.files?.[0];
     if (!file || !editing) return;
     setUploading(true);
+    setUploadError("");
     try {
       const { url } = await api.upload(file);
       setEditing({ ...editing, photo: url });
     } catch (err) {
       console.error(err);
+      setUploadError(err instanceof Error ? err.message : "Ошибка загрузки");
     }
     setUploading(false);
     if (fileRef.current) fileRef.current.value = "";
