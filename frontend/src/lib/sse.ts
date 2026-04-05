@@ -26,7 +26,6 @@ function connect() {
   };
 
   const handle = (type: string) => (e: MessageEvent) => {
-    console.log("[SSE]", type);
     let data;
     try { data = JSON.parse(e.data); } catch { data = {}; }
     notify({ type, data });
