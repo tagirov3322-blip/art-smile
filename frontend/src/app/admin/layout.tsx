@@ -84,7 +84,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           })}
         </nav>
 
-        <div className="border-t border-gray-100 p-3">
+        <div className="border-t border-gray-100 p-3 space-y-1">
+          <SoundControl />
           <button
             onClick={() => { clearTokens(); router.push("/admin/login"); }}
             className="flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-gray-500 transition hover:bg-red-50 hover:text-red-600"
