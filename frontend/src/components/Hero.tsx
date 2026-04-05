@@ -73,14 +73,13 @@ export default function Hero() {
         }}
       />
 
-
-      {/* ── Mobile: centered flex layout ── */}
+      {/* ── Content: centered on mobile, absolute on desktop ── */}
       <div
-        className="hero-title relative z-[1] flex min-h-screen flex-col items-center justify-center px-4 sm:pointer-events-none sm:absolute sm:inset-x-0 sm:top-[14%] sm:min-h-0 sm:flex-col sm:justify-start"
+        className="hero-title relative z-[1] flex min-h-screen flex-col items-center justify-center px-6 sm:pointer-events-none sm:absolute sm:inset-x-0 sm:top-[14%] sm:min-h-0 sm:px-4"
         style={{ opacity: 0, transform: "translateY(30px)", willChange: "transform, opacity" }}
       >
         <span
-          className="hero-subtitle mb-3 sm:mb-5 font-[var(--font-heading)] text-sm font-medium tracking-wide sm:text-lg lg:text-xl"
+          className="hero-subtitle mb-2 sm:mb-5 font-[var(--font-heading)] text-xs font-medium tracking-wide sm:text-lg lg:text-xl"
           style={{ color: "rgba(220, 225, 240, 0.5)" }}
         >
           Стоматология нового поколения
@@ -100,12 +99,28 @@ export default function Hero() {
           Айкью Дентал
         </h1>
 
-        {/* Buttons — inside flex on mobile, absolute on desktop */}
-        <div className="hero-cta-row mt-10 flex flex-col items-center gap-4 sm:pointer-events-none sm:absolute sm:inset-x-0 sm:bottom-auto sm:mt-0 sm:flex-row sm:justify-between sm:px-[10%] lg:px-[13%]" style={{ position: undefined as unknown as undefined }}>
+        {/* Mobile buttons — right below title */}
+        <div className="mt-8 flex w-full flex-col items-center gap-3 sm:hidden [&_a]:pointer-events-auto">
+          <a
+            href="#booking"
+            className="hero-cta inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 text-base font-medium tracking-[0.08em] text-white/90 active:scale-[0.97]"
+            style={{ visibility: "hidden" }}
+          >
+            Записаться на приём
+            <ArrowRight className="h-5 w-5 text-white/70" />
+          </a>
+          <a
+            href="#promotions"
+            className="hero-cta inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 text-base font-medium tracking-[0.08em] text-white/90 active:scale-[0.97]"
+            style={{ visibility: "hidden" }}
+          >
+            К акциям
+            <ArrowRight className="h-5 w-5 text-white/70" />
+          </a>
         </div>
       </div>
 
-      {/* ── Desktop buttons (absolute positioned) ── */}
+      {/* ── Desktop buttons (absolute) ── */}
       <div className="hero-cta-row pointer-events-none absolute inset-x-0 bottom-[30%] z-[4] hidden sm:flex items-center justify-between px-[10%] lg:px-[13%] [&_a]:pointer-events-auto">
         <a
           href="#booking"
@@ -122,26 +137,6 @@ export default function Hero() {
         >
           К акциям
           <ArrowRight className="h-6 w-6 text-white/70" />
-        </a>
-      </div>
-
-      {/* ── Mobile buttons (inside flow, centered) ── */}
-      <div className="hero-cta-row absolute inset-x-0 bottom-[8%] z-[4] flex flex-col items-center gap-3 px-6 sm:hidden [&_a]:pointer-events-auto">
-        <a
-          href="#booking"
-          className="hero-cta inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 text-base font-medium tracking-[0.08em] text-white/90 active:scale-[0.97]"
-          style={{ visibility: "hidden" }}
-        >
-          Записаться на приём
-          <ArrowRight className="h-5 w-5 text-white/70" />
-        </a>
-        <a
-          href="#promotions"
-          className="hero-cta inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 text-base font-medium tracking-[0.08em] text-white/90 active:scale-[0.97]"
-          style={{ visibility: "hidden" }}
-        >
-          К акциям
-          <ArrowRight className="h-5 w-5 text-white/70" />
         </a>
       </div>
     </section>
