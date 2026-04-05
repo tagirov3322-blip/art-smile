@@ -294,6 +294,15 @@ export default function Booking() {
                     </label>
                     {errors.consentGiven && <p className="mt-1.5 text-xs text-red-500">{errors.consentGiven}</p>}
                   </div>
+
+                  <div className="sm:col-span-2">
+                    <label className="flex cursor-pointer items-start gap-3">
+                      <input type="checkbox" className="mt-0.5 h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary" />
+                      <span className="text-sm text-muted-foreground">
+                        Согласие на персональную рассылку
+                      </span>
+                    </label>
+                  </div>
                 </div>
 
                 <button
