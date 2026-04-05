@@ -109,7 +109,7 @@ export default function About() {
       className="relative z-[1] overflow-hidden pt-0 pb-20 sm:pb-28 lg:pb-32"
       style={{ backgroundColor: "transparent" }}
     >
-      <div className="relative z-10 mx-auto max-w-[1600px] px-6 pt-40 sm:px-10 sm:pt-52 lg:px-12 lg:pt-48">
+      <div className="relative z-10 mx-auto max-w-[1600px] px-4 pt-20 sm:px-10 sm:pt-40 lg:px-12 lg:pt-48">
         <div className="flex flex-col gap-10 lg:flex-row lg:items-stretch lg:gap-10">
           {/* ── Left — Info ── */}
           <div className="about-left lg:w-[28%] shrink-0">
