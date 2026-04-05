@@ -280,7 +280,10 @@ function DoctorModal({
 export default function Doctors() {
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
   const [doctors, setDoctors] = useState<Doctor[]>([]);
+  const [showAll, setShowAll] = useState(false);
+  const extraRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
+  const VISIBLE_COUNT = 3;
 
   useEffect(() => {
     api.get<Doctor[]>("/doctors").then(setDoctors).catch(console.error);
