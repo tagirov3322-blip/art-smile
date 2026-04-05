@@ -270,7 +270,7 @@ export default function Services() {
     <section
       ref={sectionRef}
       id="services"
-      className="relative bg-[var(--muted)] pb-28 pt-16 sm:pt-20"
+      className="relative bg-[var(--muted)] dark:bg-transparent pb-28 pt-16 sm:pt-20"
     >
       {/* Subtle floating accent */}
       <div className="pointer-events-none absolute right-0 top-1/4 h-80 w-80 rounded-full bg-primary/5 blur-3xl" aria-hidden="true" />
