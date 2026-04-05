@@ -179,7 +179,15 @@ export default function Reviews() {
         <div className="reviews-heading mb-[var(--space-lg)]">
           <span className="mb-3 inline-block font-[var(--font-mono)] text-sm font-semibold uppercase tracking-[0.2em] text-white/60">Отзывы</span>
           <h2 className="text-fluid-h1 font-heading text-white">Что говорят пациенты</h2>
-          <p className="mt-4 max-w-xl text-fluid-body text-white/50">Рейтинг 4.0 на ПроДокторов</p>
+          <p className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-fluid-body text-white/50">
+            <a href="https://2gis.ru/nabchelny/firm/70000001038946979" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 transition-colors hover:text-white/80">
+              <span className="text-yellow-400">★</span> 4.9 на 2ГИС
+            </a>
+            <span className="text-white/20">|</span>
+            <a href="https://yandex.ru/maps/org/iq_dental/141258842825/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 transition-colors hover:text-white/80">
+              <span className="text-yellow-400">★</span> 5.0 на Яндекс Картах
+            </a>
+          </p>
         </div>
 
         <div className="flex justify-center gap-6 max-h-[740px] overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)]">
