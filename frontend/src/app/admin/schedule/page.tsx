@@ -112,7 +112,7 @@ export default function AdminSchedule() {
         </div>
 
         {selected && (
-          <div className="col-span-2">
+          <div className="lg:col-span-2">
             <div className="rounded-2xl bg-card p-6 shadow-sm">
               <h2 className="text-lg font-semibold text-foreground">{selected.name}</h2>
               <p className="text-sm text-muted-foreground">{selected.specialty}</p>
