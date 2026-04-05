@@ -115,7 +115,7 @@ export default function AdminSchedule() {
 
         {/* Расписание */}
         {selected && (
-          <div className="w-[480px] shrink-0">
+          <div className="col-span-2">
             <div className="rounded-2xl bg-white p-6 shadow-sm">
               <h2 className="text-lg font-semibold text-[#2a3250]">{selected.name}</h2>
               <p className="text-sm text-gray-400">{selected.specialty}</p>
