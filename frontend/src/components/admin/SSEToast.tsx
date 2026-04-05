@@ -25,8 +25,10 @@ export default function SSEToast() {
     const config = EVENT_CONFIG[evt.type];
     if (!config) return;
 
-    // Звуковое уведомление
-    try { new Audio("/notification.wav").play(); } catch {}
+    // Звук только для новых записей
+    if (evt.type === "new_booking") {
+      try { new Audio("/notification.wav").play(); } catch {}
+    }
 
     const data = evt.data || {};
     let subtitle = "";
