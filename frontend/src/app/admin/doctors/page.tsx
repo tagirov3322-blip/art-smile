@@ -37,6 +37,7 @@ export default function AdminDoctors() {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [editing, setEditing] = useState<Partial<Doctor> | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
   const [loading, setLoading] = useState(true);
   const fileRef = useRef<HTMLInputElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
