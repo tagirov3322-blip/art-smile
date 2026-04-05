@@ -334,7 +334,7 @@ export default function Booking() {
                             {availableTimeSlots.length === 0 ? (
                               <p className="py-4 text-center text-sm text-red-500">Врач не принимает в этот день</p>
                             ) : (
-                            <div className="grid grid-cols-4 gap-2">
+                            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
                               {availableTimeSlots.map((slot) => (
                                 <button
                                   key={slot}
