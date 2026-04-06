@@ -61,42 +61,7 @@ export default function Hero() {
       className="relative z-[2] min-h-[70vh] sm:min-h-screen"
       style={{ backgroundColor: "transparent" }}
     >
-      {/* ── Noise dot texture ── */}
-      <div
-        className="pointer-events-none absolute inset-0 z-0"
-        style={{
-          backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.07) 1px, transparent 0)",
-          backgroundSize: "24px 24px",
-        }}
-      />
-
-      {/* ── Soft glow ── */}
-      <div
-        className="pointer-events-none absolute inset-0 z-0"
-        style={{
-          backgroundImage: "radial-gradient(circle at 50% 40%, rgba(140,170,220,0.12) 0%, transparent 60%)",
-        }}
-      />
-
-      {/* ── Ambient light overlays ── */}
-      <div
-        className="pointer-events-none absolute inset-0 z-0"
-        style={{
-          background: `
-            radial-gradient(ellipse 50% 40% at 50% 35%, rgba(120,150,200,0.08) 0%, transparent 70%),
-            radial-gradient(ellipse 60% 50% at 25% 70%, rgba(80,100,160,0.05) 0%, transparent 60%),
-            radial-gradient(ellipse 40% 30% at 80% 20%, rgba(100,130,180,0.06) 0%, transparent 50%)
-          `,
-        }}
-      />
-
-      {/* ── Bottom fade to next section ── */}
-      <div
-        className="pointer-events-none absolute bottom-0 left-0 right-0 z-[1] h-32 sm:h-48"
-        style={{
-          background: "linear-gradient(to bottom, transparent, var(--hero-fade, #0d1117))",
-        }}
-      />
+      {/* decorative effects moved to wrapper level in globals.css */}
 
       {/* ── Content: centered on mobile, absolute on desktop ── */}
       <div
