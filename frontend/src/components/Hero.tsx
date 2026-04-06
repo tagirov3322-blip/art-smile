@@ -58,7 +58,7 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative z-[2] min-h-screen"
+      className="relative z-[2] min-h-[70vh] sm:min-h-screen"
       style={{ backgroundColor: "transparent" }}
     >
       {/* ── Ambient light overlays ── */}
@@ -75,7 +75,7 @@ export default function Hero() {
 
       {/* ── Content: centered on mobile, absolute on desktop ── */}
       <div
-        className="hero-title relative z-[1] flex min-h-screen flex-col items-center justify-center px-6 sm:pointer-events-none sm:absolute sm:inset-x-0 sm:top-[10%] md:top-[12%] lg:top-[14%] sm:min-h-0 sm:px-4"
+        className="hero-title relative z-[1] flex min-h-0 flex-col items-center px-6 pt-[45vw] pb-4 sm:pointer-events-none sm:absolute sm:inset-x-0 sm:top-[10%] md:top-[12%] lg:top-[14%] sm:pt-0 sm:pb-0 sm:px-4"
         style={{ opacity: 0, transform: "translateY(30px)", willChange: "transform, opacity" }}
       >
         <span

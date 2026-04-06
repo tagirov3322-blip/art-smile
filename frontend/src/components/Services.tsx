@@ -194,46 +194,43 @@ export default function Services() {
     setExpandedId((prev) => (prev === id ? null : id));
   }, []);
 
+  const isMobile = typeof window !== "undefined" && window.matchMedia("(max-width: 640px)").matches;
+
   const handleRowEnter = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    if (isMobile) return;
     const row = e.currentTarget;
     const chevron = row.querySelector(".chevron-icon");
     gsap.to(row, { backgroundColor: "rgba(42,50,80,0.04)", x: 10, duration: 0.3, ease: "power2.out", force3D: true });
     if (chevron) gsap.to(chevron, { y: 3, duration: 0.3, ease: "power2.out", force3D: true });
-  }, []);
+  }, [isMobile]);
 
   const handleRowLeave = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    if (isMobile) return;
     const row = e.currentTarget;
     const chevron = row.querySelector(".chevron-icon");
     gsap.to(row, { backgroundColor: "transparent", x: 0, duration: 0.3, ease: "power2.out", force3D: true });
     if (chevron) gsap.to(chevron, { y: 0, duration: 0.3, ease: "power2.out", force3D: true });
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
     detailsRefs.current.forEach((el, id) => {
       if (!el) return;
       if (expandedId === id) {
-        gsap.set(el, { display: "block" });
-        gsap.to(el, {
-          height: "auto",
-          autoAlpha: 1,
-          duration: 0.35,
-          ease: "power2.inOut",
-          force3D: true,
-        });
+        if (isMobile) {
+          gsap.set(el, { display: "block", height: "auto", autoAlpha: 1 });
+        } else {
+          gsap.set(el, { display: "block" });
+          gsap.to(el, { height: "auto", autoAlpha: 1, duration: 0.35, ease: "power2.inOut", force3D: true });
+        }
       } else if (el.offsetHeight > 0) {
-        gsap.to(el, {
-          height: 0,
-          opacity: 0,
-          duration: 0.3,
-          ease: "power2.inOut",
-          force3D: true,
-          onComplete: () => {
-            gsap.set(el, { display: "none" });
-          },
-        });
+        if (isMobile) {
+          gsap.set(el, { display: "none", height: 0, opacity: 0 });
+        } else {
+          gsap.to(el, { height: 0, opacity: 0, duration: 0.3, ease: "power2.inOut", force3D: true, onComplete: () => gsap.set(el, { display: "none" }) });
+        }
       }
     });
-  }, [expandedId]);
+  }, [expandedId, isMobile]);
 
   useGSAP(
     () => {

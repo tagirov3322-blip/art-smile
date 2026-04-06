@@ -84,12 +84,14 @@ function DoctorCard({
       gsap.to(glareRef.current, { opacity: 0, duration: 0.4 });
   }, []);
 
+  const isMobileCard = typeof window !== "undefined" && window.innerWidth < 640;
+
   return (
     <div
       className="doctor-card group relative z-[1] h-full cursor-pointer hover:z-[10]"
-      style={{ perspective: "800px" }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      style={{ perspective: isMobileCard ? "none" : "800px" }}
+      onMouseMove={isMobileCard ? undefined : handleMouseMove}
+      onMouseLeave={isMobileCard ? undefined : handleMouseLeave}
       onClick={onClick}
     >
       <div
@@ -189,34 +191,33 @@ function DoctorModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4"
       onClick={onClose}
     >
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
 
       <div
-        className="relative z-10 w-full max-w-2xl"
-        style={{ perspective: "1000px" }}
+        className="relative z-10 w-full max-h-[90vh] sm:max-w-2xl"
+        style={{ perspective: typeof window !== "undefined" && window.innerWidth >= 640 ? "1000px" : "none" }}
         onClick={(e) => e.stopPropagation()}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        onMouseMove={typeof window !== "undefined" && window.innerWidth >= 640 ? handleMouseMove : undefined}
+        onMouseLeave={typeof window !== "undefined" && window.innerWidth >= 640 ? handleMouseLeave : undefined}
       >
         <div
           ref={cardRef}
-          className="relative overflow-hidden rounded-3xl bg-card shadow-2xl will-change-transform"
-          style={{ transformStyle: "preserve-3d" }}
+          className="relative overflow-y-auto max-h-[90vh] rounded-t-3xl sm:rounded-3xl bg-card shadow-2xl"
         >
           <button
             onClick={onClose}
-            className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm transition-colors hover:bg-black/50"
+            className="sticky top-3 right-3 z-20 ml-auto mr-3 mt-3 flex h-10 w-10 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm transition-colors hover:bg-black/50"
           >
             <X className="h-5 w-5" />
           </button>
 
-          <div className="flex flex-col overflow-hidden rounded-3xl sm:flex-row">
+          <div className="flex flex-col sm:flex-row -mt-8 sm:mt-0">
             <div className="relative shrink-0 sm:w-2/5">
               <div
-                className="m-4 overflow-hidden rounded-2xl sm:m-5 sm:mr-0"
+                className="mx-4 overflow-hidden rounded-2xl sm:m-5 sm:mr-0"
                 style={{ aspectRatio: "3/4" }}
               >
                 <img
@@ -227,7 +228,7 @@ function DoctorModal({
               </div>
             </div>
 
-            <div className="flex flex-col justify-center p-8 sm:p-10">
+            <div className="flex flex-col justify-center p-6 sm:p-10">
               <p className="font-[var(--font-mono)] text-xs uppercase tracking-[0.15em] text-muted-foreground">
                 Специалист
               </p>
