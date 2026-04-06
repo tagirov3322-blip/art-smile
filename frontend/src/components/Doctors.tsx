@@ -372,9 +372,12 @@ export default function Doctors() {
             <>
               <div
                 ref={extraRef}
-                className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 overflow-hidden transition-all duration-700 ease-in-out"
+                className={cn(
+                  "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 transition-all duration-700 ease-in-out",
+                  !showAll && "overflow-hidden"
+                )}
                 style={{
-                  maxHeight: showAll ? `${doctors.length * 500}px` : "0px",
+                  maxHeight: showAll ? `${doctors.length * 600}px` : "0px",
                   opacity: showAll ? 1 : 0,
                   marginTop: showAll ? "1.25rem" : "0px",
                 }}
@@ -388,7 +391,7 @@ export default function Doctors() {
                 ))}
               </div>
 
-              <div className="mt-8 flex justify-center">
+              <div className="mt-14 flex justify-center">
                 <button
                   onClick={() => setShowAll((v) => !v)}
                   className="rounded-full border border-primary/20 bg-card px-8 py-3 text-sm font-semibold text-primary transition-all duration-300 hover:bg-primary hover:text-primary-foreground hover:border-primary"
