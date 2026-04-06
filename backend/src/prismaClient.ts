@@ -14,7 +14,7 @@ export function initPrisma() {
     host: "aws-1-eu-central-1.pooler.supabase.com",
     port: 5432,
     database: "postgres",
-    user: "postgres.uxtsjmshhujeuwbdntek",
+    user: "postgres.izuffcivirsdrlxigrbp",
     password: process.env.DB_PASSWORD,
     ssl: { rejectUnauthorized: false },
   });
