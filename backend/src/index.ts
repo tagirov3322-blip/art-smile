@@ -25,7 +25,7 @@ import statsRoutes from "./routes/stats";
 import settingsRoutes from "./routes/settings";
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = Number(process.env.PORT) || 4000;
 
 // Безопасность
 app.use(helmet());

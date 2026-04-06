@@ -27,7 +27,7 @@ export function initPrisma() {
 // Для обратной совместимости — default export с getter
 const handler: ProxyHandler<object> = {
   get(_, prop) {
-    return initPrisma()[prop];
+    return (initPrisma() as any)[prop as string];
   },
 };
 
