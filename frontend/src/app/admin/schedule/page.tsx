@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { api } from "@/lib/api";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Doctor {
   id: number;
@@ -11,13 +12,13 @@ interface Doctor {
 }
 
 const DAYS = [
-  { key: "monday", label: "Понедельник", short: "Пн" },
-  { key: "tuesday", label: "Вторник", short: "Вт" },
-  { key: "wednesday", label: "Среда", short: "Ср" },
-  { key: "thursday", label: "Четверг", short: "Чт" },
-  { key: "friday", label: "Пятница", short: "Пт" },
-  { key: "saturday", label: "Суббота", short: "Сб" },
-  { key: "sunday", label: "Воскресенье", short: "Вс" },
+  { key: "monday", label: "Понедельник" },
+  { key: "tuesday", label: "Вторник" },
+  { key: "wednesday", label: "Среда" },
+  { key: "thursday", label: "Четверг" },
+  { key: "friday", label: "Пятница" },
+  { key: "saturday", label: "Суббота" },
+  { key: "sunday", label: "Воскресенье" },
 ];
 
 const HOURS = Array.from({ length: 15 }, (_, i) => {
@@ -25,31 +26,100 @@ const HOURS = Array.from({ length: 15 }, (_, i) => {
   return `${String(h).padStart(2, "0")}:00`;
 });
 
+function getMonday(d: Date): Date {
+  const date = new Date(d);
+  const dow = date.getDay();
+  date.setDate(date.getDate() - ((dow + 6) % 7));
+  date.setHours(0, 0, 0, 0);
+  return date;
+}
+
+function formatWeekStart(d: Date): string {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+function formatWeekRange(monday: Date): string {
+  const sunday = new Date(monday);
+  sunday.setDate(sunday.getDate() + 6);
+  const opts: Intl.DateTimeFormatOptions = { day: "numeric", month: "short" };
+  return `${monday.toLocaleDateString("ru-RU", opts)} — ${sunday.toLocaleDateString("ru-RU", opts)} ${sunday.getFullYear()}`;
+}
+
+function getWeekDayDate(monday: Date, dayIndex: number): string {
+  const d = new Date(monday);
+  d.setDate(d.getDate() + dayIndex);
+  return d.toLocaleDateString("ru-RU", { day: "numeric", month: "short" });
+}
+
 export default function AdminSchedule() {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [schedule, setSchedule] = useState<Record<string, { start: string; end: string; enabled: boolean }>>({});
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [currentMonday, setCurrentMonday] = useState<Date>(() => getMonday(new Date()));
+  const [isCustom, setIsCustom] = useState(false);
 
   useEffect(() => {
     api.get<Doctor[]>("/doctors?active=false").then((data) => {
       setDoctors(data);
-      if (data.length > 0) selectDoctor(data[0]);
+      if (data.length > 0) setSelectedId(data[0].id);
     }).catch(console.error);
   }, []);
 
-  const selectDoctor = (doc: Doctor) => {
-    setSelectedId(doc.id);
+  const loadWeekSchedule = useCallback(async (doctorId: number, monday: Date) => {
     setSaved(false);
-    const s: Record<string, { start: string; end: string; enabled: boolean }> = {};
-    DAYS.forEach((d) => {
-      const existing = doc.schedule?.[d.key];
-      s[d.key] = existing
-        ? { start: existing.start, end: existing.end, enabled: true }
-        : { start: "09:00", end: "18:00", enabled: false };
+    const weekStart = formatWeekStart(monday);
+    try {
+      const data = await api.get<{ schedule: Record<string, { start: string; end: string }> | null; isCustom: boolean }>(
+        `/doctors/${doctorId}/week-schedule?weekStart=${weekStart}`
+      );
+      const s: Record<string, { start: string; end: string; enabled: boolean }> = {};
+      DAYS.forEach((d) => {
+        const existing = data.schedule?.[d.key];
+        s[d.key] = existing
+          ? { start: existing.start, end: existing.end, enabled: true }
+          : { start: "09:00", end: "18:00", enabled: false };
+      });
+      setSchedule(s);
+      setIsCustom(data.isCustom);
+    } catch {
+      // Fallback to doctor default
+      const doc = doctors.find((d) => d.id === doctorId);
+      const s: Record<string, { start: string; end: string; enabled: boolean }> = {};
+      DAYS.forEach((d) => {
+        const existing = doc?.schedule?.[d.key];
+        s[d.key] = existing
+          ? { start: existing.start, end: existing.end, enabled: true }
+          : { start: "09:00", end: "18:00", enabled: false };
+      });
+      setSchedule(s);
+      setIsCustom(false);
+    }
+  }, [doctors]);
+
+  useEffect(() => {
+    if (selectedId) loadWeekSchedule(selectedId, currentMonday);
+  }, [selectedId, currentMonday, loadWeekSchedule]);
+
+  const prevWeek = () => {
+    setCurrentMonday((prev) => {
+      const d = new Date(prev);
+      d.setDate(d.getDate() - 7);
+      return d;
     });
-    setSchedule(s);
+  };
+
+  const nextWeek = () => {
+    setCurrentMonday((prev) => {
+      const d = new Date(prev);
+      d.setDate(d.getDate() + 7);
+      return d;
+    });
+  };
+
+  const goToCurrentWeek = () => {
+    setCurrentMonday(getMonday(new Date()));
   };
 
   const toggleDay = (key: string) => {
@@ -76,29 +146,43 @@ export default function AdminSchedule() {
       }
     });
     try {
-      await api.put(`/doctors/${selectedId}`, { schedule: scheduleData });
+      await api.put(`/doctors/${selectedId}/week-schedule`, {
+        weekStart: formatWeekStart(currentMonday),
+        schedule: scheduleData,
+      });
       setSaved(true);
+      setIsCustom(true);
       setTimeout(() => setSaved(false), 2000);
-      setDoctors((prev) => prev.map((doc) => doc.id === selectedId ? { ...doc, schedule: scheduleData } : doc));
     } catch (err) {
       alert(err instanceof Error ? err.message : "Ошибка сохранения");
     }
     setSaving(false);
   };
 
+  const resetToDefault = async () => {
+    if (!selectedId) return;
+    try {
+      await api.delete(`/doctors/${selectedId}/week-schedule?weekStart=${formatWeekStart(currentMonday)}`);
+      await loadWeekSchedule(selectedId, currentMonday);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Ошибка сброса");
+    }
+  };
+
   const selected = doctors.find((d) => d.id === selectedId);
+  const isCurrentWeek = formatWeekStart(currentMonday) === formatWeekStart(getMonday(new Date()));
 
   return (
     <div>
       <h1 className="text-2xl font-bold text-foreground">График работы</h1>
-      <p className="mt-1 text-sm text-muted-foreground">Настройте расписание для каждого врача</p>
+      <p className="mt-1 text-sm text-muted-foreground">Настройте расписание для каждого врача по неделям</p>
 
       <div className="mt-6 grid grid-cols-1 items-stretch gap-4 lg:grid-cols-3 lg:gap-6">
         <div className="flex flex-row gap-2 overflow-x-auto pb-2 lg:flex-col lg:justify-between lg:overflow-visible lg:pb-0">
           {doctors.map((doc) => (
             <button
               key={doc.id}
-              onClick={() => selectDoctor(doc)}
+              onClick={() => setSelectedId(doc.id)}
               className={`w-full shrink-0 rounded-xl px-4 py-3 text-left transition-all duration-200 lg:px-5 lg:py-5 ${
                 selectedId === doc.id
                   ? "bg-primary text-primary-foreground shadow-md"
@@ -117,8 +201,33 @@ export default function AdminSchedule() {
               <h2 className="text-lg font-semibold text-foreground">{selected.name}</h2>
               <p className="text-sm text-muted-foreground">{selected.specialty}</p>
 
-              <div className="mt-6 space-y-3">
-                {DAYS.map((day) => {
+              {/* Week navigation */}
+              <div className="mt-5 flex items-center gap-3">
+                <button onClick={prevWeek} className="rounded-lg border border-border p-2 transition hover:bg-accent">
+                  <ChevronLeft className="h-4 w-4 text-foreground" />
+                </button>
+                <div className="flex-1 text-center">
+                  <p className="text-sm font-semibold text-foreground">{formatWeekRange(currentMonday)}</p>
+                  {isCustom && (
+                    <span className="text-xs text-primary">Индивидуальное расписание</span>
+                  )}
+                  {!isCustom && (
+                    <span className="text-xs text-muted-foreground">Стандартный график</span>
+                  )}
+                </div>
+                <button onClick={nextWeek} className="rounded-lg border border-border p-2 transition hover:bg-accent">
+                  <ChevronRight className="h-4 w-4 text-foreground" />
+                </button>
+              </div>
+
+              {!isCurrentWeek && (
+                <button onClick={goToCurrentWeek} className="mt-2 w-full text-center text-xs text-primary hover:underline">
+                  К текущей неделе
+                </button>
+              )}
+
+              <div className="mt-5 space-y-3">
+                {DAYS.map((day, i) => {
                   const s = schedule[day.key];
                   if (!s) return null;
                   return (
@@ -130,7 +239,10 @@ export default function AdminSchedule() {
                         {s.enabled && <svg className="h-full w-full text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>}
                       </button>
 
-                      <span className={`w-28 text-sm font-medium ${s.enabled ? "text-foreground" : "text-muted-foreground"}`}>{day.label}</span>
+                      <div className="w-28">
+                        <span className={`text-sm font-medium ${s.enabled ? "text-foreground" : "text-muted-foreground"}`}>{day.label}</span>
+                        <span className="block text-xs text-muted-foreground">{getWeekDayDate(currentMonday, i)}</span>
+                      </div>
 
                       {s.enabled ? (
                         <div className="flex items-center gap-2">
@@ -152,11 +264,17 @@ export default function AdminSchedule() {
                 })}
               </div>
 
-              <div className="mt-6">
+              <div className="mt-6 flex items-center gap-3">
                 <button onClick={save} disabled={saving}
                   className="rounded-xl bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition hover:opacity-90 disabled:opacity-50">
                   {saving ? "Сохранение..." : saved ? "Сохранено!" : "Сохранить график"}
                 </button>
+                {isCustom && (
+                  <button onClick={resetToDefault}
+                    className="rounded-xl border border-border px-5 py-2.5 text-sm font-medium text-muted-foreground transition hover:bg-accent hover:text-foreground">
+                    Сбросить к стандартному
+                  </button>
+                )}
               </div>
             </div>
           </div>

@@ -258,6 +258,7 @@ export type DoctorWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Doctor"> | Date | string
   bookings?: Prisma.BookingListRelationFilter
   portfolio?: Prisma.PortfolioWorkListRelationFilter
+  weekSchedules?: Prisma.DoctorWeekScheduleListRelationFilter
 }
 
 export type DoctorOrderByWithRelationInput = {
@@ -273,6 +274,7 @@ export type DoctorOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   bookings?: Prisma.BookingOrderByRelationAggregateInput
   portfolio?: Prisma.PortfolioWorkOrderByRelationAggregateInput
+  weekSchedules?: Prisma.DoctorWeekScheduleOrderByRelationAggregateInput
 }
 
 export type DoctorWhereUniqueInput = Prisma.AtLeast<{
@@ -291,6 +293,7 @@ export type DoctorWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Doctor"> | Date | string
   bookings?: Prisma.BookingListRelationFilter
   portfolio?: Prisma.PortfolioWorkListRelationFilter
+  weekSchedules?: Prisma.DoctorWeekScheduleListRelationFilter
 }, "id">
 
 export type DoctorOrderByWithAggregationInput = {
@@ -339,6 +342,7 @@ export type DoctorCreateInput = {
   updatedAt?: Date | string
   bookings?: Prisma.BookingCreateNestedManyWithoutDoctorInput
   portfolio?: Prisma.PortfolioWorkCreateNestedManyWithoutDoctorInput
+  weekSchedules?: Prisma.DoctorWeekScheduleCreateNestedManyWithoutDoctorInput
 }
 
 export type DoctorUncheckedCreateInput = {
@@ -354,6 +358,7 @@ export type DoctorUncheckedCreateInput = {
   updatedAt?: Date | string
   bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutDoctorInput
   portfolio?: Prisma.PortfolioWorkUncheckedCreateNestedManyWithoutDoctorInput
+  weekSchedules?: Prisma.DoctorWeekScheduleUncheckedCreateNestedManyWithoutDoctorInput
 }
 
 export type DoctorUpdateInput = {
@@ -368,6 +373,7 @@ export type DoctorUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bookings?: Prisma.BookingUpdateManyWithoutDoctorNestedInput
   portfolio?: Prisma.PortfolioWorkUpdateManyWithoutDoctorNestedInput
+  weekSchedules?: Prisma.DoctorWeekScheduleUpdateManyWithoutDoctorNestedInput
 }
 
 export type DoctorUncheckedUpdateInput = {
@@ -383,6 +389,7 @@ export type DoctorUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bookings?: Prisma.BookingUncheckedUpdateManyWithoutDoctorNestedInput
   portfolio?: Prisma.PortfolioWorkUncheckedUpdateManyWithoutDoctorNestedInput
+  weekSchedules?: Prisma.DoctorWeekScheduleUncheckedUpdateManyWithoutDoctorNestedInput
 }
 
 export type DoctorCreateManyInput = {
@@ -483,6 +490,20 @@ export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
+export type DoctorCreateNestedOneWithoutWeekSchedulesInput = {
+  create?: Prisma.XOR<Prisma.DoctorCreateWithoutWeekSchedulesInput, Prisma.DoctorUncheckedCreateWithoutWeekSchedulesInput>
+  connectOrCreate?: Prisma.DoctorCreateOrConnectWithoutWeekSchedulesInput
+  connect?: Prisma.DoctorWhereUniqueInput
+}
+
+export type DoctorUpdateOneRequiredWithoutWeekSchedulesNestedInput = {
+  create?: Prisma.XOR<Prisma.DoctorCreateWithoutWeekSchedulesInput, Prisma.DoctorUncheckedCreateWithoutWeekSchedulesInput>
+  connectOrCreate?: Prisma.DoctorCreateOrConnectWithoutWeekSchedulesInput
+  upsert?: Prisma.DoctorUpsertWithoutWeekSchedulesInput
+  connect?: Prisma.DoctorWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DoctorUpdateToOneWithWhereWithoutWeekSchedulesInput, Prisma.DoctorUpdateWithoutWeekSchedulesInput>, Prisma.DoctorUncheckedUpdateWithoutWeekSchedulesInput>
+}
+
 export type DoctorCreateNestedOneWithoutBookingsInput = {
   create?: Prisma.XOR<Prisma.DoctorCreateWithoutBookingsInput, Prisma.DoctorUncheckedCreateWithoutBookingsInput>
   connectOrCreate?: Prisma.DoctorCreateOrConnectWithoutBookingsInput
@@ -511,6 +532,80 @@ export type DoctorUpdateOneRequiredWithoutPortfolioNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.DoctorUpdateToOneWithWhereWithoutPortfolioInput, Prisma.DoctorUpdateWithoutPortfolioInput>, Prisma.DoctorUncheckedUpdateWithoutPortfolioInput>
 }
 
+export type DoctorCreateWithoutWeekSchedulesInput = {
+  name: string
+  specialty: string
+  experience?: number
+  photo?: string | null
+  description?: string | null
+  isActive?: boolean
+  schedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  bookings?: Prisma.BookingCreateNestedManyWithoutDoctorInput
+  portfolio?: Prisma.PortfolioWorkCreateNestedManyWithoutDoctorInput
+}
+
+export type DoctorUncheckedCreateWithoutWeekSchedulesInput = {
+  id?: number
+  name: string
+  specialty: string
+  experience?: number
+  photo?: string | null
+  description?: string | null
+  isActive?: boolean
+  schedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutDoctorInput
+  portfolio?: Prisma.PortfolioWorkUncheckedCreateNestedManyWithoutDoctorInput
+}
+
+export type DoctorCreateOrConnectWithoutWeekSchedulesInput = {
+  where: Prisma.DoctorWhereUniqueInput
+  create: Prisma.XOR<Prisma.DoctorCreateWithoutWeekSchedulesInput, Prisma.DoctorUncheckedCreateWithoutWeekSchedulesInput>
+}
+
+export type DoctorUpsertWithoutWeekSchedulesInput = {
+  update: Prisma.XOR<Prisma.DoctorUpdateWithoutWeekSchedulesInput, Prisma.DoctorUncheckedUpdateWithoutWeekSchedulesInput>
+  create: Prisma.XOR<Prisma.DoctorCreateWithoutWeekSchedulesInput, Prisma.DoctorUncheckedCreateWithoutWeekSchedulesInput>
+  where?: Prisma.DoctorWhereInput
+}
+
+export type DoctorUpdateToOneWithWhereWithoutWeekSchedulesInput = {
+  where?: Prisma.DoctorWhereInput
+  data: Prisma.XOR<Prisma.DoctorUpdateWithoutWeekSchedulesInput, Prisma.DoctorUncheckedUpdateWithoutWeekSchedulesInput>
+}
+
+export type DoctorUpdateWithoutWeekSchedulesInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  specialty?: Prisma.StringFieldUpdateOperationsInput | string
+  experience?: Prisma.IntFieldUpdateOperationsInput | number
+  photo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  bookings?: Prisma.BookingUpdateManyWithoutDoctorNestedInput
+  portfolio?: Prisma.PortfolioWorkUpdateManyWithoutDoctorNestedInput
+}
+
+export type DoctorUncheckedUpdateWithoutWeekSchedulesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  specialty?: Prisma.StringFieldUpdateOperationsInput | string
+  experience?: Prisma.IntFieldUpdateOperationsInput | number
+  photo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  bookings?: Prisma.BookingUncheckedUpdateManyWithoutDoctorNestedInput
+  portfolio?: Prisma.PortfolioWorkUncheckedUpdateManyWithoutDoctorNestedInput
+}
+
 export type DoctorCreateWithoutBookingsInput = {
   name: string
   specialty: string
@@ -522,6 +617,7 @@ export type DoctorCreateWithoutBookingsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   portfolio?: Prisma.PortfolioWorkCreateNestedManyWithoutDoctorInput
+  weekSchedules?: Prisma.DoctorWeekScheduleCreateNestedManyWithoutDoctorInput
 }
 
 export type DoctorUncheckedCreateWithoutBookingsInput = {
@@ -536,6 +632,7 @@ export type DoctorUncheckedCreateWithoutBookingsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   portfolio?: Prisma.PortfolioWorkUncheckedCreateNestedManyWithoutDoctorInput
+  weekSchedules?: Prisma.DoctorWeekScheduleUncheckedCreateNestedManyWithoutDoctorInput
 }
 
 export type DoctorCreateOrConnectWithoutBookingsInput = {
@@ -565,6 +662,7 @@ export type DoctorUpdateWithoutBookingsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   portfolio?: Prisma.PortfolioWorkUpdateManyWithoutDoctorNestedInput
+  weekSchedules?: Prisma.DoctorWeekScheduleUpdateManyWithoutDoctorNestedInput
 }
 
 export type DoctorUncheckedUpdateWithoutBookingsInput = {
@@ -579,6 +677,7 @@ export type DoctorUncheckedUpdateWithoutBookingsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   portfolio?: Prisma.PortfolioWorkUncheckedUpdateManyWithoutDoctorNestedInput
+  weekSchedules?: Prisma.DoctorWeekScheduleUncheckedUpdateManyWithoutDoctorNestedInput
 }
 
 export type DoctorCreateWithoutPortfolioInput = {
@@ -592,6 +691,7 @@ export type DoctorCreateWithoutPortfolioInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   bookings?: Prisma.BookingCreateNestedManyWithoutDoctorInput
+  weekSchedules?: Prisma.DoctorWeekScheduleCreateNestedManyWithoutDoctorInput
 }
 
 export type DoctorUncheckedCreateWithoutPortfolioInput = {
@@ -606,6 +706,7 @@ export type DoctorUncheckedCreateWithoutPortfolioInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutDoctorInput
+  weekSchedules?: Prisma.DoctorWeekScheduleUncheckedCreateNestedManyWithoutDoctorInput
 }
 
 export type DoctorCreateOrConnectWithoutPortfolioInput = {
@@ -635,6 +736,7 @@ export type DoctorUpdateWithoutPortfolioInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bookings?: Prisma.BookingUpdateManyWithoutDoctorNestedInput
+  weekSchedules?: Prisma.DoctorWeekScheduleUpdateManyWithoutDoctorNestedInput
 }
 
 export type DoctorUncheckedUpdateWithoutPortfolioInput = {
@@ -649,6 +751,7 @@ export type DoctorUncheckedUpdateWithoutPortfolioInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bookings?: Prisma.BookingUncheckedUpdateManyWithoutDoctorNestedInput
+  weekSchedules?: Prisma.DoctorWeekScheduleUncheckedUpdateManyWithoutDoctorNestedInput
 }
 
 
@@ -659,11 +762,13 @@ export type DoctorUncheckedUpdateWithoutPortfolioInput = {
 export type DoctorCountOutputType = {
   bookings: number
   portfolio: number
+  weekSchedules: number
 }
 
 export type DoctorCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   bookings?: boolean | DoctorCountOutputTypeCountBookingsArgs
   portfolio?: boolean | DoctorCountOutputTypeCountPortfolioArgs
+  weekSchedules?: boolean | DoctorCountOutputTypeCountWeekSchedulesArgs
 }
 
 /**
@@ -690,6 +795,13 @@ export type DoctorCountOutputTypeCountPortfolioArgs<ExtArgs extends runtime.Type
   where?: Prisma.PortfolioWorkWhereInput
 }
 
+/**
+ * DoctorCountOutputType without action
+ */
+export type DoctorCountOutputTypeCountWeekSchedulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DoctorWeekScheduleWhereInput
+}
+
 
 export type DoctorSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -704,6 +816,7 @@ export type DoctorSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   updatedAt?: boolean
   bookings?: boolean | Prisma.Doctor$bookingsArgs<ExtArgs>
   portfolio?: boolean | Prisma.Doctor$portfolioArgs<ExtArgs>
+  weekSchedules?: boolean | Prisma.Doctor$weekSchedulesArgs<ExtArgs>
   _count?: boolean | Prisma.DoctorCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["doctor"]>
 
@@ -750,6 +863,7 @@ export type DoctorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type DoctorInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   bookings?: boolean | Prisma.Doctor$bookingsArgs<ExtArgs>
   portfolio?: boolean | Prisma.Doctor$portfolioArgs<ExtArgs>
+  weekSchedules?: boolean | Prisma.Doctor$weekSchedulesArgs<ExtArgs>
   _count?: boolean | Prisma.DoctorCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type DoctorIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -760,6 +874,7 @@ export type $DoctorPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   objects: {
     bookings: Prisma.$BookingPayload<ExtArgs>[]
     portfolio: Prisma.$PortfolioWorkPayload<ExtArgs>[]
+    weekSchedules: Prisma.$DoctorWeekSchedulePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1168,6 +1283,7 @@ export interface Prisma__DoctorClient<T, Null = never, ExtArgs extends runtime.T
   readonly [Symbol.toStringTag]: "PrismaPromise"
   bookings<T extends Prisma.Doctor$bookingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Doctor$bookingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   portfolio<T extends Prisma.Doctor$portfolioArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Doctor$portfolioArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PortfolioWorkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  weekSchedules<T extends Prisma.Doctor$weekSchedulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Doctor$weekSchedulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DoctorWeekSchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1645,6 +1761,30 @@ export type Doctor$portfolioArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.PortfolioWorkScalarFieldEnum | Prisma.PortfolioWorkScalarFieldEnum[]
+}
+
+/**
+ * Doctor.weekSchedules
+ */
+export type Doctor$weekSchedulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DoctorWeekSchedule
+   */
+  select?: Prisma.DoctorWeekScheduleSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DoctorWeekSchedule
+   */
+  omit?: Prisma.DoctorWeekScheduleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DoctorWeekScheduleInclude<ExtArgs> | null
+  where?: Prisma.DoctorWeekScheduleWhereInput
+  orderBy?: Prisma.DoctorWeekScheduleOrderByWithRelationInput | Prisma.DoctorWeekScheduleOrderByWithRelationInput[]
+  cursor?: Prisma.DoctorWeekScheduleWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DoctorWeekScheduleScalarFieldEnum | Prisma.DoctorWeekScheduleScalarFieldEnum[]
 }
 
 /**

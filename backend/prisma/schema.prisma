@@ -20,19 +20,33 @@ model Admin {
 }
 
 model Doctor {
-  id          Int             @id @default(autoincrement())
-  name        String
-  specialty   String
-  experience  Int             @default(0)
-  photo       String?
-  description String?
-  isActive    Boolean         @default(true)
-  schedule    Json?
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
-  bookings    Booking[]
-  portfolio   PortfolioWork[]
+  id             Int                  @id @default(autoincrement())
+  name           String
+  specialty      String
+  experience     Int                  @default(0)
+  photo          String?
+  description    String?
+  isActive       Boolean              @default(true)
+  schedule       Json?
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+  bookings       Booking[]
+  portfolio      PortfolioWork[]
+  weekSchedules  DoctorWeekSchedule[]
 
+  @@schema("iq")
+}
+
+model DoctorWeekSchedule {
+  id        Int      @id @default(autoincrement())
+  doctorId  Int
+  doctor    Doctor   @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  weekStart DateTime @db.Date
+  schedule  Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([doctorId, weekStart])
   @@schema("iq")
 }
 

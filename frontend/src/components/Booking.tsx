@@ -141,25 +141,82 @@ export default function Booking() {
     setAvailableTimeSlots(ALL_TIME_SLOTS);
   };
 
-  // При смене даты — загрузить занятые слоты и отфильтровать доступные
+  // При смене даты — загрузить расписание дня и занятые слоты
   useEffect(() => {
     if (!doctorId || !date) return;
-    const doc = allDoctors.find((d) => String(d.id) === doctorId);
-    if (doc && !isDayAvailable(doc.schedule, date)) {
-      setTime("");
-      setAvailableTimeSlots([]);
-      return;
-    }
-    api.get<{ occupied: OccupiedSlot[] }>(`/bookings/slots?doctorId=${doctorId}&date=${date}`).then(({ occupied }) => {
-      setOccupiedSlots(occupied);
-      const slots = getAvailableSlots(doc?.schedule || null, date, occupied, 30);
+
+    Promise.all([
+      api.get<{ available: boolean; schedule: { start: string; end: string } | null }>(`/doctors/${doctorId}/day-schedule?date=${date}`),
+      api.get<{ occupied: OccupiedSlot[] }>(`/bookings/slots?doctorId=${doctorId}&date=${date}`),
+    ]).then(([dayData, slotsData]) => {
+      if (!dayData.available || !dayData.schedule) {
+        setTime("");
+        setAvailableTimeSlots([]);
+        return;
+      }
+      setOccupiedSlots(slotsData.occupied);
+      // Build schedule object for this specific day
+      const DAY_KEYS_LOCAL = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+      const dayIndex = new Date(date).getDay();
+      const dayKey = DAY_KEYS_LOCAL[dayIndex];
+      const daySchedule = { [dayKey]: dayData.schedule };
+      const slots = getAvailableSlots(daySchedule, date, slotsData.occupied, 30);
       setAvailableTimeSlots(slots);
       if (time && !slots.includes(time)) setTime("");
     }).catch(console.error);
-  }, [doctorId, date, allDoctors]);
+  }, [doctorId, date]);
+
+  // Кэш доступности дат (проверяет понедельное расписание через API)
+  const [dateAvailabilityCache, setDateAvailabilityCache] = useState<Record<string, boolean>>({});
+
+  const checkDateAvailability = async (dateStr: string): Promise<boolean> => {
+    if (!doctorId) return true;
+    if (dateStr in dateAvailabilityCache) return dateAvailabilityCache[dateStr];
+    try {
+      const data = await api.get<{ available: boolean }>(`/doctors/${doctorId}/day-schedule?date=${dateStr}`);
+      setDateAvailabilityCache((prev) => ({ ...prev, [dateStr]: data.available }));
+      return data.available;
+    } catch {
+      return true; // fallback: allow if API fails
+    }
+  };
+
+  // Pre-load availability for visible month when doctor changes
+  useEffect(() => {
+    if (!doctorId) return;
+    setDateAvailabilityCache({});
+    // Pre-load current and next month
+    const today = new Date();
+    const dates: string[] = [];
+    for (let m = 0; m < 2; m++) {
+      const month = today.getMonth() + m;
+      const year = today.getFullYear() + Math.floor(month / 12);
+      const daysInMonth = new Date(year, (month % 12) + 1, 0).getDate();
+      for (let d = 1; d <= daysInMonth; d++) {
+        dates.push(`${year}-${String((month % 12) + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`);
+      }
+    }
+    // Batch check
+    Promise.all(dates.map(async (dateStr) => {
+      try {
+        const data = await api.get<{ available: boolean }>(`/doctors/${doctorId}/day-schedule?date=${dateStr}`);
+        return { dateStr, available: data.available };
+      } catch {
+        return { dateStr, available: true };
+      }
+    })).then((results) => {
+      const cache: Record<string, boolean> = {};
+      results.forEach((r) => { cache[r.dateStr] = r.available; });
+      setDateAvailabilityCache(cache);
+    });
+  }, [doctorId]);
 
   // Проверка доступности даты в календаре
   const isDateDisabled = (dateStr: string): boolean => {
+    if (!doctorId) return false;
+    // If we have cached data, use it
+    if (dateStr in dateAvailabilityCache) return !dateAvailabilityCache[dateStr];
+    // Fallback to default schedule check while loading
     if (!selectedDoctor?.schedule) return false;
     return !isDayAvailable(selectedDoctor.schedule, dateStr);
   };
@@ -324,6 +381,8 @@ export default function Booking() {
                               value={date}
                               onChange={(v) => { setDate(v); setDateTimeStep("time"); }}
                               min={getTodayString()}
+                              inline
+                              isDateDisabled={isDateDisabled}
                             />
                           </>
                         ) : (

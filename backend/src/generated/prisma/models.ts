@@ -10,6 +10,7 @@
  */
 export type * from './models/Admin'
 export type * from './models/Doctor'
+export type * from './models/DoctorWeekSchedule'
 export type * from './models/Service'
 export type * from './models/Booking'
 export type * from './models/Review'

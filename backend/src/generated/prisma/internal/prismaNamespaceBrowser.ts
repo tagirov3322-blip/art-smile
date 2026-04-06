@@ -53,6 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   Admin: 'Admin',
   Doctor: 'Doctor',
+  DoctorWeekSchedule: 'DoctorWeekSchedule',
   Service: 'Service',
   Booking: 'Booking',
   Review: 'Review',
@@ -103,6 +104,18 @@ export const DoctorScalarFieldEnum = {
 } as const
 
 export type DoctorScalarFieldEnum = (typeof DoctorScalarFieldEnum)[keyof typeof DoctorScalarFieldEnum]
+
+
+export const DoctorWeekScheduleScalarFieldEnum = {
+  id: 'id',
+  doctorId: 'doctorId',
+  weekStart: 'weekStart',
+  schedule: 'schedule',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DoctorWeekScheduleScalarFieldEnum = (typeof DoctorWeekScheduleScalarFieldEnum)[keyof typeof DoctorWeekScheduleScalarFieldEnum]
 
 
 export const ServiceScalarFieldEnum = {
@@ -211,6 +224,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {

@@ -45,6 +45,10 @@ interface DatePickerProps {
   min?: string;
   className?: string;
   placeholder?: string;
+  /** Show calendar inline without trigger button */
+  inline?: boolean;
+  /** Custom function to disable specific dates */
+  isDateDisabled?: (dateStr: string) => boolean;
 }
 
 export function DatePicker({
@@ -53,8 +57,10 @@ export function DatePicker({
   min,
   className,
   placeholder = "Выберите дату",
+  inline = false,
+  isDateDisabled: isDateDisabledProp,
 }: DatePickerProps) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(inline);
   const [viewYear, setViewYear] = useState(() => {
     const d = parseDate(value);
     return d ? d.getFullYear() : new Date().getFullYear();
@@ -129,48 +135,52 @@ export function DatePicker({
   function selectDay(day: number) {
     const d = new Date(viewYear, viewMonth, day);
     onChange(toYMD(d));
-    setOpen(false);
+    if (!inline) setOpen(false);
   }
 
   function isDayDisabled(day: number): boolean {
-    if (!minDate) return false;
     const d = new Date(viewYear, viewMonth, day);
-    // Compare date only (strip time)
-    const dNorm = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-    const mNorm = new Date(
-      minDate.getFullYear(),
-      minDate.getMonth(),
-      minDate.getDate()
-    );
-    return dNorm < mNorm;
+    const dStr = toYMD(d);
+    // Check min date
+    if (minDate) {
+      const dNorm = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+      const mNorm = new Date(minDate.getFullYear(), minDate.getMonth(), minDate.getDate());
+      if (dNorm < mNorm) return true;
+    }
+    // Check custom disabled
+    if (isDateDisabledProp && isDateDisabledProp(dStr)) return true;
+    return false;
   }
 
   return (
     <div ref={containerRef} className={cn("relative", className)}>
-      {/* Trigger */}
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        className={cn(
-          "flex w-full items-center justify-between gap-2 rounded-xl border px-3 py-2 text-sm",
-          "bg-transparent transition-colors",
-          "border-[var(--border)] text-[var(--foreground)]",
-          "hover:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/30",
-          !value && "text-[var(--muted-foreground)]"
-        )}
-      >
-        <span className="font-[var(--font-mono)]">
-          {value ? formatDisplay(value) : placeholder}
-        </span>
-        <Calendar className="h-4 w-4 shrink-0 text-[var(--muted-foreground)]" />
-      </button>
+      {/* Trigger (hidden in inline mode) */}
+      {!inline && (
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          className={cn(
+            "flex w-full items-center justify-between gap-2 rounded-xl border px-3 py-2 text-sm",
+            "bg-transparent transition-colors",
+            "border-[var(--border)] text-[var(--foreground)]",
+            "hover:border-[var(--primary)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/30",
+            !value && "text-[var(--muted-foreground)]"
+          )}
+        >
+          <span className="font-[var(--font-mono)]">
+            {value ? formatDisplay(value) : placeholder}
+          </span>
+          <Calendar className="h-4 w-4 shrink-0 text-[var(--muted-foreground)]" />
+        </button>
+      )}
 
-      {/* Dropdown */}
-      {open && (
+      {/* Calendar */}
+      {(inline || open) && (
         <div
           className={cn(
-            "absolute left-0 z-50 mt-1 w-72 rounded-2xl border p-3",
-            "border-[var(--border)] bg-[var(--background,#fff)] shadow-xl"
+            inline
+              ? "w-full rounded-2xl p-1"
+              : "absolute left-0 z-50 mt-1 w-72 rounded-2xl border p-3 border-[var(--border)] bg-[var(--background,#fff)] shadow-xl"
           )}
         >
           {/* Month / Year header */}
