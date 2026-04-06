@@ -30,7 +30,7 @@ export default function AdminLogin() {
       <div className="w-full max-w-sm">
         <div className="rounded-2xl bg-card p-8 shadow-lg shadow-black/5">
           <div className="mb-8 text-center">
-            <h1 className="text-2xl font-bold text-foreground">IQ Dental</h1>
+            <h1 className="text-2xl font-bold text-foreground">Art Smiles</h1>
             <p className="mt-2 text-sm text-muted-foreground">Вход в панель управления</p>
           </div>
 

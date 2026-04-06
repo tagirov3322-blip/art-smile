@@ -95,14 +95,14 @@ export default function ToothScene({ onReady }: { onReady?: () => void }) {
       style={{ pointerEvents: "none" }}
       frameloop="always"
     >
-      <ambientLight intensity={0.9} />
-      <directionalLight position={[5, 8, 5]} intensity={1.4} />
-      <directionalLight position={[-4, -2, 3]} intensity={0.35} />
-      {/* Rim lights — glow effect around edges */}
-      <pointLight position={[0, 2, -3]} intensity={8} color="#a0c4ff" distance={10} decay={2} />
-      <pointLight position={[-2, -1, -2.5]} intensity={4} color="#c0d8ff" distance={8} decay={2} />
-      <pointLight position={[2, -1, -2.5]} intensity={4} color="#c0d8ff" distance={8} decay={2} />
-      <Environment preset="city" environmentIntensity={0.5} />
+      <ambientLight intensity={0.8} color="#FFF3DC" />
+      <directionalLight position={[5, 8, 5]} intensity={1.2} color="#FFE8B0" />
+      <directionalLight position={[-4, -2, 3]} intensity={0.3} color="#FFD580" />
+      {/* Rim lights — golden glow effect around edges */}
+      <pointLight position={[0, 2, -3]} intensity={9} color="#D4AF6A" distance={10} decay={2} />
+      <pointLight position={[-2, -1, -2.5]} intensity={5} color="#C4973B" distance={8} decay={2} />
+      <pointLight position={[2, -1, -2.5]} intensity={5} color="#E8C97A" distance={8} decay={2} />
+      <Environment preset="sunset" environmentIntensity={0.4} />
       <Suspense fallback={null}>
         <Tooth onReady={onReady} />
       </Suspense>

@@ -300,7 +300,7 @@ export default function Booking() {
     <section
       ref={sectionRef}
       id="booking"
-      className="relative overflow-hidden min-h-screen bg-[#0a0f1a] flex items-center"
+      className="relative overflow-hidden min-h-screen bg-[#0d0b08] flex items-center"
     >
       {/* Decorative line */}
       <div className="pointer-events-none absolute left-1/2 top-0 h-px w-3/4 -translate-x-1/2 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
@@ -476,14 +476,14 @@ export default function Booking() {
 
           {/* Info */}
           <div className="booking-info-col lg:col-span-2">
-            <div className="sticky top-8 flex h-full flex-col gap-6">
-              <div className="liquid-glass-dark rounded-3xl p-8 sm:p-10">
+            <div className="sticky top-24 flex h-full flex-col gap-6">
+              <div className="liquid-glass-dark rounded-3xl p-6 sm:p-8 lg:p-10">
                 <h3 className="font-[var(--font-heading)] text-fluid-h3 text-white">Контактная информация</h3>
                 <div className="mt-8 space-y-6">
                   {[
-                    { Icon: Phone, label: "Телефон", content: <a href="tel:+79061232727" className="font-[var(--font-mono)] text-lg font-semibold text-white transition-colors hover:text-gray-300">+7 (906) 123-27-27</a> },
-                    { Icon: MapPin, label: "Адрес", content: <p className="text-base font-semibold text-white">просп. Мира, 34, Набережные Челны</p> },
-                    { Icon: Clock, label: "Время работы", content: <><p className="font-[var(--font-mono)] text-base font-semibold text-white">Пн-Пт: 08:00 - 20:00</p><p className="font-[var(--font-mono)] text-fluid-small text-gray-400/70">Перерыв: 13:00 - 14:00</p><p className="font-[var(--font-mono)] text-fluid-small text-gray-400/70">Сб: 09:00 - 15:00 · Вс: выходной</p></> },
+                    { Icon: Phone, label: "Телефон", content: <a href="tel:+78552253535" className="font-[var(--font-mono)] text-lg font-semibold text-white transition-colors hover:text-gray-300">+7 (8552) 25-35-35</a> },
+                    { Icon: MapPin, label: "Адрес", content: <p className="text-base font-semibold text-white">пр-кт Вахитова, 54В, Набережные Челны</p> },
+                    { Icon: Clock, label: "Время работы", content: <><p className="font-[var(--font-mono)] text-base font-semibold text-white">Пн-Пт: 08:00 - 20:00</p><p className="font-[var(--font-mono)] text-fluid-small text-gray-400/70">Сб: 08:00 - 14:00 (по записи)</p><p className="font-[var(--font-mono)] text-fluid-small text-gray-400/70">Вс: выходной</p></> },
                   ].map(({ Icon, label, content }) => (
                     <div key={label} className="flex items-start gap-4">
                       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/10">
@@ -498,13 +498,13 @@ export default function Booking() {
                 </div>
               </div>
 
-              <div className="min-h-[250px] flex-1 overflow-hidden rounded-3xl border border-white/10">
-                <div className="relative h-full min-h-[250px] w-full">
+              <div className="min-h-[200px] sm:min-h-[280px] flex-1 overflow-hidden rounded-3xl border border-white/10">
+                <div className="relative h-full min-h-[200px] sm:min-h-[280px] w-full">
                   <iframe
-                    src="https://yandex.ru/map-widget/v1/?ll=52.390714%2C55.727186&z=17&l=map&pt=52.390714%2C55.727186%2Cpm2rdm"
+                    src="https://yandex.ru/map-widget/v1/?ll=52.404133%2C55.757865&z=17&l=map&pt=52.404133%2C55.757865%2Cpm2rdm"
                     className="absolute inset-0 h-full w-full"
                     allowFullScreen
-                    title="IQ Dental на карте"
+                    title="Art Smiles на карте"
                   />
                 </div>
               </div>

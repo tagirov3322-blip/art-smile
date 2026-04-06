@@ -32,7 +32,7 @@ interface ReviewsResponse {
 }
 
 const FALLBACK_REVIEWS: Review[] = [
-  { id: 1, name: "Анна Соколова", rating: 5, text: "Прекрасная клиника! Делала виниры в IQ Dental — результат превзошёл все ожидания." },
+  { id: 1, name: "Анна Соколова", rating: 5, text: "Прекрасная клиника! Делала виниры в Art Smiles — результат превзошёл все ожидания." },
   { id: 2, name: "Дмитрий Кузнецов", rating: 4, text: "Обратился с острой болью — приняли в тот же день. Лечение прошло быстро и безболезненно." },
   { id: 3, name: "Елена Васильева", rating: 5, text: "Проходила профессиональную чистку и отбеливание. Эффект потрясающий!" },
   { id: 4, name: "Михаил Петров", rating: 4, text: "Ставил имплант. Процедура прошла комфортно, хотя я очень боялся." },
@@ -170,7 +170,7 @@ export default function Reviews() {
   };
 
   return (
-    <section ref={sectionRef} id="reviews" className="relative bg-[#0a0f1a] pb-28 pt-16 text-white sm:pt-20">
+    <section ref={sectionRef} id="reviews" className="relative bg-[#0d0b08] pb-28 pt-16 text-white sm:pt-20">
       {/* Accent orbs */}
       <div className="pointer-events-none absolute left-1/4 top-0 h-80 w-80 rounded-full bg-white/3 blur-3xl" aria-hidden="true" />
       <div className="pointer-events-none absolute bottom-1/4 right-0 h-96 w-96 rounded-full bg-primary/8 blur-3xl" aria-hidden="true" />
@@ -180,14 +180,32 @@ export default function Reviews() {
           <span className="mb-3 inline-block font-[var(--font-mono)] text-sm font-semibold uppercase tracking-[0.2em] text-white/60">Отзывы</span>
           <h2 className="text-fluid-h1 font-heading text-white">Что говорят пациенты</h2>
           <p className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-fluid-body text-white/50">
-            <a href="https://2gis.ru/nabchelny/firm/70000001038946979" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 transition-colors hover:text-white/80">
-              <span className="text-yellow-400">★</span> 4.9 на 2ГИС
+            <a href="https://2gis.ru/nabchelny/firm/70000001036298410/tab/reviews" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 transition-colors hover:text-white/80">
+              <span className="text-yellow-400">★</span> 4.8 на 2ГИС
             </a>
             <span className="text-white/20">|</span>
-            <a href="https://yandex.com/maps/org/aykyu_dental/76832207525/reviews/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 transition-colors hover:text-white/80">
-              <span className="text-yellow-400">★</span> 5.0 на Яндекс Картах
+            <a href="https://yandex.com/maps/org/dental_complex_art_smiles/243945761675/reviews/?ll=52.406115%2C55.758133&z=18" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 transition-colors hover:text-white/80">
+              <span className="text-yellow-400">★</span> На Яндекс Картах
             </a>
           </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a
+              href="https://2gis.ru/nabchelny/firm/70000001036298410/tab/reviews"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-5 py-2.5 text-sm font-medium text-white/80 transition-all hover:border-white/40 hover:bg-white/10 hover:text-white"
+            >
+              Оставить отзыв на 2ГИС
+            </a>
+            <a
+              href="https://yandex.com/maps/org/dental_complex_art_smiles/243945761675/reviews/?ll=52.406115%2C55.758133&z=18"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-5 py-2.5 text-sm font-medium text-white/80 transition-all hover:border-white/40 hover:bg-white/10 hover:text-white"
+            >
+              Оставить отзыв на Яндексе
+            </a>
+          </div>
         </div>
 
         <div className="flex justify-center gap-4 sm:gap-6 max-h-[500px] sm:max-h-[740px] overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)]">
@@ -196,7 +214,7 @@ export default function Reviews() {
           <TestimonialsColumn testimonials={thirdColumn} className="hidden lg:block" speed={35} />
         </div>
 
-        <div className="reviews-form mx-auto mt-[var(--space-xl)] max-w-2xl liquid-glass-dark rounded-2xl p-8">
+        <div className="reviews-form mx-auto mt-[var(--space-xl)] max-w-2xl liquid-glass-dark rounded-2xl p-5 sm:p-8">
           <h3 className="mb-6 text-center text-fluid-h3 font-heading text-white">Оставьте свой отзыв</h3>
 
           {submitted && (
@@ -220,7 +238,7 @@ export default function Reviews() {
               <textarea id="review-text" value={formText} onChange={(e) => setFormText(e.target.value)} placeholder="Расскажите о вашем опыте..." rows={4}
                 className="w-full resize-none rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-white placeholder-white/30 transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20" required />
             </div>
-            <button type="submit" className="w-full rounded-xl bg-white px-6 py-3.5 font-semibold text-[#0a0f1a] transition-all duration-300 hover:bg-white/90 focus:outline-none">
+            <button type="submit" className="w-full rounded-xl bg-white px-6 py-3.5 font-semibold text-[#0d0b08] transition-all duration-300 hover:bg-white/90 focus:outline-none">
               Отправить отзыв
             </button>
           </form>

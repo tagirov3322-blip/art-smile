@@ -11,7 +11,7 @@ export default function PrivacyPage() {
       <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
         <Link
           href="/"
-          className="mb-8 inline-flex items-center text-sm text-blue-600 hover:text-blue-800"
+          className="mb-8 inline-flex items-center text-sm text-amber-700 hover:text-amber-900"
         >
           &larr; На главную
         </Link>
@@ -24,9 +24,9 @@ export default function PrivacyPage() {
           <p>
             Настоящая Политика конфиденциальности персональных данных (далее —
             Политика) действует в отношении всей информации, которую ООО
-            «Айкьюдентал» (ИНН/ОГРН), расположенное по адресу: Республика
-            Татарстан, г. Набережные Челны, просп. Мира, д. 34, может получить о
-            Пользователе во время использования сайта iq-dental.ru.
+            «Арт Смайлс», расположенное по адресу: Республика
+            Татарстан, г. Набережные Челны, пр-кт Вахитова, д. 54В, может получить о
+            Пользователе во время использования сайта art-smiles.ru.
           </p>
 
           <h2 className="text-xl font-semibold text-slate-900">
@@ -80,28 +80,28 @@ export default function PrivacyPage() {
           <p>
             Пользователь вправе в любое время отозвать своё согласие на обработку
             персональных данных, направив письменное уведомление на адрес
-            info@iq-dental.ru.
+            info@art-smiles.ru.
           </p>
 
           <h2 className="text-xl font-semibold text-slate-900">
             7. Контактная информация
           </h2>
           <p>
-            ООО «Айкьюдентал»
+            ООО «Арт Смайлс»
             <br />
-            Адрес: просп. Мира, 34, г. Набережные Челны, Республика Татарстан
+            Адрес: пр-кт Вахитова, 54В, г. Набережные Челны, Республика Татарстан
             <br />
             Телефон:{" "}
-            <a href="tel:+79061232727" className="text-blue-600 hover:underline">
-              +7 (906) 123-27-27
+            <a href="tel:+78552253535" className="text-amber-700 hover:underline">
+              +7 (8552) 25-35-35
             </a>
             <br />
             Email:{" "}
             <a
-              href="mailto:info@iq-dental.ru"
-              className="text-blue-600 hover:underline"
+              href="mailto:info@art-smiles.ru"
+              className="text-amber-700 hover:underline"
             >
-              info@iq-dental.ru
+              info@art-smiles.ru
             </a>
           </p>
 

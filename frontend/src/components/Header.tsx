@@ -106,21 +106,21 @@ export default function Header() {
           className="flex items-center gap-2 text-primary font-bold text-xl tracking-tight cursor-pointer"
         >
           <img
-            src="/logo_iq.png"
-            alt="IQ Dental"
-            className="logo-themed h-11 w-auto transition-[filter] duration-300"
+            src="/logo_art.png"
+            alt="Art Smiles"
+            className="logo-themed w-auto h-[48px] 2xl:h-[64px] transition-[filter] duration-300"
           />
         </a>
 
         {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-8 2xl:gap-10">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={(e) => handleSmoothScroll(e, link.href)}
               className={cn(
-                "text-sm font-medium transition-colors hover:text-primary",
+                "text-sm 2xl:text-base font-medium transition-colors hover:text-primary",
                 activeSection === link.href.replace("#", "") ? "text-primary font-semibold" : "text-muted-foreground"
               )}
             >
@@ -132,16 +132,16 @@ export default function Header() {
         {/* Desktop right side */}
         <div className="hidden lg:flex items-center gap-4">
           <a
-            href="tel:+79061232727"
-            className="flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
+            href="tel:+78552253535"
+            className="flex items-center gap-2 text-sm 2xl:text-base font-medium text-foreground hover:text-primary transition-colors"
           >
-            <Phone className="h-4 w-4" />
-            +7 (906) 123-27-27
+            <Phone className="h-4 w-4 2xl:h-5 2xl:w-5" />
+            +7 (8552) 25-35-35
           </a>
           <ThemeToggle />
           <Button
             asChild
-            className="rounded-xl bg-primary px-6 font-semibold"
+            className="rounded-xl bg-primary px-6 2xl:px-8 2xl:text-base 2xl:h-11 font-semibold"
           >
             <a
               href="#booking"
@@ -164,7 +164,7 @@ export default function Header() {
               <SheetHeader>
                 <SheetTitle className="flex items-center gap-2 text-primary">
                   <ToothIcon className="h-6 w-6" />
-                  IQ Dental
+                  Art Smiles
                 </SheetTitle>
               </SheetHeader>
 
@@ -188,11 +188,11 @@ export default function Header() {
               <div className="mt-auto flex flex-col gap-3 border-t p-4">
                 <div className="flex items-center justify-between">
                   <a
-                    href="tel:+79061232727"
+                    href="tel:+78552253535"
                     className="flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
                   >
                     <Phone className="h-4 w-4" />
-                    +7 (906) 123-27-27
+                    +7 (8552) 25-35-35
                   </a>
                   <ThemeToggle />
                 </div>

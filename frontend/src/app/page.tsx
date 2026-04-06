@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="dark:bg-[#0a0f1a] overflow-x-hidden">
+      <main className="dark:bg-[#0d0b08] overflow-x-hidden">
         <div className="hero-about-wrapper">
           <Hero />
           <ToothOverlay />

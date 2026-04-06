@@ -63,7 +63,7 @@ export default function AdminSettings() {
           <label className="mb-1.5 block text-sm font-medium text-foreground">Телефон клиники</label>
           <p className="mb-2 text-xs text-muted-foreground">Отображается в шапке сайта и на странице контактов</p>
           <input value={settings.phone} onChange={(e) => setSettings({ ...settings, phone: e.target.value })}
-            placeholder="+7 (906) 123-27-27"
+            placeholder="+7 (8552) 25-35-35"
             className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary" />
         </div>
 

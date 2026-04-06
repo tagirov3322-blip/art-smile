@@ -124,12 +124,12 @@ export default function About() {
               className="about-text-item mt-6 max-w-lg text-lg leading-relaxed text-white/80"
               style={{ opacity: 0, transform: "translateY(30px)" }}
             >
-              Клиника{" "}
-              <span className="font-semibold text-white">Айкью&nbsp;Дентал</span>{" "}
-              переехала по новому адресу —{" "}
-              <span className="font-medium text-white">просп.&nbsp;Мира,&nbsp;34</span>.
+              Стоматологический комплекс{" "}
+              <span className="font-semibold text-white">Art&nbsp;Smiles</span>{" "}
+              — это современная клиника по адресу{" "}
+              <span className="font-medium text-white">пр-кт&nbsp;Вахитова,&nbsp;54В</span>.
               Мы создали пространство, где передовые технологии сочетаются
-              с&nbsp;комфортной атмосферой.
+              с&nbsp;комфортной атмосферой. Лучшая стоматология 2025 по версии 2ГИС.
             </p>
 
             {/* Features */}
@@ -142,8 +142,8 @@ export default function About() {
                   <MapPin className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-white">Новый адрес</p>
-                  <p className="text-sm text-white/60">просп. Мира, 34</p>
+                  <p className="text-sm font-semibold text-white">Адрес</p>
+                  <p className="text-sm text-white/60">пр-кт Вахитова, 54В</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -152,7 +152,7 @@ export default function About() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-white">Работаем</p>
-                  <p className="text-sm text-white/60">Пн-Пт 8:00–20:00, Сб 9:00–15:00</p>
+                  <p className="text-sm text-white/60">Пн-Пт 8:00–20:00, Сб 8:00–14:00</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -236,12 +236,12 @@ export default function About() {
           {/* ── Right — 6 Photo cards ── */}
           <div className="about-grid flex-1 lg:translate-x-4 flex flex-col gap-5">
             {/* Row 1 */}
-            <div className="about-photo-grid flex flex-1 gap-5">
+            <div className="about-photo-grid flex flex-1 gap-5 min-h-[160px] sm:min-h-[220px] lg:min-h-0">
               {PHOTOS.slice(0, 3).map((n, i) => (
                 <div
                   key={n}
                   onClick={() => openLightbox(i)}
-                  className="about-photo cursor-pointer overflow-hidden rounded-2xl bg-white/10"
+                  className="about-photo cursor-pointer overflow-hidden rounded-2xl bg-white/10 min-h-[160px] sm:min-h-[220px] lg:min-h-0"
                   style={{ opacity: 0, transform: "translateY(40px)", flexGrow: 1, flexBasis: 0 }}
                 >
                   <img
@@ -253,12 +253,12 @@ export default function About() {
               ))}
             </div>
             {/* Row 2 */}
-            <div className="about-photo-grid flex flex-1 gap-5">
+            <div className="about-photo-grid flex flex-1 gap-5 min-h-[160px] sm:min-h-[220px] lg:min-h-0">
               {PHOTOS.slice(3, 6).map((n, i) => (
                 <div
                   key={n}
                   onClick={() => openLightbox(i + 3)}
-                  className="about-photo cursor-pointer overflow-hidden rounded-2xl bg-white/10"
+                  className="about-photo cursor-pointer overflow-hidden rounded-2xl bg-white/10 min-h-[160px] sm:min-h-[220px] lg:min-h-0"
                   style={{ opacity: 0, transform: "translateY(40px)", flexGrow: 1, flexBasis: 0 }}
                 >
                   <img

@@ -72,21 +72,21 @@ export default function Hero() {
           className="hero-subtitle mb-2 sm:mb-5 font-[var(--font-heading)] text-xs font-medium tracking-wide sm:text-lg lg:text-xl"
           style={{ color: "rgba(220, 225, 240, 0.5)" }}
         >
-          Стоматология нового поколения
+          Стоматологический комплекс · Набережные Челны
         </span>
         <h1
           className="text-center font-[var(--font-heading)] font-bold uppercase leading-[1.1]"
           style={{
             fontSize: "clamp(2.5rem, 12vw, 14rem)",
             letterSpacing: "-0.04em",
-            background: "linear-gradient(180deg, rgba(230,235,250,0.7) 0%, rgba(160,175,210,0.35) 100%)",
+            background: "linear-gradient(180deg, rgba(255,248,230,0.85) 0%, rgba(212,175,106,0.45) 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             textShadow: "none",
-            filter: "drop-shadow(0 0 60px rgba(150,170,220,0.2))",
+            filter: "drop-shadow(0 0 60px rgba(212,175,106,0.25))",
           }}
         >
-          Айкью Дентал
+          Art Smiles
         </h1>
 
         {/* Mobile buttons — right below title */}
@@ -111,22 +111,22 @@ export default function Hero() {
       </div>
 
       {/* ── Desktop buttons (absolute) ── */}
-      <div className="hero-cta-row pointer-events-none absolute inset-x-0 bottom-[22%] sm:bottom-[20%] md:bottom-[25%] lg:bottom-[30%] z-[4] hidden sm:flex items-center justify-between px-[5%] md:px-[8%] lg:px-[12%] xl:px-[13%] [&_a]:pointer-events-auto">
+      <div className="hero-cta-row pointer-events-none absolute inset-x-0 bottom-[18%] sm:bottom-[18%] md:bottom-[22%] lg:bottom-[28%] z-[4] hidden sm:flex items-center justify-between px-[4%] md:px-[7%] lg:px-[4.5%] xl:px-[4.5%] 2xl:px-[9.8%] [&_a]:pointer-events-auto">
         <a
           href="#booking"
-          className="hero-cta inline-flex items-center justify-center gap-2 rounded-lg border font-medium tracking-[0.08em] transition-[border-color,background-color,box-shadow] duration-300 active:scale-[0.97] h-14 w-[240px] text-base md:h-16 md:w-[280px] md:text-lg lg:h-20 lg:w-[320px] lg:text-xl border-white/80 bg-white text-[#0a0f1a] hover:bg-white/90 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] dark:border-white/20 dark:bg-white/5 dark:text-white/90 dark:hover:border-white/60 dark:hover:bg-white/15 dark:hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]"
+          className="hero-cta inline-flex items-center justify-center gap-2 rounded-lg border font-medium tracking-[0.06em] whitespace-nowrap transition-[border-color,background-color,box-shadow] duration-300 active:scale-[0.97] h-12 w-[230px] text-sm sm:h-14 sm:w-[250px] sm:text-base md:h-16 md:w-[280px] md:text-base lg:h-[72px] lg:w-[330px] lg:text-lg 2xl:h-[88px] 2xl:w-[420px] 2xl:text-xl border-white/80 bg-white text-[#1a1814] hover:bg-white/90 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] dark:border-white/20 dark:bg-white/5 dark:text-white/90 dark:hover:border-white/60 dark:hover:bg-white/15 dark:hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]"
           style={{ visibility: "hidden" }}
         >
           Записаться на приём
-          <ArrowRight className="h-5 w-5 lg:h-6 lg:w-6 text-[#0a0f1a]/60 dark:text-white/70" />
+          <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 2xl:h-7 2xl:w-7 text-[#1a1814]/60 dark:text-white/70 shrink-0" />
         </a>
         <a
           href="#promotions"
-          className="hero-cta inline-flex items-center justify-center gap-2 rounded-lg border font-medium tracking-[0.08em] transition-[border-color,background-color,box-shadow] duration-300 active:scale-[0.97] h-14 w-[240px] text-base md:h-16 md:w-[280px] md:text-lg lg:h-20 lg:w-[320px] lg:text-xl border-white/80 bg-white text-[#0a0f1a] hover:bg-white/90 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] dark:border-white/20 dark:bg-white/5 dark:text-white/90 dark:hover:border-white/60 dark:hover:bg-white/15 dark:hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]"
+          className="hero-cta inline-flex items-center justify-center gap-2 rounded-lg border font-medium tracking-[0.06em] whitespace-nowrap transition-[border-color,background-color,box-shadow] duration-300 active:scale-[0.97] h-12 w-[230px] text-sm sm:h-14 sm:w-[250px] sm:text-base md:h-16 md:w-[280px] md:text-base lg:h-[72px] lg:w-[330px] lg:text-lg 2xl:h-[88px] 2xl:w-[420px] 2xl:text-xl border-white/80 bg-white text-[#1a1814] hover:bg-white/90 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] dark:border-white/20 dark:bg-white/5 dark:text-white/90 dark:hover:border-white/60 dark:hover:bg-white/15 dark:hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]"
           style={{ visibility: "hidden" }}
         >
           К акциям
-          <ArrowRight className="h-5 w-5 lg:h-6 lg:w-6 text-[#0a0f1a]/60 dark:text-white/70" />
+          <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 2xl:h-7 2xl:w-7 text-[#1a1814]/60 dark:text-white/70 shrink-0" />
         </a>
       </div>
     </section>

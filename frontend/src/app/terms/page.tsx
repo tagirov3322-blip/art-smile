@@ -11,7 +11,7 @@ export default function TermsPage() {
       <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
         <Link
           href="/"
-          className="mb-8 inline-flex items-center text-sm text-blue-600 hover:text-blue-800"
+          className="mb-8 inline-flex items-center text-sm text-amber-700 hover:text-amber-900"
         >
           &larr; На главную
         </Link>
@@ -23,8 +23,8 @@ export default function TermsPage() {
         <div className="prose prose-slate max-w-none space-y-6 text-slate-700">
           <p>
             Настоящее Пользовательское соглашение (далее — Соглашение) регулирует
-            отношения между ООО «Айкьюдентал» (далее — Клиника) и посетителем
-            сайта iq-dental.ru (далее — Пользователь).
+            отношения между ООО «Арт Смайлс» (далее — Клиника) и посетителем
+            сайта art-smiles.ru (далее — Пользователь).
           </p>
 
           <h2 className="text-xl font-semibold text-slate-900">
@@ -33,7 +33,7 @@ export default function TermsPage() {
           <p>
             Использование сайта означает согласие Пользователя с настоящим
             Соглашением и условиями обработки его персональных данных. Сайт
-            iq-dental.ru носит исключительно информационный характер и не является
+            art-smiles.ru носит исключительно информационный характер и не является
             публичной офертой.
           </p>
 
@@ -86,23 +86,23 @@ export default function TermsPage() {
             6. Контактная информация
           </h2>
           <p>
-            ООО «Айкьюдентал»
+            ООО «Арт Смайлс»
             <br />
-            Лицензия № Л041-01181-16/00361643 от 24.09.2019
+            Лицензия на осуществление медицинской деятельности
             <br />
-            Адрес: просп. Мира, 34, г. Набережные Челны, Республика Татарстан
+            Адрес: пр-кт Вахитова, 54В, г. Набережные Челны, Республика Татарстан
             <br />
             Телефон:{" "}
-            <a href="tel:+79061232727" className="text-blue-600 hover:underline">
-              +7 (906) 123-27-27
+            <a href="tel:+78552253535" className="text-amber-700 hover:underline">
+              +7 (8552) 25-35-35
             </a>
             <br />
             Email:{" "}
             <a
-              href="mailto:info@iq-dental.ru"
-              className="text-blue-600 hover:underline"
+              href="mailto:info@art-smiles.ru"
+              className="text-amber-700 hover:underline"
             >
-              info@iq-dental.ru
+              info@art-smiles.ru
             </a>
           </p>
 

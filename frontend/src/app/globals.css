@@ -5,9 +5,9 @@
 
 .hero-about-wrapper {
   position: relative;
-  background-color: #0d1117;
-  background-image: linear-gradient(160deg, #1a2035 0%, #141a2a 15%, #0d1117 30%, #111827 50%, #0d1117 70%, #151c2c 85%, #1a2438 100%);
-  --hero-fade: #0d1117;
+  background-color: #0d0b08;
+  background-image: linear-gradient(160deg, #1a1208 0%, #141008 15%, #0d0b08 30%, #111009 50%, #0d0b08 70%, #13100a 85%, #1a1208 100%);
+  --hero-fade: #0d0b08;
 }
 
 /* Noise dots — cover top 60% of wrapper then fade out */
@@ -31,42 +31,42 @@
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 50% 25%, rgba(140,170,220,0.12) 0%, transparent 50%),
-    radial-gradient(ellipse 50% 30% at 50% 20%, rgba(120,150,200,0.08) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 40% at 25% 40%, rgba(80,100,160,0.05) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 25% at 80% 15%, rgba(100,130,180,0.06) 0%, transparent 50%);
+    radial-gradient(circle at 50% 25%, rgba(212,175,106,0.14) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 30% at 50% 20%, rgba(196,151,59,0.09) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 25% 40%, rgba(180,130,40,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 25% at 80% 15%, rgba(220,180,80,0.07) 0%, transparent 50%);
   mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 70%);
   -webkit-mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 70%);
 }
 
 .dark .hero-about-wrapper {
-  background: #0a0f1a !important;
-  --hero-fade: #0a0f1a;
+  background: #0d0b08 !important;
+  --hero-fade: #0d0b08;
 }
 
 :root {
-  --background: #fafbfc;
-  --foreground: #1a1f2e;
-  --primary: #2a3250;
+  --background: #fafaf8;
+  --foreground: #1a1814;
+  --primary: #C4973B;
   --primary-foreground: #ffffff;
-  --secondary: #f0f2f5;
-  --secondary-foreground: #2a3250;
-  --accent: #e8eaef;
-  --accent-foreground: #1a1f2e;
-  --muted: #f1f2f5;
-  --muted-foreground: #6b7280;
-  --border: #e2e4e8;
-  --input: #e2e4e8;
-  --ring: #2a3250;
+  --secondary: #f5f0e8;
+  --secondary-foreground: #8B6914;
+  --accent: #f0e8d4;
+  --accent-foreground: #1a1814;
+  --muted: #f5f0e8;
+  --muted-foreground: #7a6e5e;
+  --border: #e8dfc8;
+  --input: #e8dfc8;
+  --ring: #C4973B;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
   --card: #ffffff;
-  --card-foreground: #1a1f2e;
+  --card-foreground: #1a1814;
   --popover: #ffffff;
-  --popover-foreground: #1a1f2e;
+  --popover-foreground: #1a1814;
   --radius: 1rem;
-  --section-dark: #0a0f1a;
-  --section-dark-end: #1a2438;
+  --section-dark: #0d0b08;
+  --section-dark-end: #1a1208;
 
   /* Fluid spacing — augen.pro style */
   --space-xs: clamp(0.25rem, 0.5vw, 0.5rem);
@@ -79,27 +79,27 @@
 }
 
 .dark {
-  --section-dark: #0a0f1a;
-  --section-dark-end: #0a0f1a;
-  --background: #0a0f1a;
-  --foreground: #e4e7ec;
-  --primary: #8b9cc7;
-  --primary-foreground: #0a0f1a;
-  --secondary: #151c2e;
-  --secondary-foreground: #e4e7ec;
-  --accent: #1a2338;
-  --accent-foreground: #e4e7ec;
-  --muted: #151c2e;
-  --muted-foreground: #8b95a8;
-  --border: #1e2a42;
-  --input: #1e2a42;
-  --ring: #8b9cc7;
+  --section-dark: #0d0b08;
+  --section-dark-end: #0d0b08;
+  --background: #0d0b08;
+  --foreground: #f0ece4;
+  --primary: #D4AF6A;
+  --primary-foreground: #0d0b08;
+  --secondary: #1c1610;
+  --secondary-foreground: #f0ece4;
+  --accent: #231c11;
+  --accent-foreground: #f0ece4;
+  --muted: #1c1610;
+  --muted-foreground: #9a9080;
+  --border: #2e2418;
+  --input: #2e2418;
+  --ring: #D4AF6A;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --card: #111827;
-  --card-foreground: #e4e7ec;
-  --popover: #111827;
-  --popover-foreground: #e4e7ec;
+  --card: #181410;
+  --card-foreground: #f0ece4;
+  --popover: #181410;
+  --popover-foreground: #f0ece4;
 }
 
 @theme inline {
@@ -282,9 +282,9 @@ body {
   overflow-x: hidden;
 }
 
-/* Logo — CSS-only theme switch, no flash */
+/* Logo — show as-is (Art Smiles logo is colored) */
 .logo-themed {
-  filter: brightness(0) saturate(100%) invert(17%) sepia(14%) saturate(1500%) hue-rotate(190deg) brightness(92%) contrast(92%);
+  filter: none;
 }
 .dark .logo-themed {
   filter: brightness(0) invert(1);
@@ -324,32 +324,32 @@ body {
 }
 
 .dark .liquid-glass-light {
-  background: rgba(20, 25, 40, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(30, 20, 8, 0.65);
+  border: 1px solid rgba(196, 151, 59, 0.15);
   box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 0 rgba(255, 220, 100, 0.08),
     inset 0 -1px 0 0 rgba(255, 255, 255, 0.02),
-    0 8px 32px rgba(0, 0, 0, 0.2);
+    0 8px 32px rgba(0, 0, 0, 0.25);
 }
 
 .dark .glass-card {
-  background: rgba(20, 25, 40, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(30, 20, 8, 0.65);
+  border: 1px solid rgba(196, 151, 59, 0.15);
   box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 0 rgba(255, 220, 100, 0.08),
     inset 0 -1px 0 0 rgba(255, 255, 255, 0.02),
-    0 8px 32px rgba(0, 0, 0, 0.2);
+    0 8px 32px rgba(0, 0, 0, 0.25);
 }
 
 .liquid-glass-dark {
-  background: rgba(20, 25, 40, 0.55);
+  background: rgba(30, 20, 8, 0.65);
   backdrop-filter: blur(24px) saturate(1.4);
   -webkit-backdrop-filter: blur(24px) saturate(1.4);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(196, 151, 59, 0.15);
   box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 0 rgba(255, 220, 100, 0.08),
     inset 0 -1px 0 0 rgba(255, 255, 255, 0.02),
-    0 8px 32px rgba(0, 0, 0, 0.2);
+    0 8px 32px rgba(0, 0, 0, 0.25);
 }
 
 /* Glass card legacy aliases */
@@ -364,14 +364,14 @@ body {
     0 8px 32px rgba(0, 0, 0, 0.06);
 }
 .glass-card-dark {
-  background: rgba(20, 25, 40, 0.55);
+  background: rgba(30, 20, 8, 0.65);
   backdrop-filter: blur(24px) saturate(1.4);
   -webkit-backdrop-filter: blur(24px) saturate(1.4);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(196, 151, 59, 0.15);
   box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 0 rgba(255, 220, 100, 0.08),
     inset 0 -1px 0 0 rgba(255, 255, 255, 0.02),
-    0 8px 32px rgba(0, 0, 0, 0.2);
+    0 8px 32px rgba(0, 0, 0, 0.25);
 }
 
 /* ═══════════════════════════════════════════
@@ -445,13 +445,13 @@ body {
    ═══════════════════════════════════════════ */
 
 .liquid-glass-primary {
-  background: rgba(42, 50, 80, 0.07);
+  background: rgba(196, 151, 59, 0.07);
   backdrop-filter: blur(20px) saturate(1.5);
   -webkit-backdrop-filter: blur(20px) saturate(1.5);
-  border: 1px solid rgba(42, 50, 80, 0.12);
+  border: 1px solid rgba(196, 151, 59, 0.18);
   box-shadow:
     inset 0 1px 0 0 rgba(255, 255, 255, 0.4),
-    0 8px 32px rgba(42, 50, 80, 0.08);
+    0 8px 32px rgba(196, 151, 59, 0.08);
 }
 
 /* Hide decorative orbs in dark mode */
@@ -461,8 +461,8 @@ body {
 }
 
 .dark .liquid-glass-primary {
-  background: rgba(42, 50, 80, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(196, 151, 59, 0.15);
+  border: 1px solid rgba(196, 151, 59, 0.2);
   box-shadow:
     inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
     0 8px 32px rgba(0, 0, 0, 0.2);

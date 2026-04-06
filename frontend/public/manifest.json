@@ -1,11 +1,11 @@
 {
-  "name": "IQ Dental — Стоматология в Набережных Челнах",
-  "short_name": "IQ Dental",
-  "description": "Стоматология нового поколения. Имплантация, протезирование, лечение зубов.",
+  "name": "Art Smiles — Стоматология в Набережных Челнах",
+  "short_name": "Art Smiles",
+  "description": "Стоматологический комплекс Art Smiles. Имплантация, протезирование, ортодонтия, лечение под седацией.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0a0f1a",
-  "theme_color": "#2a3250",
+  "background_color": "#fafaf8",
+  "theme_color": "#C4973B",
   "icons": [
     {
       "src": "/icon-192.png",

@@ -50,16 +50,16 @@ const footerSections = [
   {
     label: "Контакты",
     links: [
-      { title: "+7 (906) 123-27-27", href: "tel:+79061232727", icon: Phone },
-      { title: "+7 (967) 872-25-94", href: "tel:+79678722594", icon: Phone },
-      { title: "info@iq-dental.ru", href: "mailto:info@iq-dental.ru", icon: Mail },
+      { title: "+7 (8552) 25-35-35", href: "tel:+78552253535", icon: Phone },
+      { title: "+7 (986) 925-35-35", href: "tel:+79869253535", icon: Phone },
+      { title: "info@art-smiles.ru", href: "mailto:info@art-smiles.ru", icon: Mail },
     ],
   },
   {
     label: "Мы в соцсетях",
     links: [
-      { title: "ВКонтакте", href: "https://vk.com/iqdentalchelny", icon: VkIcon },
-      { title: "Telegram", href: "https://t.me/iqdentalnch", icon: TelegramIcon },
+      { title: "ВКонтакте", href: "https://vk.com/art_smiles1", icon: VkIcon },
+      { title: "Telegram", href: "https://t.me/artsmiles", icon: TelegramIcon },
     ],
   },
 ];
@@ -68,7 +68,7 @@ export default function Footer() {
   return (
     <footer
       id="contacts"
-      className="relative w-full rounded-t-[2.5rem] md:rounded-t-[3.5rem] border-t border-white/10 bg-[#0a0f1a] bg-[radial-gradient(35%_128px_at_50%_0%,rgba(255,255,255,0.06),transparent)] px-6 py-12 lg:py-16"
+      className="relative w-full rounded-t-[2.5rem] md:rounded-t-[3.5rem] border-t border-white/10 bg-[#0d0b08] bg-[radial-gradient(35%_128px_at_50%_0%,rgba(255,255,255,0.06),transparent)] px-6 py-12 lg:py-16"
     >
       {/* Top glow line */}
       <div className="absolute top-0 right-1/2 left-1/2 h-px w-1/3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/20 blur-sm" />
@@ -78,26 +78,26 @@ export default function Footer() {
         <div className="space-y-4">
           <Link href="/" className="flex items-center gap-3">
             <img
-              src="/logo_iq.png"
-              alt="IQ Dental"
-              className="h-[4.25rem] w-auto"
-              style={{ filter: "brightness(0) invert(72%) sepia(12%) saturate(560%) hue-rotate(182deg) brightness(92%) contrast(87%)" }}
+              src="/logo_art.png"
+              alt="Art Smiles"
+              className="h-[10rem] w-auto"
+              style={{ filter: "none" }}
             />
           </Link>
-          <p className="text-sm text-slate-500 max-w-xs leading-relaxed mt-4">
+          <p className="text-sm text-stone-500 max-w-xs leading-relaxed mt-4">
             Современная стоматология в Набережных Челнах.
             Качественное лечение и индивидуальный подход.
           </p>
-          <div className="flex items-start gap-2 text-sm text-slate-500 mt-4">
+          <div className="flex items-start gap-2 text-sm text-stone-500 mt-4">
             <MapPin className="h-4 w-4 mt-0.5 shrink-0" />
-            <span>просп. Мира, 34, Набережные Челны</span>
+            <span>пр-кт Вахитова, 54В, Набережные Челны</span>
           </div>
-          <div className="flex items-center gap-2 text-sm text-slate-500">
+          <div className="flex items-center gap-2 text-sm text-stone-500">
             <Clock className="h-4 w-4 shrink-0" />
-            <span>Пн-Пт: 08:00-20:00 (перерыв 13:00-14:00), Сб: 09:00-15:00, Вс: выходной</span>
+            <span>Пн-Пт: 08:00-20:00, Сб: 08:00-14:00 (по записи), Вс: выходной</span>
           </div>
-          <p className="text-xs text-slate-600 mt-6">
-            © 2019–{new Date().getFullYear()} IQ Dental. Все права защищены.
+          <p className="text-xs text-stone-600 mt-6">
+            © 2019–{new Date().getFullYear()} Art Smiles. Все права защищены.
           </p>
         </div>
 
@@ -105,10 +105,10 @@ export default function Footer() {
         <div className="mt-10 grid grid-cols-2 gap-8 md:grid-cols-4 xl:col-span-2 xl:mt-0">
           {footerSections.map((section) => (
             <div key={section.label} className="mb-10 md:mb-0">
-              <h3 className="text-xs uppercase tracking-wider text-slate-500 font-[var(--font-mono)]">
+              <h3 className="text-xs uppercase tracking-wider text-stone-500 font-[var(--font-mono)]">
                 {section.label}
               </h3>
-              <ul className="mt-4 space-y-2.5 text-sm text-slate-400">
+              <ul className="mt-4 space-y-2.5 text-sm text-stone-400">
                 {section.links.map((link) => (
                   <li key={link.title}>
                     {link.href.startsWith("/") ? (
@@ -139,8 +139,8 @@ export default function Footer() {
       </div>
 
       {/* Bottom legal line */}
-      <div className="mx-auto max-w-7xl mt-12 w-full border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600 font-[var(--font-mono)]">
-        <span>ООО «Айкьюдентал», Лицензия № Л041-01181-16/00361643</span>
+      <div className="mx-auto max-w-7xl mt-12 w-full border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-stone-600 font-[var(--font-mono)]">
+        <span>ООО «Арт Смайлс», Лицензия на осуществление медицинской деятельности</span>
         <span>Сайт не является публичной офертой</span>
       </div>
     </footer>

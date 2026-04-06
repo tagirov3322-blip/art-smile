@@ -86,6 +86,12 @@ function DoctorCard({
 
   const isMobileCard = typeof window !== "undefined" && window.innerWidth < 640;
 
+  const photoPosition: Record<string, string> = {
+    "Шайхелисламов Раушан Рафисович": "scale(1.35) translateY(-18%)",
+    "Сабиров Ренат Халитович": "scale(1.35) translateY(-4%)",
+  };
+  const photoTransform = photoPosition[doctor.name] ?? "scale(1.35) translateY(-8%)";
+
   return (
     <div
       className="doctor-card group relative z-[1] h-full cursor-pointer hover:z-[10]"
@@ -128,7 +134,8 @@ function DoctorCard({
               src={doctor.photo || "/doctors/default.webp"}
               alt={doctor.name}
               loading="lazy"
-              className="absolute inset-0 h-full w-full object-cover object-top"
+              className="absolute inset-0 h-full w-full object-cover"
+              style={{ objectPosition: "50% 0%", transform: photoTransform, transformOrigin: "50% 0%" }}
             />
             {/* Subtle overlay on hover */}
             <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />

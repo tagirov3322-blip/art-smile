@@ -26,10 +26,10 @@ interface Promo {
 }
 
 const ACCENTS = [
-  { accent: "from-[#151c28] via-[#1a2333] to-[#172030]", border: "border-white/8", dark: true },
-  { accent: "from-[#172030] via-[#151c28] to-[#1a2333]", border: "border-white/8", dark: true },
-  { accent: "from-[#1a2333] via-[#151c28] to-[#172030]", border: "border-white/8", dark: true },
-  { accent: "from-[#151c28] via-[#172030] to-[#1a2333]", border: "border-white/8", dark: true },
+  { accent: "from-[#1a1208] via-[#231808] to-[#1c1408]", border: "border-[#C4973B]/20", dark: true },
+  { accent: "from-[#1c1408] via-[#1a1208] to-[#231808]", border: "border-[#C4973B]/20", dark: true },
+  { accent: "from-[#231808] via-[#1c1408] to-[#1a1208]", border: "border-[#C4973B]/20", dark: true },
+  { accent: "from-[#1a1208] via-[#231808] to-[#1c1408]", border: "border-[#C4973B]/20", dark: true },
 ];
 
 const FALLBACK_PROMOTIONS: Promo[] = [
@@ -80,17 +80,17 @@ export default function Promotions() {
                 promo.accent,
                 promo.border,
                 "transition-all duration-500 hover:shadow-2xl hover:scale-[1.015]",
-                promo.dark ? "hover:shadow-blue-900/20" : "hover:shadow-primary/8 liquid-glass-light"
+                promo.dark ? "hover:shadow-[#C4973B]/15" : "hover:shadow-primary/8 liquid-glass-light"
               )}
             >
               {/* Decorative blurred orbs */}
               <div className={cn(
                 "pointer-events-none absolute -right-10 -top-10 h-48 w-48 rounded-full blur-2xl transition-transform duration-700 group-hover:scale-125",
-                promo.dark ? "bg-blue-400/10" : "bg-primary/6"
+                promo.dark ? "bg-[#C4973B]/10" : "bg-primary/6"
               )} />
               <div className={cn(
                 "pointer-events-none absolute -bottom-8 right-16 h-32 w-32 rounded-full blur-2xl transition-transform duration-700 group-hover:scale-110 group-hover:translate-x-4",
-                promo.dark ? "bg-indigo-400/8" : "bg-primary/4"
+                promo.dark ? "bg-[#D4AF6A]/8" : "bg-primary/4"
               )} />
 
               {/* Badge */}
@@ -98,7 +98,7 @@ export default function Promotions() {
                 "inline-flex w-fit items-center gap-2 rounded-full px-4 py-2 text-sm font-medium shadow-sm backdrop-blur-sm",
                 promo.dark ? "bg-white/10 text-white/90" : "bg-white/80 text-foreground"
               )}>
-                <span className={cn("h-2 w-2 rounded-full", promo.dark ? "bg-blue-400" : "bg-primary")} />
+                <span className={cn("h-2 w-2 rounded-full", promo.dark ? "bg-[#D4AF6A]" : "bg-primary")} />
                 {promo.badge}
               </span>
 

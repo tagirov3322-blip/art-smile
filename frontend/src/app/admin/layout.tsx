@@ -82,7 +82,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <aside className="fixed left-0 top-0 z-30 hidden h-full w-60 flex-col border-r border-border bg-card lg:flex">
         <div className="flex h-20 items-center justify-center">
           <Link href="/admin" className="flex items-center">
-            <img src="/logo_iq.png" alt="IQ Dental" className="logo-themed h-14 w-auto" />
+            <img src="/logo_art.png" alt="Art Smiles" className="logo-themed h-14 w-auto" />
           </Link>
         </div>
 
@@ -130,7 +130,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Mobile Top Bar */}
       <header className="fixed left-0 right-0 top-0 z-30 flex h-14 items-center justify-between border-b border-border bg-card px-4 lg:hidden">
         <Link href="/admin" className="flex items-center">
-          <img src="/logo_iq.png" alt="IQ Dental" className="logo-themed h-8 w-auto" />
+          <img src="/logo_art.png" alt="Art Smiles" className="logo-themed h-8 w-auto" />
         </Link>
         <div className="flex items-center gap-2">
           {mounted && (
