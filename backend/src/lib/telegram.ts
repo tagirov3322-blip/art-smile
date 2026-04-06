@@ -56,6 +56,8 @@ export function initTelegramBot(): void {
 
   bot.launch().then(() => {
     logger.info("Telegram-бот запущен");
+  }).catch((err: Error) => {
+    logger.warn(`Telegram-бот не запущен: ${err.message}`);
   });
 
   process.once("SIGINT", () => bot?.stop("SIGINT"));

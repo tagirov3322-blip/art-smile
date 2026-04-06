@@ -197,15 +197,15 @@ export default function Services() {
   const handleRowEnter = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     const row = e.currentTarget;
     const chevron = row.querySelector(".chevron-icon");
-    gsap.to(row, { backgroundColor: "rgba(42,50,80,0.04)", paddingLeft: 52, duration: 0.3, ease: "power2.out" });
-    if (chevron) gsap.to(chevron, { y: 3, duration: 0.3, ease: "power2.out" });
+    gsap.to(row, { backgroundColor: "rgba(42,50,80,0.04)", x: 10, duration: 0.3, ease: "power2.out", force3D: true });
+    if (chevron) gsap.to(chevron, { y: 3, duration: 0.3, ease: "power2.out", force3D: true });
   }, []);
 
   const handleRowLeave = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     const row = e.currentTarget;
     const chevron = row.querySelector(".chevron-icon");
-    gsap.to(row, { backgroundColor: "transparent", paddingLeft: 32, duration: 0.3, ease: "power2.out" });
-    if (chevron) gsap.to(chevron, { y: 0, duration: 0.3, ease: "power2.out" });
+    gsap.to(row, { backgroundColor: "transparent", x: 0, duration: 0.3, ease: "power2.out", force3D: true });
+    if (chevron) gsap.to(chevron, { y: 0, duration: 0.3, ease: "power2.out", force3D: true });
   }, []);
 
   useEffect(() => {
@@ -218,13 +218,15 @@ export default function Services() {
           autoAlpha: 1,
           duration: 0.35,
           ease: "power2.inOut",
+          force3D: true,
         });
-      } else {
+      } else if (el.offsetHeight > 0) {
         gsap.to(el, {
           height: 0,
           opacity: 0,
           duration: 0.3,
           ease: "power2.inOut",
+          force3D: true,
           onComplete: () => {
             gsap.set(el, { display: "none" });
           },
