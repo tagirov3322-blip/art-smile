@@ -111,7 +111,7 @@ export default function Hero() {
       </div>
 
       {/* ── Desktop buttons (absolute) ── */}
-      <div className="hero-cta-row pointer-events-none absolute inset-x-0 bottom-[22%] sm:bottom-[20%] md:bottom-[25%] lg:bottom-[30%] z-[4] hidden sm:flex items-center justify-between px-[8%] md:px-[10%] lg:px-[13%] [&_a]:pointer-events-auto">
+      <div className="hero-cta-row pointer-events-none absolute inset-x-0 bottom-[22%] sm:bottom-[20%] md:bottom-[25%] lg:bottom-[30%] z-[4] hidden sm:flex items-center justify-between px-[5%] md:px-[8%] lg:px-[12%] xl:px-[13%] [&_a]:pointer-events-auto">
         <a
           href="#booking"
           className="hero-cta inline-flex items-center justify-center gap-2 rounded-lg border font-medium tracking-[0.08em] transition-[border-color,background-color,box-shadow] duration-300 active:scale-[0.97] h-14 w-[240px] text-base md:h-16 md:w-[280px] md:text-lg lg:h-20 lg:w-[320px] lg:text-xl border-white/80 bg-white text-[#0a0f1a] hover:bg-white/90 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] dark:border-white/20 dark:bg-white/5 dark:text-white/90 dark:hover:border-white/60 dark:hover:bg-white/15 dark:hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]"
