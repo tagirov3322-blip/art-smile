@@ -55,9 +55,12 @@ const STATUS_COLORS: Record<string, string> = { new: "#f59e0b", confirmed: "#3b8
 const STATUS_LABELS: Record<string, string> = { new: "Новые", confirmed: "Подтверждённые", completed: "Завершённые", cancelled: "Отменённые" };
 const PIE_COLORS = ["#f59e0b", "#3b82f6", "#22c55e", "#ef4444"];
 
+type Period = "today" | "week" | "month" | "all";
+const PERIOD_LABELS: Record<Period, string> = { today: "Сегодня", week: "Неделя", month: "Месяц", all: "Всё время" };
+
 export default function AdminDashboard() {
   const [stats, setStats] = useState<Stats | null>(null);
-  const [recentBookings, setRecentBookings] = useState<Booking[]>([]);
+  const [period, setPeriod] = useState<Period>("all");
   const [activePieIndex, setActivePieIndex] = useState(-1);
   const [pieHovered, setPieHovered] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -65,14 +68,13 @@ export default function AdminDashboard() {
   const isDark = resolvedTheme === "dark";
 
   const loadDashboard = () => {
-    api.get<Stats>("/stats").then(setStats).catch(console.error);
-    api.get<BookingsResponse>("/bookings?limit=7").then((d) => setRecentBookings(d.bookings)).catch(console.error);
+    api.get<Stats>(`/stats?period=${period}`).then(setStats).catch(console.error);
   };
 
   const loadRef = useRef(loadDashboard);
   loadRef.current = loadDashboard;
 
-  useEffect(() => { loadDashboard(); }, []);
+  useEffect(() => { loadDashboard(); }, [period]);
   useEffect(() => { return onSSE(() => loadRef.current()); }, []);
 
   // GSAP entrance animations
@@ -106,14 +108,20 @@ export default function AdminDashboard() {
 
   return (
     <div ref={containerRef}>
-      <div className="dash-header mb-8 flex items-end justify-between">
+      <div className="dash-header mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Дашборд</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Общая статистика клиники</p>
+          <h1 className="text-2xl font-bold text-foreground">Статистика</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {new Date().toLocaleDateString("ru-RU", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
+          </p>
         </div>
-        <p className="text-xs text-muted-foreground">
-          {new Date().toLocaleDateString("ru-RU", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
-        </p>
+        <div className="flex gap-1.5">
+          {(Object.keys(PERIOD_LABELS) as Period[]).map((p) => (
+            <button key={p} onClick={() => setPeriod(p)} className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${period === p ? "bg-primary text-primary-foreground" : "bg-accent text-muted-foreground hover:text-foreground"}`}>
+              {PERIOD_LABELS[p]}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12 lg:gap-5">
@@ -179,26 +187,6 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Последние записи */}
-      <div className="dash-table mt-6 overflow-x-auto rounded-2xl bg-card shadow-sm">
-        <div className="px-6 py-5"><p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">Последние записи</p></div>
-        {recentBookings.length > 0 ? (
-          <table className="w-full text-left text-sm">
-            <thead><tr className="border-y border-border text-[10px] uppercase tracking-wider text-muted-foreground"><th className="px-6 py-2.5 font-medium">Пациент</th><th className="px-6 py-2.5 font-medium">Врач</th><th className="px-6 py-2.5 font-medium">Услуга</th><th className="px-6 py-2.5 font-medium">Дата / Время</th><th className="px-6 py-2.5 font-medium">Статус</th></tr></thead>
-            <tbody>
-              {recentBookings.map((b) => (
-                <tr key={b.id} className="dash-table-row border-b border-border/50 last:border-0 transition-colors hover:bg-accent/50">
-                  <td className="px-6 py-3.5"><div className="font-medium text-foreground">{b.patientName}</div><div className="text-[11px] text-muted-foreground">{b.phone}</div></td>
-                  <td className="px-6 py-3.5 text-muted-foreground">{b.doctor.name.split(" ").slice(0, 2).join(" ")}</td>
-                  <td className="px-6 py-3.5 text-muted-foreground">{b.service.name}</td>
-                  <td className="px-6 py-3.5 text-muted-foreground">{new Date(b.date).toLocaleDateString("ru-RU")} <span className="text-muted-foreground/60">{b.time}</span></td>
-                  <td className="px-6 py-3.5"><span className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold" style={{ backgroundColor: (STATUS_COLORS[b.status] || "#999") + "15", color: STATUS_COLORS[b.status] || "#666" }}><span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: STATUS_COLORS[b.status] || "#666" }} />{STATUS_LABELS[b.status] || b.status}</span></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : <div className="px-6 pb-6 text-sm text-muted-foreground/50">Записей пока нет</div>}
-      </div>
     </div>
   );
 }

@@ -30,6 +30,15 @@ export default function AdminSettings() {
     api.get<Settings>("/settings").then(setSettings).catch(console.error);
   }, []);
 
+  const handleSmsToggle = (checked: boolean) => {
+    if (!settings) return;
+    if (settings.smsEnabled && !checked) {
+      const confirmed = confirm("Вы уверены, что хотите отключить SMS-уведомления? Пациенты не будут получать напоминания о записи.");
+      if (!confirmed) return;
+    }
+    setSettings({ ...settings, smsEnabled: checked });
+  };
+
   const save = async () => {
     if (!settings) return;
     setSaving(true);
@@ -51,29 +60,24 @@ export default function AdminSettings() {
 
       <div className="page-content mt-6 max-w-lg space-y-5 rounded-2xl bg-card p-6 shadow-sm">
         <div>
-          <label className="mb-1.5 block text-sm font-medium text-foreground">Название клиники</label>
-          <input value={settings.clinicName} onChange={(e) => setSettings({ ...settings, clinicName: e.target.value })}
-            className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary" />
-        </div>
-        <div>
-          <label className="mb-1.5 block text-sm font-medium text-foreground">Телефон</label>
+          <label className="mb-1.5 block text-sm font-medium text-foreground">Телефон клиники</label>
+          <p className="mb-2 text-xs text-muted-foreground">Отображается в шапке сайта и на странице контактов</p>
           <input value={settings.phone} onChange={(e) => setSettings({ ...settings, phone: e.target.value })}
+            placeholder="+7 (906) 123-27-27"
             className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary" />
         </div>
-        <div>
-          <label className="mb-1.5 block text-sm font-medium text-foreground">Адрес</label>
-          <input value={settings.address} onChange={(e) => setSettings({ ...settings, address: e.target.value })}
-            className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary" />
+
+        <div className="rounded-xl border border-border p-4">
+          <label className="flex items-center gap-3 text-sm font-medium text-foreground cursor-pointer">
+            <input type="checkbox" checked={settings.smsEnabled} onChange={(e) => handleSmsToggle(e.target.checked)} className="h-4 w-4 rounded" />
+            SMS-уведомления
+          </label>
+          <p className="mt-1.5 ml-7 text-xs text-muted-foreground">
+            {settings.smsEnabled
+              ? "Пациенты получают SMS-напоминания о записи"
+              : "SMS-уведомления отключены"}
+          </p>
         </div>
-        <div>
-          <label className="mb-1.5 block text-sm font-medium text-foreground">Telegram Chat ID</label>
-          <input value={settings.telegramChatId} onChange={(e) => setSettings({ ...settings, telegramChatId: e.target.value })}
-            className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary" />
-        </div>
-        <label className="flex items-center gap-2 text-sm text-foreground">
-          <input type="checkbox" checked={settings.smsEnabled} onChange={(e) => setSettings({ ...settings, smsEnabled: e.target.checked })} className="rounded" />
-          SMS-уведомления включены
-        </label>
 
         <button onClick={save} disabled={saving}
           className="rounded-xl bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition hover:opacity-90 disabled:opacity-50">

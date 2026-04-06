@@ -17,7 +17,7 @@ const NAV = [
   { href: "/admin/services", label: "Услуги", icon: "🦷" },
   { href: "/admin/reviews", label: "Отзывы", icon: "⭐" },
   { href: "/admin/promotions", label: "Акции", icon: "🎉" },
-  { href: "/admin", label: "Дашборд", icon: "📊" },
+  { href: "/admin", label: "Статистика", icon: "📊" },
   { href: "/admin/settings", label: "Настройки", icon: "⚙️" },
 ];
 
@@ -25,7 +25,7 @@ const NAV = [
 const BOTTOM_NAV = [
   { href: "/admin/bookings", label: "Записи", icon: "📋" },
   { href: "/admin/doctors", label: "Врачи", icon: "👨‍⚕️" },
-  { href: "/admin", label: "Дашборд", icon: "📊" },
+  { href: "/admin", label: "Статистика", icon: "📊" },
   { href: "/admin/services", label: "Услуги", icon: "🦷" },
 ];
 
@@ -215,7 +215,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </nav>
 
       {/* Main content */}
-      <main ref={mainRef} className="flex-1 pt-14 pb-16 px-4 lg:ml-60 lg:pt-0 lg:pb-0 lg:p-8">
+      <main ref={mainRef} className="flex-1 pt-14 pb-16 px-4 lg:ml-60 lg:p-10">
         {children}
       </main>
       <SSEToast />
