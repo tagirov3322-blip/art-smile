@@ -94,7 +94,7 @@ export default function Footer() {
           </div>
           <div className="flex items-center gap-2 text-sm text-slate-500">
             <Clock className="h-4 w-4 shrink-0" />
-            <span>Пн-Пт: 08:00-20:00, Сб-Вс: 09:00-18:00</span>
+            <span>Пн-Пт: 08:00-20:00 (перерыв 13:00-14:00), Сб: 09:00-15:00, Вс: выходной</span>
           </div>
           <p className="text-xs text-slate-600 mt-6">
             © 2019–{new Date().getFullYear()} IQ Dental. Все права защищены.

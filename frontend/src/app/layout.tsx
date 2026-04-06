@@ -92,9 +92,9 @@ const jsonLd = {
     },
     {
       "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Saturday", "Sunday"],
+      dayOfWeek: ["Saturday"],
       opens: "09:00",
-      closes: "18:00",
+      closes: "15:00",
     },
   ],
   priceRange: "₽₽",

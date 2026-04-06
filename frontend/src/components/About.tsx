@@ -152,7 +152,7 @@ export default function About() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-white">Работаем</p>
-                  <p className="text-sm text-white/60">Пн-Пт 8:00–20:00</p>
+                  <p className="text-sm text-white/60">Пн-Пт 8:00–20:00, Сб 9:00–15:00</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">

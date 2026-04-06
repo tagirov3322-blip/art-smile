@@ -473,7 +473,7 @@ export default function Booking() {
                   {[
                     { Icon: Phone, label: "Телефон", content: <a href="tel:+79061232727" className="font-[var(--font-mono)] text-lg font-semibold text-white transition-colors hover:text-gray-300">+7 (906) 123-27-27</a> },
                     { Icon: MapPin, label: "Адрес", content: <p className="text-base font-semibold text-white">просп. Мира, 34, Набережные Челны</p> },
-                    { Icon: Clock, label: "Время работы", content: <><p className="font-[var(--font-mono)] text-base font-semibold text-white">Пн-Пт: 08:00 - 20:00</p><p className="font-[var(--font-mono)] text-fluid-small text-gray-400/70">Сб-Вс: 09:00 - 18:00</p></> },
+                    { Icon: Clock, label: "Время работы", content: <><p className="font-[var(--font-mono)] text-base font-semibold text-white">Пн-Пт: 08:00 - 20:00</p><p className="font-[var(--font-mono)] text-fluid-small text-gray-400/70">Перерыв: 13:00 - 14:00</p><p className="font-[var(--font-mono)] text-fluid-small text-gray-400/70">Сб: 09:00 - 15:00 · Вс: выходной</p></> },
                   ].map(({ Icon, label, content }) => (
                     <div key={label} className="flex items-start gap-4">
                       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/10">
