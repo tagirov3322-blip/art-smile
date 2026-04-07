@@ -27,6 +27,9 @@ import settingsRoutes from "./routes/settings";
 const app = express();
 const PORT = Number(process.env.PORT) || 4000;
 
+// Trust proxy (Render стоит за load balancer)
+app.set("trust proxy", 1);
+
 // Безопасность
 app.use(helmet());
 app.use(cors({
