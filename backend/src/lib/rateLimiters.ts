@@ -3,7 +3,7 @@ import rateLimit from "express-rate-limit";
 // Записи: 2 заявки за 30 минут с одного IP
 export const bookingLimiter = rateLimit({
   windowMs: 30 * 60 * 1000,
-  max: 2,
+  max: 5,
   message: { error: "Вы уже отправили заявку. Подождите 30 минут" },
 });
 
