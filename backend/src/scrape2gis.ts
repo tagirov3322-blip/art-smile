@@ -8,7 +8,7 @@ async function scrape2GIS() {
   console.log("Загружаю страницу 2GIS...");
 
   const res = await axios.get(
-    "https://2gis.ru/nabchelny/firm/70000001038946979/tab/reviews",
+    "https://2gis.ru/nabchelny/firm/70000001036298410/tab/reviews",
     {
       headers: {
         "User-Agent":
@@ -35,8 +35,22 @@ async function scrape2GIS() {
       text.length > 30 &&
       !text.startsWith("http") &&
       !text.startsWith("Добрый день") &&
-      !text.startsWith("Спасибо за отзыв") &&
-      !text.startsWith("Большое спасибо за отзыв") &&
+      !text.startsWith("Добрый вечер") &&
+      !text.startsWith("Здравствуйте") &&
+      !text.startsWith("Спасибо") &&
+      !text.startsWith("Большое спасибо") &&
+      !text.startsWith("Благодарим") &&
+      !text.startsWith("Заходите") &&
+      !text.startsWith("Вероника") &&
+      !text.startsWith("Гузель") &&
+      !text.startsWith("Сабина") &&
+      !text.startsWith("Фаниль") &&
+      !text.startsWith("Алина") &&
+      !text.includes("hh.ru") &&
+      !text.includes("спасибо за отзыв") &&
+      !text.includes("спасибо, что уделили") &&
+      !text.includes("Были рады помочь") &&
+      !text.includes("приходите к нам ещё") &&
       !text.includes("предложили прийти на прием")
     ) {
       allTexts.push(text);
@@ -49,7 +63,7 @@ async function scrape2GIS() {
   await prisma.review.deleteMany({ where: { source: "2gis" } });
 
   let saved = 0;
-  for (let i = 0; i < allTexts.length && i < 20; i++) {
+  for (let i = 0; i < allTexts.length && i < 30; i++) {
     const text = allTexts[i];
     const authorName = "Пациент Art Smile";
     const sourceId = `2gis_${i}_${Date.now()}`;

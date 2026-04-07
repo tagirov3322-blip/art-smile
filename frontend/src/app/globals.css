@@ -282,12 +282,12 @@ body {
   overflow-x: hidden;
 }
 
-/* Logo — show as-is (Art Smiles logo is colored) */
+/* Logo — white source image, invert for light theme */
 .logo-themed {
-  filter: none;
+  filter: brightness(0) invert(0);
 }
 .dark .logo-themed {
-  filter: brightness(0) invert(1);
+  filter: none;
 }
 
 /* ═══════════════════════════════════════════
