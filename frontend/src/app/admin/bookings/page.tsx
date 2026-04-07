@@ -315,45 +315,47 @@ export default function AdminBookings() {
 
       <div className="mt-6">
         {loading ? <Skeleton /> : (
-          <div ref={tableRef} className="overflow-x-auto rounded-2xl bg-card shadow-sm">
-            <table className="min-w-[800px] w-full text-left text-sm">
+          <>
+          {/* Desktop table */}
+          <div ref={tableRef} className="hidden xl:block overflow-x-auto rounded-2xl bg-card shadow-sm">
+            <table className="w-full text-left text-sm">
               <thead>
                 <tr className="border-b border-border text-xs uppercase tracking-wider text-muted-foreground">
-                  <th className="px-4 py-3">Пациент</th>
-                  <th className="px-4 py-3">Телефон</th>
-                  <th className="px-4 py-3">Врач</th>
-                  <th className="px-4 py-3">Услуга</th>
-                  <th className="px-4 py-3">Дата</th>
-                  <th className="px-4 py-3">Статус</th>
-                  <th className="px-4 py-3">Действия</th>
+                  <th className="px-3 py-3">Пациент</th>
+                  <th className="px-3 py-3">Телефон</th>
+                  <th className="px-3 py-3">Врач</th>
+                  <th className="px-3 py-3">Услуга</th>
+                  <th className="px-3 py-3">Дата</th>
+                  <th className="px-3 py-3">Статус</th>
+                  <th className="px-3 py-3">Действия</th>
                 </tr>
               </thead>
               <tbody>
                 {data?.bookings.map((b) => (
                   <tr key={b.id} className="booking-row border-b border-border/50 hover:bg-accent/50 transition-colors">
-                    <td className="px-4 py-3 font-medium text-foreground whitespace-nowrap">{b.patientName}</td>
-                    <td className="px-4 py-3 text-muted-foreground whitespace-nowrap">{b.phone}</td>
-                    <td className="px-4 py-3 text-muted-foreground whitespace-nowrap">{b.doctor.name.split(" ").slice(0, 2).join(" ")}</td>
-                    <td className="px-4 py-3 text-muted-foreground">{b.service.name}</td>
-                    <td className="px-4 py-3 text-muted-foreground whitespace-nowrap">{new Date(b.date).toLocaleDateString("ru-RU")} {b.time}</td>
-                    <td className="px-4 py-3">
+                    <td className="px-3 py-3 font-medium text-foreground whitespace-nowrap max-w-[160px] truncate">{b.patientName}</td>
+                    <td className="px-3 py-3 text-muted-foreground whitespace-nowrap text-xs">{b.phone}</td>
+                    <td className="px-3 py-3 text-muted-foreground whitespace-nowrap max-w-[140px] truncate">{b.doctor.name.split(" ").slice(0, 2).join(" ")}</td>
+                    <td className="px-3 py-3 text-muted-foreground max-w-[160px] truncate">{b.service.name}</td>
+                    <td className="px-3 py-3 text-muted-foreground whitespace-nowrap text-xs">{new Date(b.date).toLocaleDateString("ru-RU")} {b.time}</td>
+                    <td className="px-3 py-3">
                       <span className={`inline-block rounded-full px-2.5 py-1 text-xs font-semibold ${STATUS_COLORS[b.status]}`}>
                         {STATUS_LABELS[b.status] || b.status}
                       </span>
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-3 py-3">
                       <div className="flex gap-1">
                         {(b.status === "new" || b.status === "confirmed") && (
                           <>
-                            <button onClick={() => openEdit(b)} className="rounded-lg bg-accent px-2.5 py-1 text-xs font-medium text-foreground hover:bg-accent/80 transition-colors">Изменить</button>
+                            <button onClick={() => openEdit(b)} className="rounded-lg bg-accent px-2 py-1 text-xs font-medium text-foreground hover:bg-accent/80 transition-colors">Изм.</button>
                             {b.status === "new" && (
-                              <button onClick={() => changeStatus(b.id, "confirmed")} className="rounded-lg bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700 hover:bg-blue-100 dark:bg-blue-950 dark:text-blue-400 dark:hover:bg-blue-900 transition-colors">Подтвердить</button>
+                              <button onClick={() => changeStatus(b.id, "confirmed")} className="rounded-lg bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 hover:bg-blue-100 dark:bg-blue-950 dark:text-blue-400 dark:hover:bg-blue-900 transition-colors">✓</button>
                             )}
-                            <button onClick={() => changeStatus(b.id, "cancelled")} className="rounded-lg bg-red-50 px-2.5 py-1 text-xs font-medium text-red-700 hover:bg-red-100 dark:bg-red-950 dark:text-red-400 dark:hover:bg-red-900 transition-colors">Отменить</button>
+                            <button onClick={() => changeStatus(b.id, "cancelled")} className="rounded-lg bg-red-50 px-2 py-1 text-xs font-medium text-red-700 hover:bg-red-100 dark:bg-red-950 dark:text-red-400 dark:hover:bg-red-900 transition-colors">✕</button>
                           </>
                         )}
                         {(b.status === "completed" || b.status === "cancelled") && (
-                          <button onClick={() => deleteBooking(b.id)} className="rounded-lg bg-accent px-2.5 py-1 text-xs font-medium text-muted-foreground hover:bg-red-100 hover:text-red-600 dark:hover:bg-red-950 dark:hover:text-red-400 transition-colors">Удалить</button>
+                          <button onClick={() => deleteBooking(b.id)} className="rounded-lg bg-accent px-2 py-1 text-xs font-medium text-muted-foreground hover:bg-red-100 hover:text-red-600 dark:hover:bg-red-950 dark:hover:text-red-400 transition-colors">Удалить</button>
                         )}
                       </div>
                     </td>
@@ -365,6 +367,55 @@ export default function AdminBookings() {
               </tbody>
             </table>
           </div>
+
+          {/* Card layout for smaller screens */}
+          <div className="xl:hidden space-y-3">
+            {data?.bookings.map((b) => (
+              <div key={b.id} className="booking-row rounded-2xl bg-card p-4 shadow-sm space-y-3">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="font-medium text-foreground truncate">{b.patientName}</p>
+                    <p className="text-sm text-muted-foreground">{b.phone}</p>
+                  </div>
+                  <span className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold ${STATUS_COLORS[b.status]}`}>
+                    {STATUS_LABELS[b.status] || b.status}
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-sm">
+                  <div>
+                    <span className="text-muted-foreground">Врач: </span>
+                    <span className="text-foreground">{b.doctor.name.split(" ").slice(0, 2).join(" ")}</span>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">Услуга: </span>
+                    <span className="text-foreground">{b.service.name}</span>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">Дата: </span>
+                    <span className="text-foreground">{new Date(b.date).toLocaleDateString("ru-RU")} {b.time}</span>
+                  </div>
+                </div>
+                <div className="flex gap-2 pt-1">
+                  {(b.status === "new" || b.status === "confirmed") && (
+                    <>
+                      <button onClick={() => openEdit(b)} className="rounded-lg bg-accent px-3 py-1.5 text-xs font-medium text-foreground hover:bg-accent/80 transition-colors">Изменить</button>
+                      {b.status === "new" && (
+                        <button onClick={() => changeStatus(b.id, "confirmed")} className="rounded-lg bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 hover:bg-blue-100 dark:bg-blue-950 dark:text-blue-400 dark:hover:bg-blue-900 transition-colors">Подтвердить</button>
+                      )}
+                      <button onClick={() => changeStatus(b.id, "cancelled")} className="rounded-lg bg-red-50 px-3 py-1.5 text-xs font-medium text-red-700 hover:bg-red-100 dark:bg-red-950 dark:text-red-400 dark:hover:bg-red-900 transition-colors">Отменить</button>
+                    </>
+                  )}
+                  {(b.status === "completed" || b.status === "cancelled") && (
+                    <button onClick={() => deleteBooking(b.id)} className="rounded-lg bg-accent px-3 py-1.5 text-xs font-medium text-muted-foreground hover:bg-red-100 hover:text-red-600 dark:hover:bg-red-950 dark:hover:text-red-400 transition-colors">Удалить</button>
+                  )}
+                </div>
+              </div>
+            ))}
+            {data?.bookings.length === 0 && (
+              <div className="rounded-2xl bg-card px-5 py-8 text-center text-muted-foreground shadow-sm">Записей нет</div>
+            )}
+          </div>
+          </>
         )}
       </div>
 
