@@ -16,7 +16,7 @@ function connect() {
   if (typeof window === "undefined") return;
   if (es) { es.close(); es = null; }
 
-  es = new EventSource(SSE_URL);
+  es = new EventSource(SSE_URL, { withCredentials: true });
   es.onopen = () => {};
   es.onerror = () => {
     if (es?.readyState === EventSource.CLOSED) {
