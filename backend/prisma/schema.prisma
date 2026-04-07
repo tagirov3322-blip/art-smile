@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  schemas  = ["iq"]
+  schemas  = ["art"]
 }
 
 model Admin {
@@ -16,7 +16,7 @@ model Admin {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  @@schema("iq")
+  @@schema("art")
 }
 
 model Doctor {
@@ -34,7 +34,7 @@ model Doctor {
   portfolio      PortfolioWork[]
   weekSchedules  DoctorWeekSchedule[]
 
-  @@schema("iq")
+  @@schema("art")
 }
 
 model DoctorWeekSchedule {
@@ -47,7 +47,7 @@ model DoctorWeekSchedule {
   updatedAt DateTime @updatedAt
 
   @@unique([doctorId, weekStart])
-  @@schema("iq")
+  @@schema("art")
 }
 
 model Service {
@@ -62,7 +62,7 @@ model Service {
   updatedAt   DateTime  @updatedAt
   bookings    Booking[]
 
-  @@schema("iq")
+  @@schema("art")
 }
 
 model Booking {
@@ -81,7 +81,7 @@ model Booking {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  @@schema("iq")
+  @@schema("art")
 }
 
 model Review {
@@ -96,7 +96,7 @@ model Review {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  @@schema("iq")
+  @@schema("art")
 }
 
 model Promotion {
@@ -110,7 +110,7 @@ model Promotion {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
-  @@schema("iq")
+  @@schema("art")
 }
 
 model PortfolioWork {
@@ -124,12 +124,12 @@ model PortfolioWork {
   doctor      Doctor   @relation(fields: [doctorId], references: [id])
   createdAt   DateTime @default(now())
 
-  @@schema("iq")
+  @@schema("art")
 }
 
 model Settings {
   id              Int    @id @default(1)
-  clinicName      String @default("IQ Dental")
+  clinicName      String @default("Art Smile")
   phone           String @default("")
   address         String @default("")
   workingHours    Json?
@@ -137,5 +137,5 @@ model Settings {
   smsEnabled      Boolean @default(false)
   updatedAt       DateTime @updatedAt
 
-  @@schema("iq")
+  @@schema("art")
 }

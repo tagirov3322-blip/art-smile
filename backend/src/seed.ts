@@ -30,7 +30,7 @@ async function seed() {
         specialty: "Стоматолог-ортопед, директор",
         experience: 12,
         photo: "/doctors/nigmatullin.webp",
-        description: "Специалист в области ортопедической стоматологии. Руководит клиникой IQ Dental, обеспечивая высочайшие стандарты качества лечения.",
+        description: "Специалист в области ортопедической стоматологии. Руководит клиникой Art Smile, обеспечивая высочайшие стандарты качества лечения.",
         isActive: true,
         schedule: {
           monday: { start: "09:00", end: "18:00" },
@@ -196,7 +196,7 @@ async function seed() {
     prisma.review.create({ data: { authorName: "Дмитрий К.", text: "Делал чистку зубов. Результат отличный, зубы стали заметно белее. Приятный персонал, удобная запись.", rating: 5, source: "2gis", isApproved: true, isVisible: true } }),
     prisma.review.create({ data: { authorName: "Эльвира Р.", text: "Ребёнку 4 года, боялись идти к стоматологу. Динара Ильясовна нашла подход — дочка теперь сама просится на приём!", rating: 5, source: "yandex", isApproved: true, isVisible: true } }),
     prisma.review.create({ data: { authorName: "Марат И.", text: "Поставил 2 импланта у Тимура Рустамовича. Операция прошла быстро, восстановление без осложнений. Рекомендую!", rating: 5, source: "2gis", isApproved: true, isVisible: true } }),
-    prisma.review.create({ data: { authorName: "Лилия С.", text: "Хожу в IQ Dental уже 2 года. Всегда всё на высшем уровне. Особенно нравится, что напоминают о приёме.", rating: 4, source: "site", isApproved: true, isVisible: true } }),
+    prisma.review.create({ data: { authorName: "Лилия С.", text: "Хожу в Art Smile уже 2 года. Всегда всё на высшем уровне. Особенно нравится, что напоминают о приёме.", rating: 4, source: "site", isApproved: true, isVisible: true } }),
     prisma.review.create({ data: { authorName: "Руслан Г.", text: "Ставил виниры на передние зубы. Результат превзошёл ожидания — улыбка как у голливудской звезды!", rating: 5, source: "yandex", isApproved: true, isVisible: true } }),
   ]);
 
@@ -206,7 +206,7 @@ async function seed() {
     where: { id: 1 },
     update: {},
     create: {
-      clinicName: "IQ Dental",
+      clinicName: "Art Smile",
       phone: "+78001234567",
       address: "г. Казань, ул. Баумана, 50",
       workingHours: {

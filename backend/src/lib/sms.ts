@@ -2,7 +2,7 @@ import axios from "axios";
 import logger from "./logger";
 
 const SMS_API_KEY = process.env.SMS_API_KEY;
-const SMS_SENDER = process.env.SMS_SENDER || "IQ Dental";
+const SMS_SENDER = process.env.SMS_SENDER || "Art Smile";
 
 async function sendSms(phone: string, message: string): Promise<boolean> {
   if (!SMS_API_KEY) {
@@ -37,7 +37,7 @@ async function sendSms(phone: string, message: string): Promise<boolean> {
 export function sendBookingCreatedSms(phone: string, patientName: string): Promise<boolean> {
   return sendSms(
     phone,
-    `${patientName}, ваша запись в IQ Dental принята! Мы свяжемся с вами для подтверждения. Тел: ${process.env.CLINIC_PHONE || ""}`
+    `${patientName}, ваша запись в Art Smile принята! Мы свяжемся с вами для подтверждения. Тел: ${process.env.CLINIC_PHONE || ""}`
   );
 }
 
@@ -49,13 +49,13 @@ export function sendBookingConfirmedSms(
 ): Promise<boolean> {
   return sendSms(
     phone,
-    `${patientName}, ваша запись в IQ Dental подтверждена на ${date} в ${time}. Адрес: ${process.env.CLINIC_ADDRESS || ""}. Тел: ${process.env.CLINIC_PHONE || ""}`
+    `${patientName}, ваша запись в Art Smile подтверждена на ${date} в ${time}. Адрес: ${process.env.CLINIC_ADDRESS || ""}. Тел: ${process.env.CLINIC_PHONE || ""}`
   );
 }
 
 export function sendBookingCancelledSms(phone: string, patientName: string): Promise<boolean> {
   return sendSms(
     phone,
-    `${patientName}, ваша запись в IQ Dental отменена. Для перезаписи позвоните: ${process.env.CLINIC_PHONE || ""}`
+    `${patientName}, ваша запись в Art Smile отменена. Для перезаписи позвоните: ${process.env.CLINIC_PHONE || ""}`
   );
 }

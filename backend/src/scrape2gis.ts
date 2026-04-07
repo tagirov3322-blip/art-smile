@@ -51,7 +51,7 @@ async function scrape2GIS() {
   let saved = 0;
   for (let i = 0; i < allTexts.length && i < 20; i++) {
     const text = allTexts[i];
-    const authorName = "Пациент IQ Dental";
+    const authorName = "Пациент Art Smile";
     const sourceId = `2gis_${i}_${Date.now()}`;
 
     // Определяем рейтинг по тону (все 2GIS отзывы обычно положительные)

@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: iq-dental-api
+    name: art-smile-api
     runtime: node
     region: frankfurt
     rootDir: backend
@@ -30,7 +30,7 @@ services:
       - key: SMS_API_KEY
         sync: false
       - key: SMS_SENDER
-        value: "IQ Dental"
+        value: "Art Smile"
       - key: CLINIC_PHONE
         sync: false
       - key: CLINIC_ADDRESS

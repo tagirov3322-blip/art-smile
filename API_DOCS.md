@@ -1,4 +1,4 @@
-# API Documentation — IQ Dental
+# API Documentation — Art Smile
 
 Base URL: `http://localhost:4000/api`
 
@@ -284,7 +284,7 @@ Query: `?source=site&isApproved=false&page=1&limit=20`
 **Body:**
 ```json
 {
-  "clinicName": "IQ Dental",
+  "clinicName": "Art Smile",
   "phone": "+7...",
   "address": "...",
   "workingHours": { "monday": { "start": "09:00", "end": "18:00" } },

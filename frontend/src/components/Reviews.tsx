@@ -185,7 +185,7 @@ export default function Reviews() {
             </a>
             <span className="text-white/20">|</span>
             <a href="https://yandex.com/maps/org/dental_complex_art_smiles/243945761675/reviews/?ll=52.406115%2C55.758133&z=18" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 transition-colors hover:text-white/80">
-              <span className="text-yellow-400">★</span> На Яндекс Картах
+              <span className="text-yellow-400">★</span> 4.3 на Яндекс Картах
             </a>
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
