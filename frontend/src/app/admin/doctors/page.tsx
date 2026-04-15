@@ -95,10 +95,15 @@ export default function AdminDoctors() {
     }
   };
 
-  const remove = async (id: number) => {
-    if (!confirm("Удалить врача?")) return;
-    await api.delete(`/doctors/${id}`);
-    load();
+  const toggleVisibility = async (d: Doctor) => {
+    if (d.isActive && !confirm(`Скрыть «${d.name}» с сайта? Записи и портфолио сохранятся, врача можно будет вернуть.`)) return;
+    try {
+      await api.put(`/doctors/${d.id}`, { isActive: !d.isActive });
+      load();
+    } catch (err) {
+      console.error("Toggle visibility error:", err);
+      alert(err instanceof Error ? err.message : "Не удалось изменить видимость");
+    }
   };
 
   return (
@@ -138,7 +143,7 @@ export default function AdminDoctors() {
                 </div>
                 <div className="mt-4 flex gap-2">
                   <button onClick={() => setEditing(d)} className="rounded-lg bg-accent px-3 py-1.5 text-xs font-medium text-foreground hover:bg-accent/80 transition-colors">Редактировать</button>
-                  <button onClick={() => remove(d.id)} className="rounded-lg bg-red-50 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-100 dark:bg-red-950 dark:text-red-400 dark:hover:bg-red-900 transition-colors">Удалить</button>
+                  <button onClick={() => toggleVisibility(d)} className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${d.isActive ? "bg-red-50 text-red-600 hover:bg-red-100 dark:bg-red-950 dark:text-red-400 dark:hover:bg-red-900" : "bg-green-50 text-green-700 hover:bg-green-100 dark:bg-green-950 dark:text-green-400 dark:hover:bg-green-900"}`}>{d.isActive ? "Скрыть" : "Показать"}</button>
                 </div>
               </div>
             ))}
